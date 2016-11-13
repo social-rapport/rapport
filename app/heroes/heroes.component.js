@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var auth_service_1 = require('./auth.service');
-var hero_service_1 = require('./hero.service');
+var auth_service_1 = require('../shared/auth.service');
+var hero_service_1 = require('../shared/hero.service');
 var router_1 = require('@angular/router');
 var HeroesComponent = (function () {
     function HeroesComponent(auth, heroService, router) {
@@ -36,8 +36,8 @@ var HeroesComponent = (function () {
         core_1.Component({
             selector: 'my-heroes',
             providers: [auth_service_1.Auth, hero_service_1.HeroService],
-            templateUrl: 'app/heroes.component.html',
-            styleUrls: ['app/heroes.component.css']
+            templateUrl: 'app/heroes/heroes.component.html',
+            styleUrls: ['app/heroes/heroes.component.css']
         }), 
         __metadata('design:paramtypes', [auth_service_1.Auth, hero_service_1.HeroService, router_1.Router])
     ], HeroesComponent);
