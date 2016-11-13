@@ -6,21 +6,14 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         shell: {
-          // congratulate the developer on a job well done.
-          affirmation: {
-            command: 'say -v Alex "Nice work, developer.  You deserve a cold beer."'
-          },
-          // converts coverage for js lines under to test to ts lines in the source
-          remapIstanbul: {
-            command: 'node_modules/.bin/remap-istanbul -i coverage/report-json/coverage-final.json -o coverage/display-report -t html'
-          },
-          // start up a browser to view the coverage report
-          coverage: {
-            command: 'node_modules/.bin/http-server -c-1 -o -p 9875 ./coverage/display-report'
+         
+
+          tsc: {
+            command: 'tsc'
           },
 
-          electron: {
-            command: 'electron main.js'
+          serve: {
+            command: 'lite-server'
           },
 
           electroncompile:{
@@ -28,12 +21,31 @@ module.exports = function(grunt) {
           }
         },
 
-        watch: {
-          typescript: {
-            files: ['app/],
-            tasks: ['webpack']
+        tsc: {
+                options: {
+                    // task options 
+                },
+                files: [{
+                    expand : true,
+                    dest   : "app",
+                    cwd    : "src",
+                    ext    : ".js",
+                    src    : [
+                        "*.ts",
+                        "!*.d.ts"
+                    ]
+                }]
+            
+        },
+        copy: {
+          main: {
+            expand: true,
+            cwd: 'src',
+            src: ['**/*.html', '**/*.css'],
+            dest: 'app/',
           },
         },
+
 
         // make sure to call the 'browserSync:xxxx' task rather than just 'browserSync' so it doesn't try to serve multiple things
         browserSync: {
@@ -53,5 +65,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-tsc');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+
+    grunt.registerTask('default',['copy','shell:tsc', 'shell:serve']);
     
 };
