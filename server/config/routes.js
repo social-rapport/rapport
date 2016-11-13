@@ -23,8 +23,10 @@ app.get("/signInWithGoogle", function(req, res){
 //SENDS EMAIL
 app.get("/sendMail", gmail.sendMail);
 
-//FOR GMAIL OAUTH
+//GETS GMAIL CONTACTS
+app.get("/contacts", gmail.getContacts);
+
+//FOR GMAIL OAUTH, don't access directly
 app.get("/tokens", gmail.getTokens);
 app.get("/url", gmail.sendUrl);
-app.get("/contacts", gmail.getContacts);
 };

@@ -17,6 +17,7 @@ module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   scope: scopes
 });
 
+module.exports.tokens = "";
 
 //BEGIN METHODS
 module.exports.sendUrl = function(req, res) {
@@ -33,13 +34,14 @@ module.exports.getTokens = function(req, res) {
       return;
     }
     // console.log(tokens.access_token);
+    module.exports.tokens = tokens;
     module.exports.oauth2Client.setCredentials(tokens);
-    module.exports.getContacts(req, res, tokens);
+    // module.exports.getContacts(req, res, tokens);
   });
 };
 
-module.exports.getContacts = function(req, res, tokens){
-  var tokens = tokens || req.param.tokens;
+module.exports.getContacts = function(req, res){
+  var tokens = module.exports.tokens || req.param.tokens;
   var opts = {
     token: tokens.access_token
   };
