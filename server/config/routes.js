@@ -13,16 +13,18 @@ app.get('/',function(request, response){
 //app.get('/api/example', exampleController.exampleMethod);
 
   // app.post
+
+// <--------------- GMAIL ROUTES --------------->
+//FOR SIGNING INTO GOOGLE WITH OAUTH
 app.get("/signInWithGoogle", function(req, res){
-  res.sendFile(__dirname+'/static/index.html');
+  res.sendFile(__dirname+'/static/gmailLogin.html');
 });
 
+//SENDS EMAIL
+app.get("/sendMail", gmail.sendMail);
+
+//FOR GMAIL OAUTH
 app.get("/tokens", gmail.getTokens);
-
 app.get("/url", gmail.sendUrl);
-
 app.get("/contacts", gmail.getContacts);
-
-app.get("/sendSampleMail", gmail.sendSampleMail);
-
 };

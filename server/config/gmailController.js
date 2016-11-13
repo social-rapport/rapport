@@ -1,7 +1,9 @@
+//VARS NEEDED
 var google = require("googleapis");
 var googleContacts = require('google-contacts-with-photos');
 var gmailKeys = require('./gmailKeys.js');
 
+// BASIC OAUTH SETUP
 var OAuth2 = google.auth.OAuth2;
 var scopes = [
   'https://www.googleapis.com/auth/gmail.compose',
@@ -15,6 +17,8 @@ module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   scope: scopes
 });
 
+
+//BEGIN METHODS
 module.exports.sendUrl = function(req, res) {
   // console.log(module.exports.url);
   res.send(module.exports.url);
@@ -50,8 +54,19 @@ module.exports.getContacts = function(req, res, tokens){
     });
 };
 
-module.exports.sendSampleMail = function(auth, cb) {
-    var auth = module.exports.oauth2Client;
+module.exports.sendMail = function(req, res){
+  module.exports.configureMail(module.exports.oauth2Client, function(err, results) {
+    if(err){
+      console.log('error ', err);
+      res.send(err);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  });
+};
+
+module.exports.configureMail = function(auth, cb) {
     var gmailClass = google.gmail('v1');
     var email_lines = [];
     email_lines.push('From: "Vi Vo" <vi.uyen.vo@gmail.com>');
@@ -63,10 +78,8 @@ module.exports.sendSampleMail = function(auth, cb) {
     email_lines.push('Hello there! How have you been?<br/>');
 
     var email = email_lines.join('\r\n').trim();
-
     var base64EncodedEmail = new Buffer(email).toString('base64');
     base64EncodedEmail = base64EncodedEmail.replace(/\+/g, '-').replace(/\//g, '_');
-
     gmailClass.users.messages.send({
       auth: auth,
       userId: 'me',
