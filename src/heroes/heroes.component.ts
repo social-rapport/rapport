@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { Hero } from './hero';
-import { Auth } from './auth.service';
-import { HeroService } from './hero.service';
+import { Hero } from '../shared/hero';
+import { Auth } from '../shared/auth.service';
+import { HeroService } from '../shared/hero.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'my-heroes',
   providers: [Auth, HeroService],
-  templateUrl: 'app/heroes.component.html',
-  styleUrls: ['app/heroes.component.css']
+  templateUrl: 'app/heroes/heroes.component.html',
+  styleUrls: ['app/heroes/heroes.component.css']
 })
 
 export class HeroesComponent {
