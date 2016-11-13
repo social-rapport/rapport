@@ -6,8 +6,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         shell: {
-         
-
+  
           tsc: {
             command: 'tsc'
           },
@@ -46,11 +45,24 @@ module.exports = function(grunt) {
           },
         },
 
+        watch: {
+          scripts: {
+            files: ['src/**/*'],
+            tasks: ['copy','shell:tsc'],
+            options: {
+              spawn: false,
+            },
+          },
+        },
 
         // make sure to call the 'browserSync:xxxx' task rather than just 'browserSync' so it doesn't try to serve multiple things
         browserSync: {
           dist: {
             options: {
+              //watchTask: true,
+              //files: ["./app"],
+              port : 8080,
+              //proxy: 'localhost:3000',
               server: './',
               // background must be true in order for grunt watch task to run
               background: true,
@@ -64,10 +76,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-ts');
-    grunt.loadNpmTasks('grunt-karma');
+    //grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-tsc');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default',['copy','shell:tsc', 'shell:serve']);
+    grunt.registerTask('default',['copy','shell:tsc','browserSync','watch']);
     
 };
