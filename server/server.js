@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-
+app.use(express.static('static'));
 //-------------- DATABASE -------------------------
 
 
@@ -11,7 +11,6 @@ middleware(app, express);
 //------------- ROUTES ----------------------
 var routes = require('./config/routes.js');
 routes(app, express);
-
 
 //-------------- Server Listening --------------------
 app.listen(app.get('port'), function() {
