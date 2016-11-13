@@ -8,7 +8,7 @@ var scopes = [
   'https://www.googleapis.com/auth/contacts.readonly'
 ];
 
-module.exports.oauth2Client = new OAuth2(gmailKeys.clientId, gmailKeys.clientSecret, "http://localhost:5050/server/config/static/oauthcallback");
+module.exports.oauth2Client = new OAuth2(gmailKeys.clientId, gmailKeys.clientSecret, "http://localhost:5050/oauthcallback");
 
 module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   access_type: 'offline',
@@ -28,7 +28,7 @@ module.exports.getTokens = function(req, res) {
       res.send(err);
       return;
     }
-    console.log(tokens.access_token);
+    // console.log(tokens.access_token);
     module.exports.oauth2Client.setCredentials(tokens);
     module.exports.getContacts(req, res, tokens);
   });
@@ -41,7 +41,7 @@ module.exports.getContacts = function(req, res, tokens){
   };
   googleContacts(opts)
     .then(function (data) {
-        console.log(data);
+        // console.log(data);
         res.send(data);
     })
     .catch(function (err) {
