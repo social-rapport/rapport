@@ -4,3 +4,5 @@
 ## NPM ##
 node_modules/
 
+## PRIVATE KEYS ##
+priavate_keys.js
