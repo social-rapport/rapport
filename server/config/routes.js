@@ -1,14 +1,21 @@
 // REQUIRE CONTROLLERS
 // var exampleController = require('../example/exampleController.js');
 var gmail = require('./gmailController.js');
-
+const auth0Utils = require('../utils/auth0_utils.js');
 module.exports = function (app, express) {
+
+//change
 
 app.get('/',function(request, response){
   console.log('Server Alive');
-  response.status(200).send('Server Alive');
+  response.status(200).send('Server is alive!');
 });
 
+//route for handling sign in and sign up
+app.get('/signin', (req, res) => {
+  auth0Utils.getUserIdFromToken(req.body.id)
+    .then(userId => console.log('successfully got user id', userId ));
+});
 // app.get
 //app.get('/api/example', exampleController.exampleMethod);
 
