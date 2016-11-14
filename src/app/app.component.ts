@@ -13,6 +13,7 @@ import { Auth } from '../shared/auth.service';
         <p>This is a change//</p>
         <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
         <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+        <a routerLink="/landing-page" routerLinkActive="active">Landing Page</a>
     </nav>
     <router-outlet></router-outlet>
   `,

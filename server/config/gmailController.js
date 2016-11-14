@@ -21,19 +21,20 @@ module.exports.tokens = "";
 
 //BEGIN METHODS
 module.exports.sendUrl = function(req, res) {
-  // console.log(module.exports.url);
+  console.log('the gmail url',module.exports.url);
   res.send(module.exports.url);
 };
 
 module.exports.getTokens = function(req, res) {
   var code = req.query.code;
+  console.log('getting tokens');
   module.exports.oauth2Client.getToken(code, function(err, tokens) {
     if (err) {
       console.log(err);
       res.send(err);
       return;
     }
-    // console.log(tokens.access_token);
+    console.log(tokens.access_token);
     module.exports.tokens = tokens;
     module.exports.oauth2Client.setCredentials(tokens);
     // module.exports.getContacts(req, res, tokens);
