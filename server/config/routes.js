@@ -29,4 +29,10 @@ app.get("/contacts", gmail.getContacts);
 //FOR GMAIL OAUTH, don't access directly
 app.get("/tokens", gmail.getTokens);
 app.get("/url", gmail.sendUrl);
+app.get("/app",function(req,res){
+  res.sendFile('index.html', {root: '../'})
+})
+app.get("/oauthcallback",function(req,res){
+  res.sendFile('index.html', {root: '../'})
+})
 };
