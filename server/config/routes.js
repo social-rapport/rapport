@@ -8,7 +8,7 @@ module.exports = function (app, express) {
 
 app.get('/',function(request, response){
   console.log('Server Alive');
-  response.status(200).send('Server Alive');
+  response.status(200).send('Server is alive!');
 });
 
 //route for handling sign in and sign up

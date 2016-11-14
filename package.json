@@ -46,4 +46,5 @@
     "grunt-tsc": "^1.0.12",
     "lite-server": "^2.2.2",
     "typescript": "^2.0.3"
+  }
 }
