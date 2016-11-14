@@ -6,10 +6,17 @@ const authClientSecret = process.env.AUTH0_CLIENT_SECRET || require('../../priva
 
 //takes the JWT token passed from the auth0 login and handshakes to get the user object and returns the user id
 function getUserIdFromToken (token) {
-    const url = `http://${authDomain}/tokeninfo`;
+   const url = `https://${authDomain}/tokeninfo`;
 
    return new Promise((resolve, reject) =>{
-        request.post(url, {json: {id_token: token}}, (error, response,body) => {
+       const requestParams = {
+           method: 'POST',
+           url: url,
+           headers: {'Content-Type': 'application/json'},
+           body:`{"id_token": "${token}"}`
+       };
+
+        request(requestParams, (error, response,body) => {
             if (error) {
                 console.log=('error getting user object from token id ====> ', error);
                 reject(error);
@@ -23,14 +30,14 @@ function getUserIdFromToken (token) {
 function getAccesstoken() {
     const requestParams = {
         method: 'POST',
-        url: `https://${authPath.AUTH0_DOMAIN}/oauth/token`,
+        url: `https://${authDomain}/oauth/token`,
         headers: {'content-type': 'application/json'},
-        body: `{
-            "client_id":"${authClientId}",
-            "client_Secret":"${authClientSecret}",
-            "audience":"https://${authDomain}/api/v2",
-            "grant_type":"client_credentials"
-        }`
+        body: JSON.stringify({
+            client_id:authClientId,
+            client_secret:authClientSecret,
+            audience:`https://${authDomain}/api/v2/`,
+            grant_type:"client_credentials"
+        })
     };
 
     return new Promise((resolve, reject) => {
@@ -51,7 +58,7 @@ function getUserAccessKeys(userId, accessToken) {
         method: 'GET',
         url: `https://${authDomain}/api/v2/users/${userId}`,
         headers: {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization' : 'Bearer ' + accessToken
         }
     };
@@ -62,9 +69,20 @@ function getUserAccessKeys(userId, accessToken) {
                 console.log('error getting IdP access tokens', error);
                 reject(error);
             }
-            resolve(jsonChecker(body).identities);
+            resolve(jsonChecker(body));
         });
     });
+}
+
+function getGmailInfo(userObj) {
+    let gmailInfo = {};
+
+   gmailInfo.name = userObj.name;
+   gmailInfo.email = userObj.email;
+   gmailInfo.oauth = userObj.identities[0].access_token;
+
+   module.exports.gmailInfo = gmailInfo;
+   return gmailInfo;
 }
 
 //filters the identities array and pulls out the FB access key
@@ -77,9 +95,13 @@ function jsonChecker(itemToBeChecked) {
     return typeof itemToBeChecked === 'string' ? JSON.parse(itemToBeChecked) : itemToBeChecked;
 }
 
+
+
 module.exports = {
     getFbAccessKey: getFbAccessKey,
     getUserAccessKeys: getUserAccessKeys,
     getAccesstoken: getAccesstoken,
-    getUserIdFromToken: getUserIdFromToken
+    getUserIdFromToken: getUserIdFromToken,
+    getGmailInfo: getGmailInfo,
+    gmailInfo: null
 };
