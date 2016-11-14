@@ -6,11 +6,11 @@ import { HeroDetailComponent }  from '../detail/hero-detail.component';
 import {LandingPageComponent}   from '../landing-page/landing-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',  component: DashboardComponent },
-  { path: 'detail/:id', component: HeroDetailComponent },
-  { path: 'heroes',     component: HeroesComponent },
-  { path: 'landing-page', component: LandingPageComponent}
+  // { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: '', component: LandingPageComponent},
+  // { path: 'dashboard',  component: HeroesComponent },
+  // { path: 'detail/:id', component: HeroDetailComponent },
+  // { path: 'setup',     component: DashboardComponent },
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

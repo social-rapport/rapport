@@ -9,9 +9,10 @@ import { Auth } from '../shared/auth.service';
     <h1>{{title}}</h1>
     <nav>
                 <p>This is a change//</p>
-        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
-        <a routerLink="/landing-page" routerLinkActive="active">Landing Page</a>
+        <a routerLink="/welcome" routerLinkActive="active">Landing Page</a>
+        <a routerLink="/dashboard" routerLinkActive="active">Choose A Bot</a>
+        <a routerLink="/heroes" routerLinkActive="active">Bot Management</a>
+      
     </nav>
     <router-outlet></router-outlet>
   `,
