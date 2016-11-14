@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '../shared/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'my-app',
@@ -8,18 +9,22 @@ import { Auth } from '../shared/auth.service';
   template: `
     <h1>{{title}}</h1>
     <nav>
-                <p>This is a change//</p>
-        <a routerLink="/welcome" routerLinkActive="active">Landing Page</a>
-        <a routerLink="/dashboard" routerLinkActive="active">Choose A Bot</a>
-        <a routerLink="/heroes" routerLinkActive="active">Bot Management</a>
-      
+        <a routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
+        <a routerLink="/manage" routerLinkActive="active">Manage Bots</a>
+        <button class="right" (click)="logout()">Logout</button>
+
     </nav>
     <router-outlet></router-outlet>
   `,
   
 })
 export class AppComponent {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth,private router: Router) {}
 
   title = 'Tour of Heroes';
+
+  logout(){
+    this.auth.logout();
+    this.router.navigate(['']);
+  }
 }

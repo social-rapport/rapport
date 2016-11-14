@@ -4,13 +4,16 @@ import { DashboardComponent }   from '../dashboard/dashboard.component';
 import { HeroesComponent }      from '../heroes/heroes.component';
 import { HeroDetailComponent }  from '../detail/hero-detail.component';
 import {LandingPageComponent}   from '../landing-page/landing-page.component';
+import {SetupComponent}   from '../setup/setup.component';
+import {ManageComponent}   from '../manage/manage.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: '', component: LandingPageComponent},
-  // { path: 'dashboard',  component: HeroesComponent },
+  { path: 'setup', component: SetupComponent },
+  { path: 'manage',  component: ManageComponent },
   // { path: 'detail/:id', component: HeroDetailComponent },
-  // { path: 'setup',     component: DashboardComponent },
+  
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

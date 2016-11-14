@@ -16,6 +16,9 @@ nav a {
   background-color: #eee;
   border-radius: 4px;
 }
+.right{
+  float: right;
+}
 nav a:visited, a:link {
   color: #607D8B;
 }
