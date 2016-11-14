@@ -6,4 +6,5 @@ node_modules/
 app/
 
 server/config/gmailKeys.js
+server/config/api-services.js
 
