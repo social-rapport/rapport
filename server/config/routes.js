@@ -12,7 +12,7 @@ app.get('/',function(request, response){
 });
 
 //route for handling sign in and sign up
-app.get('/signing', (req, res) => {
+app.get('/signin', (req, res) => {
   auth0Utils.getUserIdFromToken(req.body.id)
     .then(userId => console.log('successfully got user id', userId ));
 });
