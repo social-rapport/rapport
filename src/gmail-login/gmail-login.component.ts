@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 
 @Component({
     selector: 'gmail-login',
-    template: '<p>gmail</p><button (click)="login()"></button>',
+    template: '<p>gmail</p><button (click)="login()">Login To Gmail</button>',
 })
 //
 export class GmailLoginComponent {

@@ -7,16 +7,16 @@ import {GmailLoginComponent} from '../gmail-login/gmail-login.component';
 @Component({
   selector: 'my-heroes',
   providers: [Auth,GmailLoginComponent],
-  template: `<p>This is the landing page </p>
-            <gmail-login></gmail-login>`,
+  template: `<p>Welcome </p>
+            `,
 })
 
 export class LandingPageComponent {
-  constructor(private router: Router
+  constructor(private router: Router, private auth: Auth
   ) {}
- 
-  gotoFirstTime(): void {
-   
+
+  ngOnInit(): void {
+    //this.auth.login();
   }
 
 }
