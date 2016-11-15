@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
         <a routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a routerLink="/manage" routerLinkActive="active">Manage Bots</a>
         <a class="right" (click)="authAct()">{{authAction}}</a>
-
     </nav>
     <router-outlet></router-outlet>
   `,

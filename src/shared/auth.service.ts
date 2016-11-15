@@ -9,10 +9,7 @@ import 'rxjs/add/operator/catch';
 //import { Auth0Lock } from 'auth0-lock'
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
-import { Headers, Http } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
 
 declare var Auth0Lock: any;
 
