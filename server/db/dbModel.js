@@ -83,7 +83,15 @@ module.exports = {
 
   },
   bot: {
-
+    getAllTasks: function (callback) {
+      // Get all tastks
+      var query = 'SELECT * FROM Tasks';
+      db.query(query, function(err, tasks) {
+        if(err){ throw err;}
+        //console.log(tasks);
+        callback(err, tasks);
+      });
+    }
   },
   tasks: {
     updateTasks:function(instructions, userId, callback){
@@ -110,7 +118,7 @@ module.exports = {
 
 }; //end exports
 
-module.exports.users.get();
+//module.exports.users.get();
 // helper
 //var query = 'insert into chatData(username, text, roomname) \
 //                      value (?, ?, ?)';
