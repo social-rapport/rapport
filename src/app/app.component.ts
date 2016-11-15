@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { Auth } from '../shared/auth.service';
 import { Router } from '@angular/router';
+import { Contact } from '../shared/contact.service';
 
 @Component({
   selector: 'my-app',
   styleUrls: ['app/app/app.component.css'],
-  providers: [Auth],
+  providers: [Auth, Contact],
   template: `
     <h1>{{title}}</h1>
     <nav>
         <a routerLink="/home" routerLinkActive="active">home</a>
+        <a (click)="getContacts()">Log Contacts</a>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
@@ -20,7 +22,7 @@ import { Router } from '@angular/router';
   
 })
 export class AppComponent {
-  constructor(private auth: Auth,private router: Router) {
+  constructor(private auth: Auth,private router: Router, private contact: Contact) {
   
     this.router.events.subscribe(path => {
       console.log('path = ', path);
@@ -30,9 +32,17 @@ export class AppComponent {
       }
     });
   }
-
   authenticated(){
     return this.auth.authenticated();
+  }
+
+  getContacts() {
+    this.contact.getContacts()
+      .subscribe(
+        data => console.log("data", data),
+        error => console.log("error", error),
+        () => console.log("observable complete")
+      );
   }
 
   login(){

@@ -31,7 +31,11 @@ export class Auth {
       localStorage.setItem('id_token', authResult.idToken);
       this.http.post('/signIn', body, {headers: headers})
         //.map(res => res.json())
-        .subscribe(data => console.log("returned data",data));
+        .subscribe(
+          data => console.log("returned data",data),
+          error => console.log("error", error),
+          () => console.log("sign in completed")
+         );
     });
 
     // this.router.events.take(1).subscribe(event => {

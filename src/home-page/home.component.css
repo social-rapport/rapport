@@ -1,12 +1,29 @@
+nav {
+  background-color: rgba(40,69,79,0.5);
+}
+
 ul {
-  height: 100px;
+  height: 30px;
+  width: 300px;
+  padding: 0px;
+  margin-left : 600px;
+  margin-top: 200px;
 }
 
 ul li {
   position: relative;
-  width: 200px;
+  width: 100px;
+  list-style: none;
+  float: left;
+  margin-top: 5px;
+}
+
+li a {
+  text-decoration: none;
+  color: black;
 }
 
 body {
   background-image: url("http://i.imgur.com/Fkt1vEL.jpg");
-}
+  margin: 0px;
+  padding: 0px;

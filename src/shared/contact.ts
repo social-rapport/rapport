@@ -4,3 +4,9 @@ export class Contact {
     birthday: string;
     active: Array<string>;
 }
+
+class gmailContact {
+    email: string;
+    name: string;
+    photo: string;
+}

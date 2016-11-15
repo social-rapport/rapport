@@ -6,3 +6,15 @@ export class Bot {
   contacts: Array<Object>;
   tasks: Array<string>;
 }
+
+class BotActivity {
+  recent: Array<any>;
+  scheduled: Array<any>;
+}
+
+class customBot {
+  botType: string;
+  tasks: Array<string>;
+  selectedContacts: Array<Object>;
+  botActivity: BotActivity;
+}
