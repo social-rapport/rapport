@@ -43,6 +43,7 @@ module.exports.getTokens = function(req, res) {
   });
 };
 
+//not being used
 module.exports.getContactsWithAuth = function(authobj){
   var opts = {
     token: authobj.oauth
@@ -60,15 +61,11 @@ module.exports.getContactsWithAuth = function(authobj){
 };
 
 module.exports.getContacts = function(req, res){
-  // var tokens = module.exports.tokens;
   var opts = {
-    // token: tokens.access_token
     token: appController.oauth
   };
-  console.log('now options is ', opts);
   googleContacts(opts)
     .then(function (data) {
-        console.log(data);
         res.send(data);
     })
     .catch(function (err) {
