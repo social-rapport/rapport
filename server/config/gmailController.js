@@ -61,6 +61,7 @@ module.exports.getContactsWithAuth = function(authobj){
 };
 
 module.exports.getContacts = function(req, res){
+  //need to use token to look up oauth in backend later
   var opts = {
     token: appController.oauth
   };

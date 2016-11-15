@@ -65,6 +65,7 @@ module.exports.checkIfNewUser = function(req, res){
                   oauth: 'some secret oauth token'
                 };
                 dbModel.users.getIdFromEmail(gmailInfo.email, function(userId){
+                  // console.log('the req.body.bots is ', req.body.bots);
                   // console.log('the userId is ', userId[0].id);
                   dbModel.tasks.updateTasks(req.body.bots, userId[0].id, function(status){
                     console.log(status);

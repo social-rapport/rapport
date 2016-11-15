@@ -15,6 +15,12 @@ module.exports = function (app, express) {
   //route for handling sign in and sign up
   app.post('/signIn', appController.checkIfNewUser);
 
+<<<<<<< HEAD
+=======
+  //for assigning new tasks to bot
+  app.put('/api/bots', appController.updateBots);
+
+>>>>>>> update task saves to task table, still need bot id
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH
   app.get("/signInWithGoogle", function(req, res){
@@ -27,7 +33,6 @@ module.exports = function (app, express) {
 
   //GETS GMAIL CONTACTS
   app.get("/api/gmail/contacts", gmail.getContacts);
-  // app.get("/contacts", gmail.getContacts);
 
   //FOR GMAIL OAUTH, don't access directly
   app.get("/tokens", gmail.getTokens);

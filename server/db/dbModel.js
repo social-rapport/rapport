@@ -41,6 +41,13 @@ module.exports = {
         };
         callback(data);
       });
+    },
+    getIdFromEmail: function(email, callback){
+      var query = 'SELECT id FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
+      db.query(query, function(err, userId){
+        if(err){throw err;}
+        callback(userId);
+      });
     }
   },
   gmail: {
@@ -78,8 +85,19 @@ module.exports = {
   bot: {
 
   },
-  Tasks: {
-
+  tasks: {
+    updateTasks:function(instructions, userId, callback){
+      // callback(instructions[0].selectedContacts);
+      for(var key in instructions[0].selectedContacts){
+        var recipientEmail = instructions[0].selectedContacts[key].email;
+        var date = new Date();
+        var query = "INSERT INTO tasks(recipient, date, platform, id_bot, task) values("+db.escape(recipientEmail)+","+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+        db.query(query,function(err, added){
+          if(err){throw err;}
+        });
+      }
+      callback('added successfully');
+    }
   },
   Log: {
 
