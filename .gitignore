@@ -1,0 +1,12 @@
+## Mac OSX ##
+.DS_Store
+
+## NPM ##
+node_modules/
+app/
+
+server/config/gmailKeys.js
+server/config/api-services.js
+
+## PRIVATE KEYS ##
+priavate_keys.js
