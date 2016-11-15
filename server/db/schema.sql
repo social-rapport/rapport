@@ -11,7 +11,7 @@ CREATE TABLE `Tasks` (
   `date` DATE ,
   `platform` VARCHAR(20) ,
   `id_bot` INTEGER ,
-  `message` VARCHAR(20) ,
+  `message` VARCHAR(500) ,
   `task` VARCHAR(20) ,
   PRIMARY KEY (`id`)
 );
@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS `gmail`;
 
 CREATE TABLE `gmail` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `credentials` VARCHAR(20),
+  `credentials` VARCHAR(500),
   `emailAddress` VARCHAR(20),
   PRIMARY KEY (`id`)
 );
@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `facebook`;
 
 CREATE TABLE `facebook` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `credentials` VARCHAR(20),
+  `credentials` VARCHAR(500),
   PRIMARY KEY (`id`)
 );
 
