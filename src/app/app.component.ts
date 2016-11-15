@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
     <h1>{{title}}</h1>
     <nav>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
-        <a routerLink="/manage" routerLinkActive="active">Manage Bots</a>
+        <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
         <a *ngIf="!authenticated()" class="right" (click)="login()">Login</a>
     </nav>

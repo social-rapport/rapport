@@ -7,7 +7,7 @@ import {Auth0CallbackGuard} from '../shared/auth0.guard';
 import {AuthGuard} from '../shared/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent, canActivate:[Auth0CallbackGuard]},
+  { path: '', component: LandingPageComponent},
   { path: 'setup', canActivate:[AuthGuard], component: SetupComponent,},
   { path: 'manage', canActivate: [AuthGuard], component: ManageComponent },
   { path: 'logout', redirectTo: '', pathMatch: 'full' },
