@@ -30,13 +30,11 @@ export class Auth {
 
       localStorage.setItem('id_token', authResult.idToken);
       this.http.post('/signIn', body, {headers: headers})
-        //.map(res => res.json())
-        .subscribe(
-          data => console.log("returned data",data),
-          error => console.log("error", error),
-          () => console.log("sign in completed")
-         );
+        .map(res => res.json())
+        .subscribe(data => this.handleLogin(data));
     });
+
+    
 
     // this.router.events.take(1).subscribe(event => {
     //   if (/access_token/.test(event.url) || /error/.test(event.url)) {  
@@ -52,6 +50,10 @@ export class Auth {
     //     }
     //   }
     // });
+  }
+  
+  handleLogin(data){
+    console.log('login result:', data);
   }
 
   public login() {
