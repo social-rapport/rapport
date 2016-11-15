@@ -29,14 +29,11 @@ export class Auth {
       console.log("body", body);
 
       localStorage.setItem('id_token', authResult.idToken);
-      this.http.post('/signIn', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => this.handleLogin(data));
+      // this.http.post('/signIn', body, {headers: headers})
+      //   .map(res => res.json())
+      //   .subscribe(data => this.handleLogin(data));
     });
-
-    
-
-    // this.router.events.take(1).subscribe(event => {
+    // this.router.events.subscribe(event => {
     //   if (/access_token/.test(event.url) || /error/.test(event.url)) {  
 
     //     let authResult = this.auth0.parseHash(window.location.hash);
