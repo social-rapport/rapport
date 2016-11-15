@@ -22,6 +22,8 @@ module.exports = function (app, express) {
               .then(userObj => {
                 console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
                 console.log("exported gmailInfo", auth0Utils.gmailInfo);
+                var gmailInfo = auth0Utils.getGmailInfo(userObj);
+                gmail.getContactsWithAuth(gmailInfo);
               });
           });
       });

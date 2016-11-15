@@ -2,6 +2,7 @@
 var google = require("googleapis");
 var googleContacts = require('google-contacts-with-photos');
 var gmailKeys = require('./gmailKeys.js');
+var auth = require('../utils/auth0_utils.js');
 
 // BASIC OAUTH SETUP
 var OAuth2 = google.auth.OAuth2;
@@ -17,7 +18,7 @@ module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   scope: scopes
 });
 
-module.exports.tokens = "";
+module.exports.tokens = auth.gmailInfo;
 
 //BEGIN METHODS
 module.exports.sendUrl = function(req, res) {
@@ -41,14 +42,31 @@ module.exports.getTokens = function(req, res) {
   });
 };
 
+module.exports.getContactsWithAuth = function(authobj){
+  var opts = {
+    token: authobj.oauth
+  };
+  console.log('options is ', opts);
+  googleContacts(opts)
+    .then(function (data) {
+        console.log(data);
+        // res.send(data);
+    })
+    .catch(function (err) {
+        console.log(err);
+        // res.end();
+    });
+};
+
 module.exports.getContacts = function(req, res){
-  var tokens = module.exports.tokens || req.param.tokens;
+  var tokens = module.exports.tokens;
   var opts = {
     token: tokens.access_token
   };
+  console.log('now options is ', opts);
   googleContacts(opts)
     .then(function (data) {
-        // console.log(data);
+        console.log(data);
         res.send(data);
     })
     .catch(function (err) {
