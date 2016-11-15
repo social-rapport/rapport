@@ -2,6 +2,7 @@
 // var exampleController = require('../example/exampleController.js');
 var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
+var appController = require('./appController.js');
 module.exports = function (app, express) {
 
   console.log("routes loaded");
@@ -12,25 +13,7 @@ module.exports = function (app, express) {
   });
 
   //route for handling sign in and sign up
-  app.post('/signIn', function(req, res){
-
-    auth0Utils.getUserIdFromToken(req.body.idToken)
-      .then(userId => {
-        auth0Utils.getAccesstoken()
-          .then(accessToken => {
-            auth0Utils.getUserAccessKeys(userId, accessToken)
-              .then(userObj => {
-                console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
-                console.log("exported gmailInfo", auth0Utils.gmailInfo);
-                var gmailInfo = auth0Utils.getGmailInfo(userObj);
-                gmail.getContactsWithAuth(gmailInfo);
-              });
-          });
-      });
-
-
-    res.status(200).send('post heard');
-  });
+  app.post('/signIn', appController.checkIfNewUser);
 
 
   // <--------------- GMAIL ROUTES --------------->

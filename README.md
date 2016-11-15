@@ -8,3 +8,10 @@ GMAIL GETTING STARTED
 - GMAIL SEND MAIL
   4. to send email, go to gmailController and manually fill in to/from/message fields in sendSampleEmail,(will automate this with function parameters later)
   5. go to route to send mail localhost:5050/sendSampleMail
+
+
+
+To START APP
+1. grunt in one terminal
+2. node server/server.js in another terminal
+3. go to route 5050
