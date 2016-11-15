@@ -15,27 +15,21 @@ module.exports.checkIfNewUser = function(req, res){
             auth0Utils.getUserAccessKeys(userId, accessToken)
               .then(userObj => {
                 console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
-                // var gmailInfo = auth0Utils.getGmailInfo(userObj);
-                var gmailInfo = {
-                  name: 'Jesse Rocket',
-                  email: 'jesse@teamrocket.com',
-                  oauth: 'some secret oauth token'
-                };
-                //check if email address is in database
+                var gmailInfo = auth0Utils.getGmailInfo(userObj);
+                // var gmailInfo = {
+                //   name: 'Jesse Rocket',
+                //   email: 'jesse@teamrocket.com',
+                //   oauth: 'some secret oauth token'
+                // };
                   dbModel.gmail.emailExists(gmailInfo.email, function(bool){
-                      //if yes
-                          //getBasicUserData(email)
                       if(bool){
                         dbModel.users.getBasicUserData(gmailInfo.email, function(info){
                           res.status(200).send(info);
                         });
                       } else {
-                      //if not
-                          //save email, username, oauth token to db
                         result.username = gmailInfo.name;
                         result.email = gmailInfo.email;
                         result.newUser = true;
-                        //saveNewUser
                         dbModel.users.saveNewUser(gmailInfo, function(saved){
                           if(saved){
                             res.status(200).send(result);
@@ -46,9 +40,6 @@ module.exports.checkIfNewUser = function(req, res){
                         });
                       }
                   });
-
-                // console.log("exported gmailInfo", auth0Utils.gmailInfo);
-                // gmail.getContactsWithAuth(gmailInfo);
               });
           });
       });
