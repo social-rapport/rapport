@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '../shared/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'my-app',
@@ -8,19 +9,32 @@ import { Auth } from '../shared/auth.service';
   template: `
     <h1>{{title}}</h1>
     <nav>
-        <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
-        <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
-        <p>This is a change//</p>
-        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
-        <a routerLink="/landing-page" routerLinkActive="active">Landing Page</a>
+        <a routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
+        <a routerLink="/manage" routerLinkActive="active">Manage Bots</a>
+        <a class="right" (click)="authAct()">{{authAction}}</a>
     </nav>
     <router-outlet></router-outlet>
   `,
   
 })
 export class AppComponent {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth,private router: Router) {
+    if(!auth.authenticated()){
+      this.authAction = 'Login';
+    } else {
+      this.authAction = 'Logout';
+    }
+  }
 
+  authAction = "Login";
   title = 'Tour of Heroes';
+
+  authAct(){
+    if(!this.auth.authenticated()){
+      this.auth.login();
+    } else {
+      this.auth.logout();
+      this.router.navigate(['']);
+    }
+  }
 }

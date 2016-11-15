@@ -10,6 +10,7 @@ import 'rxjs/add/operator/catch';
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
 
+
 declare var Auth0Lock: any;
 
 @Injectable()
@@ -19,6 +20,7 @@ export class Auth {
 
   constructor(private http: Http) {
     // Add callback for lock `authenticated` event
+    var self = this;
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
@@ -32,7 +34,7 @@ export class Auth {
   }
 
   public login() {
-    // Call the show method to display the widget.
+    // Call the show method to display the widget./
     this.lock.show();
   };
 
