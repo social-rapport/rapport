@@ -1,0 +1,12 @@
+ul {
+  height: 100px;
+}
+
+ul li {
+  position: relative;
+  width: 200px;
+}
+
+body {
+  background-image: url("http://i.imgur.com/Fkt1vEL.jpg");
+}

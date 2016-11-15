@@ -5,9 +5,11 @@ import {SetupComponent}   from '../setup/setup.component';
 import {ManageComponent}   from '../manage/manage.component';
 import {Auth0CallbackGuard} from '../shared/auth0.guard';
 import {AuthGuard} from '../shared/auth.guard';
+import { HomePageComponent } from '../home-page/home.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent},
+  { path: 'home', component: HomePageComponent},
   { path: 'setup', canActivate:[AuthGuard], component: SetupComponent,},
   { path: 'manage', canActivate: [AuthGuard], component: ManageComponent },
   { path: 'logout', redirectTo: '', pathMatch: 'full' },

@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `gmail`;
 CREATE TABLE `gmail` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `credentials` VARCHAR(500),
-  `emailAddress` VARCHAR(20),
+  `emailAddress` VARCHAR(500),
   PRIMARY KEY (`id`)
 );
 

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   template: `
     <h1>{{title}}</h1>
     <nav>
+        <a routerLink="/home" routerLinkActive="active">home</a>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>

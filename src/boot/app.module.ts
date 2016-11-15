@@ -18,6 +18,7 @@ import {GmailLoginComponent}    from '../gmail-login/gmail-login.component';
 import {SetupComponent}    from '../setup/setup.component';
 import {ManageComponent}    from '../manage/manage.component';
 import {ContactComponent}    from '../contact/contact.component';
+import { HomePageComponent } from '../home-page/home.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {ContactComponent}    from '../contact/contact.component';
     HttpModule,
   ],
   declarations: [
+    HomePageComponent,
     AppComponent,
     LandingPageComponent,
     GmailLoginComponent,
