@@ -15,7 +15,6 @@ module.exports = function (app, express) {
   //route for handling sign in and sign up
   app.post('/signIn', appController.checkIfNewUser);
 
-
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH
   app.get("/signInWithGoogle", function(req, res){

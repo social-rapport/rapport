@@ -30,7 +30,7 @@ export class Auth {
 
       localStorage.setItem('id_token', authResult.idToken);
       this.http.post('/signIn', body, {headers: headers})
-        .map(res => res.json())
+        //.map(res => res.json())
         .subscribe(data => console.log("returned data",data));
     });
 

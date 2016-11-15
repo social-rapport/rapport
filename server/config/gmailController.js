@@ -74,6 +74,20 @@ module.exports.getContacts = function(req, res){
     });
 };
 
+module.exports.getContactsFromAuth = function(userObj) {
+  const opts = {
+    token: userObj.oauth
+  };
+
+  googleContacts(opts)
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch(function (err){
+      console.log(err);
+    });
+}
+
 module.exports.sendMail = function(req, res){
   module.exports.configureMail(module.exports.oauth2Client, function(err, results) {
     if(err){
