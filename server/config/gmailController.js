@@ -104,13 +104,49 @@ module.exports.sendMail = function(req, res){
 module.exports.configureMail = function(auth, cb) {
     var gmailClass = google.gmail('v1');
     var email_lines = [];
-    email_lines.push('From: "Vi Vo" <vi.uyen.vo@gmail.com>');
-    email_lines.push('To: vi.uyen.vo@gmail.com');
+    email_lines.push('From: "Nam" <nthwinn@gmail.com>');
+    email_lines.push('To: nthwinn@gmail.com');
     email_lines.push('Content-type: text/html;charset=iso-8859-1');
     email_lines.push('MIME-Version: 1.0');
-    email_lines.push('Subject: whooooot! this is from vi\'s app');
+    email_lines.push('Subject: whooooot! this is from Nam app');
     email_lines.push('');
     email_lines.push('Hello there! How have you been?<br/>');
+
+    var email = email_lines.join('\r\n').trim();
+    var base64EncodedEmail = new Buffer(email).toString('base64');
+    base64EncodedEmail = base64EncodedEmail.replace(/\+/g, '-').replace(/\//g, '_');
+    gmailClass.users.messages.send({
+      auth: auth,
+      userId: 'me',
+      resource: {
+        raw: base64EncodedEmail
+      }
+    }, cb);
+  };
+
+// for the bot
+//Test For Send MailBot
+module.exports.sendMailBot = function(msgData,callback){
+  module.exports.configureMailBot(msgData,module.exports.oauth2Client, function(err, results) {
+    if(err){
+      console.log('error ', err);
+      callback(err);
+    } else {
+      console.log(results);
+      callback(results);
+    }
+  });
+};
+module.exports.configureMailBot = function(msgData, auth, cb) {
+    var gmailClass = google.gmail('v1');
+    var email_lines = [];
+    email_lines.push('From: ' + msgData.name + '<' +msgData.email+ '>');
+    email_lines.push('To: '+ msgData.email);
+    email_lines.push('Content-type: text/html;charset=iso-8859-1');
+    email_lines.push('MIME-Version: 1.0');
+    email_lines.push('Subject: ' + msgData.subject);
+    email_lines.push('');
+    email_lines.push(msgData.body);
 
     var email = email_lines.join('\r\n').trim();
     var base64EncodedEmail = new Buffer(email).toString('base64');
