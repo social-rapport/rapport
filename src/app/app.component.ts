@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
     <nav>
         <a routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a routerLink="/manage" routerLinkActive="active">Manage Bots</a>
-        <a class="right" (click)="authAct()">{{authAction}}</a>
+        <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
+        <a *ngIf="!authenticated()" class="right" (click)="login()">Login</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -19,22 +20,33 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   constructor(private auth: Auth,private router: Router) {
-    if(!auth.authenticated()){
-      this.authAction = 'Login';
-    } else {
-      this.authAction = 'Logout';
-    }
+  
+    this.router.events.subscribe(path => {
+      console.log('path = ', path);
+      if(path.url === '/logout'){
+        this.auth.logout();
+        this.authAction = 'Login';
+      }
+    });
+  }
+
+  authenticated(){
+    return this.auth.authenticated();
+  }
+
+  login(){
+    this.auth.login();
   }
 
   authAction = "Login";
-  title = 'Tour of Heroes';
+  title = 'Rapport';
 
-  authAct(){
-    if(!this.auth.authenticated()){
-      this.auth.login();
-    } else {
-      this.auth.logout();
-      this.router.navigate(['']);
-    }
-  }
+  // authAct(){
+  //   if(!this.auth.authenticated()){
+  //     this.auth.login();
+  //   } else {
+  //     this.auth.logout();
+  //     this.router.navigate(['']);
+  //   }
+  // }
 }

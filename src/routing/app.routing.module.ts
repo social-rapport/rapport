@@ -8,10 +8,11 @@ import {SetupComponent}   from '../setup/setup.component';
 import {ManageComponent}   from '../manage/manage.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: '', component: LandingPageComponent},
   { path: 'setup', component: SetupComponent },
   { path: 'manage',  component: ManageComponent },
+  { path: 'logout', redirectTo: '', pathMatch: 'full' },
+
   // { path: 'detail/:id', component: HeroDetailComponent },
   
 ];
