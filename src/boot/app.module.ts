@@ -18,6 +18,7 @@ import {GmailLoginComponent}    from '../gmail-login/gmail-login.component';
 import { HttpModule }    from '@angular/http';
 import {SetupComponent}    from '../setup/setup.component';
 import {ManageComponent}    from '../manage/manage.component';
+import {ContactComponent}    from '../contact/contact.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import {ManageComponent}    from '../manage/manage.component';
     GmailLoginComponent,
     SetupComponent,
     ManageComponent,
+    ContactComponent,
   ],
   providers: [
     { provide: 'Window',  useValue: window },

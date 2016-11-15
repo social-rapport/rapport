@@ -3,6 +3,6 @@ export class Bot {
   description: string;
   name: string;
   activities: Array<string>;
-  contacts: Array<string>;
+  contacts: Array<Object>;
   tasks: Array<string>;
 }

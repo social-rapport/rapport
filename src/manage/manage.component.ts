@@ -4,6 +4,7 @@ import { Bot } from '../shared/bot';
 import { BotService } from '../shared/bot.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ContactComponent } from '../contact/contact.component';
 
 @Component({
   selector: 'manage-component',
@@ -24,7 +25,7 @@ export class ManageComponent {
   activities: string [];
   selectedActivity: string;
   
-  contacts: string[];
+  contacts: Object[];
   selectedContact: string;
 
   tasks: string [];

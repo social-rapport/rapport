@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
     <nav>
         <a routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a routerLink="/manage" routerLinkActive="active">Manage Bots</a>
-        <button class="right" (click)="logout()">Logout</button>
+        <a class="right" (click)="authAct()">{{authAction}}</a>
 
     </nav>
     <router-outlet></router-outlet>
@@ -19,12 +19,23 @@ import { Router } from '@angular/router';
   
 })
 export class AppComponent {
-  constructor(private auth: Auth,private router: Router) {}
+  constructor(private auth: Auth,private router: Router) {
+    if(!auth.authenticated()){
+      this.authAction = 'Login';
+    } else {
+      this.authAction = 'Logout';
+    }
+  }
 
+  authAction = "Login";
   title = 'Tour of Heroes';
 
-  logout(){
-    this.auth.logout();
-    this.router.navigate(['']);
+  authAct(){
+    if(!this.auth.authenticated()){
+      this.auth.login();
+    } else {
+      this.auth.logout();
+      this.router.navigate(['']);
+    }
   }
 }

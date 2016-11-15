@@ -4,7 +4,9 @@ export const BOTS: Bot[] = [
     description: 'keeps it real',
     name: 'Default', 
     activities: ['said hi', 'said hello'], 
-    contacts: ['John', 'Rob'],
+    contacts: [{name: "John", birthday:"8/88/8888", active: false},
+                {name: "Jane", birthday:"9/9/9999", active: false}
+                ],
     tasks: ['say hi'],
     },
 ];

@@ -23,6 +23,7 @@ export class Auth {
 
   constructor(private http: Http) {
     // Add callback for lock `authenticated` event
+    var self = this;
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});

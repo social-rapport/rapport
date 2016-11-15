@@ -16,9 +16,7 @@ export class LandingPageComponent {
   ) {}
 
   ngOnInit(): void {
-    if(!this.auth.authenticated()){
-      this.auth.login();
-    }
+    
   }
 
 }
