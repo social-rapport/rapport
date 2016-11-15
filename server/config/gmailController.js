@@ -3,6 +3,7 @@ var google = require("googleapis");
 var googleContacts = require('google-contacts-with-photos');
 var gmailKeys = require('./gmailKeys.js');
 var auth = require('../utils/auth0_utils.js');
+var appController = require('./appController.js');
 
 // BASIC OAUTH SETUP
 var OAuth2 = google.auth.OAuth2;
@@ -59,9 +60,10 @@ module.exports.getContactsWithAuth = function(authobj){
 };
 
 module.exports.getContacts = function(req, res){
-  var tokens = module.exports.tokens;
+  // var tokens = module.exports.tokens;
   var opts = {
-    token: tokens.access_token
+    // token: tokens.access_token
+    token: appController.oauth
   };
   console.log('now options is ', opts);
   googleContacts(opts)

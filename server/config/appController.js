@@ -2,6 +2,8 @@ var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
 var dbModel = require('../db/dbModel.js');
 
+module.exports.oauth = "";
+
 module.exports.checkIfNewUser = function(req, res){
     var result = {
       username:'',
@@ -16,6 +18,7 @@ module.exports.checkIfNewUser = function(req, res){
               .then(userObj => {
                 console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
                 var gmailInfo = auth0Utils.getGmailInfo(userObj);
+                module.exports.oauth = gmailInfo.oauth;
                 // var gmailInfo = {
                 //   name: 'Jesse Rocket',
                 //   email: 'jesse@teamrocket.com',

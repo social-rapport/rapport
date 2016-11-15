@@ -27,7 +27,8 @@ module.exports = function (app, express) {
   app.get("/sendMail", gmail.sendMail);
 
   //GETS GMAIL CONTACTS
-  app.get("/contacts", gmail.getContacts);
+  app.get("/api/gmail/contacts", gmail.getContacts);
+  // app.get("/contacts", gmail.getContacts);
 
   //FOR GMAIL OAUTH, don't access directly
   app.get("/tokens", gmail.getTokens);
