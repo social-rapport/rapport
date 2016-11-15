@@ -1,21 +1,20 @@
-
-import { AUTH_PROVIDERS }      from 'angular2-jwt';
-
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
-import { AppComponent }        from '../app/app.component';
-import { HeroDetailComponent } from '../detail/hero-detail.component';
-import { HeroesComponent }     from '../heroes/heroes.component';
-import { HeroService }         from '../shared/hero.service';
-import { BotService }         from '../shared/bot.service';
-
+import {LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
-import { DashboardComponent }   from '../dashboard/dashboard.component';
+
+import { AUTH_PROVIDERS }      from 'angular2-jwt';
+import {AuthGuard} from '../shared/auth.guard';
+import {Auth0CallbackGuard} from '../shared/auth0.guard';
+import { BotService }         from '../shared/bot.service';
+import {Auth} from '../shared/auth.service';
+
 import { AppRoutingModule }     from '../routing/app.routing.module';
+import { AppComponent }        from '../app/app.component';
 import {LandingPageComponent}   from '../landing-page/landing-page.component';
 import {GmailLoginComponent}    from '../gmail-login/gmail-login.component';
-import { HttpModule }    from '@angular/http';
 import {SetupComponent}    from '../setup/setup.component';
 import {ManageComponent}    from '../manage/manage.component';
 import {ContactComponent}    from '../contact/contact.component';
@@ -29,9 +28,6 @@ import {ContactComponent}    from '../contact/contact.component';
   ],
   declarations: [
     AppComponent,
-    HeroDetailComponent,
-    HeroesComponent,
-    DashboardComponent,
     LandingPageComponent,
     GmailLoginComponent,
     SetupComponent,
@@ -40,8 +36,11 @@ import {ContactComponent}    from '../contact/contact.component';
   ],
   providers: [
     { provide: 'Window',  useValue: window },
-    HeroService,
+    //{provide: LocationStrategy, useClass: HashLocationStrategy},
     BotService,
+    Auth,
+    AuthGuard,
+    Auth0CallbackGuard,
     AUTH_PROVIDERS
   ],
   bootstrap: [ AppComponent ]

@@ -1,22 +1,25 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent }   from '../dashboard/dashboard.component';
-import { HeroesComponent }      from '../heroes/heroes.component';
-import { HeroDetailComponent }  from '../detail/hero-detail.component';
 import {LandingPageComponent}   from '../landing-page/landing-page.component';
 import {SetupComponent}   from '../setup/setup.component';
 import {ManageComponent}   from '../manage/manage.component';
+import {Auth0CallbackGuard} from '../shared/auth0.guard';
+import {AuthGuard} from '../shared/auth.guard';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: '', component: LandingPageComponent},
-  { path: 'setup', component: SetupComponent },
-  { path: 'manage',  component: ManageComponent },
+  { path: 'setup', canActivate:[AuthGuard], component: SetupComponent,},
+  { path: 'manage', canActivate: [AuthGuard], component: ManageComponent },
+  { path: 'logout', redirectTo: '', pathMatch: 'full' },
+
   // { path: 'detail/:id', component: HeroDetailComponent },
   
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers: [
+    AuthGuard,
+  ],
 })
 export class AppRoutingModule {}
