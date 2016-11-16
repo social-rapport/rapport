@@ -19,6 +19,8 @@ module.exports = function (app, express) {
   //for assigning new tasks to bot
   app.put('/api/bots', appController.updateBots);
 
+  app.get('/api/bots', appController.getBotInfo);
+
 
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH
