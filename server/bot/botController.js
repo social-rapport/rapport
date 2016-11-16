@@ -90,7 +90,7 @@ module.exports = {
 //     message: null,
 //     task: 'sayHiGmail',
 //     id_bot: 1,
-//     id_recipient: 2
+//     id_recipient: 1
 // },
 // {
 //     date: '2016-11-15',
