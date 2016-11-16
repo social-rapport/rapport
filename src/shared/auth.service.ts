@@ -19,19 +19,22 @@ declare var Auth0Lock: any;
 export class Auth {
   // Configure Auth0
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
-
+  first = false;
   constructor(private http: Http, private router:Router) {
     // Add callback for lock `authenticated` event
     var self = this;
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
-      console.log("body", body);
 
-      localStorage.setItem('id_token', authResult.idToken);
-      // this.http.post('/signIn', body, {headers: headers})
-      //   .map(res => res.json())
-      //   .subscribe(data => this.handleLogin(data));
+      if(!localStorage.getItem('id_token')){
+        localStorage.setItem('id_token', authResult.idToken);
+        this.http.post('/signIn', body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => this.handleLogin(data));
+        this.first = true;
+      }
+      
     });
     // this.router.events.subscribe(event => {
     //   if (/access_token/.test(event.url) || /error/.test(event.url)) {  

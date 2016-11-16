@@ -59,6 +59,10 @@ export class ManageComponent {
     this.selectedTask = task;
   }
 
+  submitAllSettings(): void{
+    //this.botService.submit(this.bots);
+  }
+
   ngOnInit(): void {
     this.getBots();
   }
