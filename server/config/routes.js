@@ -15,12 +15,11 @@ module.exports = function (app, express) {
   //route for handling sign in and sign up
   app.post('/signIn', appController.checkIfNewUser);
 
-<<<<<<< HEAD
-=======
+
   //for assigning new tasks to bot
   app.put('/api/bots', appController.updateBots);
 
->>>>>>> update task saves to task table, still need bot id
+
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH
   app.get("/signInWithGoogle", function(req, res){
