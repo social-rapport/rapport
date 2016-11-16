@@ -9,4 +9,7 @@ server/config/gmailKeys.js
 server/config/api-services.js
 
 ## PRIVATE KEYS ##
-priavate_keys.js
+./private_keys.js
+private_keys.js
+env.js
+./env.js

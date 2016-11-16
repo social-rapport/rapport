@@ -14,8 +14,9 @@ import { ContactComponent } from '../contact/contact.component';
 })
 
 export class ManageComponent {
-  constructor(private botService: BotService
-  ) {}
+  constructor(private botService: BotService) {
+    this.callback = this.callback.bind(this);
+  }
  
   title = 'My Bots';
   
@@ -46,12 +47,20 @@ export class ManageComponent {
     this.selectedActivity = activity;
   }
 
+  callback(): void{
+    console.log('contact activated');
+  }
+
   onSelectContact(contact): void {
     this.selectedContact = contact;
   }
 
   onSelectTask(task): void {
     this.selectedTask = task;
+  }
+
+  submitAllSettings(): void{
+    //this.botService.submit(this.bots);
   }
 
   ngOnInit(): void {

@@ -15,8 +15,13 @@ export class ContactComponent {
     console.log('created contact')
   }
 
-  @Input()
-  contact;
+  activateContact(){
+    this.contact.active = true;
+  }
+
+  @Input() contact;
+
+  //@Output() onVoted = new EventEmitter<boolean>();
 }
 
 

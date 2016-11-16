@@ -1,7 +1,7 @@
 const request = require('request');
-const authDomain = process.env.AUTH0_DOMAIN || require('../../private_keys.js').AUTH0_DOMAIN;
-const authClientId = process.env.AUTH0_CLIENT_ID || require('../../private_keys.js').AUTH0_CLIENT_ID;
-const authClientSecret = process.env.AUTH0_CLIENT_SECRET || require('../../private_keys.js').AUTH0_CLIENT_SECRET;
+const authDomain = process.env.AUTH0_DOMAIN || require('../../env.js').AUTH0_DOMAIN;
+const authClientId = process.env.AUTH0_CLIENT_ID || require('../../env.js').AUTH0_CLIENT_ID;
+const authClientSecret = process.env.AUTH0_CLIENT_SECRET || require('../../env.js').AUTH0_CLIENT_SECRET;
 
 
 //takes the JWT token passed from the auth0 login and handshakes to get the user object and returns the user id

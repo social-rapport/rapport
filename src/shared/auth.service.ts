@@ -4,7 +4,7 @@ import { Injectable }      from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
-
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -19,39 +19,35 @@ declare var Auth0Lock: any;
 export class Auth {
   // Configure Auth0
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
-
+  first = false;
   constructor(private http: Http, private router:Router) {
+
+
     // Add callback for lock `authenticated` event
     var self = this;
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
-      console.log("body", body);
 
-      localStorage.setItem('id_token', authResult.idToken);
-      this.http.post('/signIn', body, {headers: headers})
-        //.map(res => res.json())
-        .subscribe(
-          data => console.log("returned data",data),
-          error => console.log("error", error),
-          () => console.log("sign in completed")
-         );
+      if(!localStorage.getItem('id_token')){
+        localStorage.setItem('id_token', authResult.idToken);
+        this.http.post('/signIn', body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => this.handleLogin(data));
+        this.first = true;
+      }
+      
     });
-
-    // this.router.events.take(1).subscribe(event => {
-    //   if (/access_token/.test(event.url) || /error/.test(event.url)) {  
-
-    //     let authResult = this.auth0.parseHash(window.location.hash);
-
-    //     if (authResult && authResult.idToken) {
-    //       this.lock.emit('authenticated', authResult);
-    //     }
-
-    //     if (authResult && authResult.error) {
-    //       this.lock.emit('authorization_error', authResult);
-    //     }
-    //   }
-    // });
+   
+  }
+  
+  handleLogin(data){
+    console.log('new user?:', data.newUser);
+    if(data.newUser){
+      this.router.navigate(['setup']);
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   public login() {
