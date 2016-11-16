@@ -36,12 +36,13 @@ module.exports = {
        if(err){ throw err;}
       console.log('tasks', tasks);
       console.log('email', tasks[0].recipient.name);
+      var completedTasks = [];
 
       function runGenerator(length, index) {
         if(length === index) {
           return;
         }
-        console.log(index)
+        console.log(index);
         // Run Gmail Tasks
         if(tasks[index].tasks.platform === gmail){
           var msgData = {
@@ -53,13 +54,22 @@ module.exports = {
           }
           gmail.sendMailBot(msgData, function(results){
             console.log('results',results);
+            completedTasks.push(tasks[index].tasks);
             runGenerator(length, index+1);
+
           });
         } else if(tasks[index].tasks.platform === facebook){
           //Run FaceBook Tasks
+          completedTasks.push(tasks[index].tasks);
         }
       }
       runGenerator(tasks.length, 0);
+      logTasks(completedTasks);
+    });
+  },
+  logTasks: function(tasks){
+    dbModel.log.saveTasks(tasks, function(status){
+      console.log('status');
     });
   }
 }
