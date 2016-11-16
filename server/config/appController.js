@@ -60,14 +60,14 @@ module.exports.checkIfNewUser = function(req, res){
     //             console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
                 // var gmailInfo = auth0Utils.getGmailInfo(userObj);
                 var gmailInfo = {
-                  name: 'Jesse Rocket',
-                  email: 'jesse@teamrocket.com',
-                  oauth: 'some secret oauth token'
+                  name: 'James Rocket',
+                  email: 'james@teamrocket.com',
+                  oauth: 'some secret oauth token for james'
                 };
                 dbModel.users.getIdFromEmail(gmailInfo.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
                   // console.log('the userId is ', userId[0].id);
-                  dbModel.tasks.updateTasks(req.body.bots, userId[0].id, function(status){
+                  dbModel.tasks.updateTasksRecursive(req.body.bots, userId[0].id, function(status){
                     console.log(status);
                     res.end();
                   });
