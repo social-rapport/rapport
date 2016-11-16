@@ -4,7 +4,7 @@ import { Injectable }      from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
-
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -21,6 +21,8 @@ export class Auth {
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
   first = false;
   constructor(private http: Http, private router:Router) {
+
+
     // Add callback for lock `authenticated` event
     var self = this;
     this.lock.on("authenticated", (authResult) => {
@@ -36,20 +38,7 @@ export class Auth {
       }
       
     });
-    // this.router.events.subscribe(event => {
-    //   if (/access_token/.test(event.url) || /error/.test(event.url)) {  
-
-    //     let authResult = this.auth0.parseHash(window.location.hash);
-
-    //     if (authResult && authResult.idToken) {
-    //       this.lock.emit('authenticated', authResult);
-    //     }
-
-    //     if (authResult && authResult.error) {
-    //       this.lock.emit('authorization_error', authResult);
-    //     }
-    //   }
-    // });
+   
   }
   
   handleLogin(data){

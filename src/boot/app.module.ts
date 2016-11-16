@@ -6,7 +6,6 @@ import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
 
 import { AUTH_PROVIDERS }      from 'angular2-jwt';
-import { auth0 }  from 'auth0-js';
 import {AuthGuard} from '../shared/auth.guard';
 import {Auth0CallbackGuard} from '../shared/auth0.guard';
 import { BotService }         from '../shared/bot.service';
