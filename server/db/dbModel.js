@@ -169,6 +169,7 @@ module.exports = {
       var oneTask = {};
       var date = new Date();
       date = String(date).slice(4, 15);
+      // var date = 'Nov 12 2016';
       console.log(date);
       //get everything from tasks table with today's date
       module.exports.tasks.getTasksByDate(date, true, function(formatedTasks){
@@ -188,7 +189,9 @@ module.exports = {
       var query = "SELECT * FROM tasks WHERE date="+db.escape(date);
       db.query(query, function(err, tasks){
         if(err){throw err;}
-        if(format){
+        if(tasks.length===0){
+          cb('no tasks for provided day');
+        } else if(format){
           module.exports.tasks.formatTasks(tasks, cb);
         } else {
           cb(tasks);
