@@ -5,7 +5,7 @@ export class Contact {
     active: Array<string>;
 }
 
-class gmailContact {
+export class gmailContact {
     email: string;
     name: string;
     photo: string;

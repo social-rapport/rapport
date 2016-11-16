@@ -10,9 +10,9 @@ export class BotService {
 
   }
 
-  xgetBots(): Promise<Bot[]> {
-    return Promise.resolve(BOTS);
-  }
+  // xgetBots(): Promise<Bot[]> {
+  //   return Promise.resolve(BOTS);
+  // }
 
   // getBot(id: number): Promise<Bot> {
   //   return this.getBots()

@@ -21,8 +21,7 @@ module.exports.checkIfNewUser = function(req, res){
                 module.exports.oauth = gmailInfo.oauth;
                 // var gmailInfo = {
                 //   name: 'James Rocket',
-                // 
-                  email: 'james@teamrocket.com',
+                //   email: 'james@teamrocket.com',
                 //   oauth: 'some secret oauth token james'
                 // };
                   dbModel.gmail.emailExists(gmailInfo.email, function(bool){
