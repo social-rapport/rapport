@@ -7,7 +7,7 @@
       <li *ngFor="let bot of bots" style="float:left"
         [class.selected]="bot === selectedBot"
         (click)="onSelectBot(bot)">
-        <span class="badge">{{bot.name}}</span> 
+        <span class="badge">{{bot.botType}}</span> 
       </li>
     </ul>
 

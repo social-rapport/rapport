@@ -9,7 +9,7 @@ import { FilterContacts } from './contact.pipe';
 
 @Component({
   selector: 'home',
-  providers: [Auth, gmailContact, Contact, FilterContacts],
+  providers: [gmailContact, Contact, FilterContacts],
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
               <ul>

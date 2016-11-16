@@ -21,7 +21,8 @@ export class SetupComponent {
   }
   
   handleClick(selectedType){
-    this.BotService.addBotTypeToUser(selectedType)
+    this.BotService.addBotTypeToUser(selectedType);
+    console.log("updated userBots", this.BotService.userBots);
     this.router.navigate(['manage']);
   }
   
