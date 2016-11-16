@@ -21,7 +21,7 @@ module.exports = function (app, express) {
 
   app.get('/api/bots', appController.getBotInfo);
 
-  app.get('/botTypes', appController.getBotTypes);
+  app.get('/api/botTypes', appController.getBotTypes);
 
 
   // <--------------- GMAIL ROUTES --------------->
