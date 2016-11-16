@@ -11,7 +11,7 @@ import { Contact } from '../shared/contact.service';
     <h1>{{title}}</h1>
     <nav>
         <a routerLink="/home" routerLinkActive="active">home</a>
-        <a (click)="getContacts()">Log Contacts</a>
+        <a *ngIf="authenticated()" (click)="getContacts()">Log Contacts</a>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>

@@ -10,20 +10,23 @@ export class BotService {
 
   }
 
-  getBots(): Promise<Bot[]> {
+  xgetBots(): Promise<Bot[]> {
     return Promise.resolve(BOTS);
   }
 
-  getBot(id: number): Promise<Bot> {
-    return this.getBots()
-                .then(bots => bots.find(bot => bot.id === id));
-  }
+  // getBot(id: number): Promise<Bot> {
+  //   return this.getBots()
+  //               .then(bots => bots.find(bot => bot.id === id));
+  // }
     
-  xgetBots(){
+  getBots(){
     let token = localStorage.getItem('id_token');
+    let email = localStorage.getItem('user_email');
 
-    return this.http.get(`/api//bots?token=${token}`)
-      .map((data: any) => data.json());
+    return this.http.get(`/api/bots?email=${email}`)
+      .map(function(data: any) {
+        console.log(data);
+      }).toPromise();
   }
 
   xupdateBots(botObject: any){
