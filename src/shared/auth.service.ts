@@ -28,7 +28,9 @@ export class Auth {
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
-
+      if(localStorage.getItem('id_token')){
+        this.router.navigate(['setup']);
+      }
       if(!localStorage.getItem('id_token')){
         localStorage.setItem('id_token', authResult.idToken);
         this.http.post('/signIn', body, {headers: headers})
