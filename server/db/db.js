@@ -3,7 +3,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: process.env.DBPASS || require('../../private_keys.js').DB_PASS,
+  password: process.env.DBPASS || require('../../env.js').DB_PASS,
   database: 'rapport'
 });
 
