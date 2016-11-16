@@ -97,7 +97,7 @@ module.exports.checkIfNewUser = function(req, res){
                   // console.log('the userId is ', userId[0].id);
                   dbModel.bot.exists(userId[0].id, 'standard', function(bool){
                     if(!bool){
-                      res.end('no bots with this name and userId');
+                      res.end(JSON.stringify([]));
                     } else {
                       dbModel.bot.getBotTasks('basic', userId[0].id, function(selectedContacts){
                         var data = {

@@ -1,21 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-
+//import {BotService} from '../shared/bot.service';
+import { Router } from '@angular/router';
+import {BotService } from '../shared/bot.service';
 @Component({
   moduleId: module.id,
   selector: 'setup-component',
+  //providers: [BotService],
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.css']
 })
 
 export class SetupComponent {
-  constructor() {
-      this.bots = [
-      {id: 0, name: 'Default Bot', description: 'Our standard bot includes everything you need to keep it real'}, 
-      {id: 1, name: 'Social Proof Bot', description: 'Impress others with frequent posts from bots to your facebook wall'}, 
-      {id: 2, name: 'Stay in Touch Bot', description: "Stay in touch with people you don't have time for"},
-      {id: 3, name: 'Customized Bot', description: 'Make your own bot'}
-      ];
-  }
   bots = []; 
+  constructor(private BotService: BotService, private router: Router) {
+      var self = this;
+      BotService.getBotTypes().then(function(types){
+        console.log('botTypes', types);
+        self.bots = types;
+      })
+  }
+  
+  handleClick(selectedType){
+    this.BotService.addBotTypeToUser(selectedType)
+    this.router.navigate(['manage']);
+  }
   
 }

@@ -33,7 +33,7 @@ export class ManageComponent {
   selectedTask: string;
 
   getBots(): void {
-    this.botService.getBots().then(bots => this.bots = bots);
+    this.botService.importUserBots().then(bots => this.bots = bots);
   }
 
   onSelectBot(bot: Bot): void {
