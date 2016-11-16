@@ -244,11 +244,32 @@ module.exports = {
     //   }
     // }
   // },
-  Log: {
-
+  log: {
+    saveTasks: function(task, callback){
+    var taskQuery = 'INSERT INTO Log(date, platform, message, task) values('+db.escape(task.date)+','+db.escape(task.platform)+','+db.escape(task.message)+', '+db.escape(task.task)+')';
+      db.query(taskQuery, function(err, result){
+        if(err){throw err;}
+        callback('success');
+      });
+    }
   }
 
 }; //end exports
+
+// unit test
+// var tasks = {
+//     date: '2016-11-15',
+//     platform: 'gmail',
+//     message: "hello",
+//     task: 'sayHiGmail',
+//     id_bot: 1,
+//     id_recipient: 2,
+// };
+
+// module.exports.log.saveTasks(tasks, function(result){
+//   console.log(result);
+// });
+
 
 //module.exports.users.get();
 // helper
