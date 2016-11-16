@@ -19,7 +19,7 @@ import { FilterContacts } from './contact.pipe';
 })
 export class SearchComponent {
 
-  constructor(private router: Router, private auth: Auth, private contact: Contact) {}
+  constructor(private contact: Contact) {}
 
   private contacts: Array<gmailContact>;
 
