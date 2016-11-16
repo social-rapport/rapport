@@ -8,6 +8,8 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { BotService } from './bot.service';
+
 //import { Auth0Lock } from 'auth0-lock'
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
@@ -18,39 +20,39 @@ declare var Auth0Lock: any;
 export class Auth {
   // Configure Auth0
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
-  constructor(private http: Http, private router:Router) {
+  constructor(private http: Http, private router:Router,  private botService: BotService) {
 
     var self = this;
     this.lock.on("authenticated", (authResult) => {
+      console.log("lock on called");
+
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
       localStorage.setItem('id_token', authResult.idToken);
-
-      //redirect for firsttime and second time users based on localStorage variable
-      if(!localStorage.getItem('previous_user')){
-        localStorage.setItem('previous_user', 'true');
-        //setup is for first-time users to choose their bot
-        this.router.navigate(['setup']);
-      } else {
-        this.router.navigate(['home']);
-      }
       
-        //update user info from backend
-        this.http.post('/signIn', body, {headers: headers})
+      //update user info from backend
+      this.http.post('/signIn', body, {headers: headers})
         .map(res => res.json())
-        .subscribe(data => this.updateUserInfo(data));
+        .subscribe(userObj => this.updateUserInfo(userObj));
     });
    
   }
   
   updateUserInfo(data){
+    console.log("data", data);
     localStorage.setItem('user_email', data.email);
+    this.botService.importUserBots()
+      .then(userBots => this.redirectForUserType(data));
   }
 
   public login() {
     // Call the show method to display the widget./
     this.lock.show();
   };
+
+  public redirectForUserType(userObj) {
+    userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['home']);
+  }
 
   public authenticated() {
     // Check if there's an unexpired JWT

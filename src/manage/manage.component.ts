@@ -8,7 +8,7 @@ import { ContactComponent } from '../contact/contact.component';
 
 @Component({
   selector: 'manage-component',
-  providers: [BotService],
+  //providers: [BotService],
   templateUrl: 'app/manage/manage.component.html',
   styleUrls: ['app/manage/manage.component.css']
 })
@@ -33,7 +33,12 @@ export class ManageComponent {
   selectedTask: string;
 
   getBots(): void {
-    this.botService.importUserBots().then(bots => this.bots = bots);
+    this.botService.importUserBots().then(bots => {
+      this.bots = bots
+      this.onSelectBot(this.bots[0]);
+      console.log("bots array", this.bots);
+      console.log("selected bot", this.selectedBot);
+    });
   }
 
   onSelectBot(bot: Bot): void {

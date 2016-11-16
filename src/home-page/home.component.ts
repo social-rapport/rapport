@@ -6,7 +6,7 @@ import {GmailLoginComponent} from '../gmail-login/gmail-login.component';
 
 @Component({
   selector: 'home',
-  providers: [Auth,GmailLoginComponent],
+  //providers: [Auth,GmailLoginComponent],
   styleUrls: ['app/home-page/home.component.css'],
   template: `<nav>
               <ul> 

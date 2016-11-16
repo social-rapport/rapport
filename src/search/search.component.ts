@@ -9,7 +9,7 @@ import { FilterContacts } from './contact.pipe';
 
 @Component({
   selector: 'home',
-  providers: [Auth, gmailContact, Contact, FilterContacts],
+  providers: [gmailContact, Contact, FilterContacts],
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
               <ul>
@@ -19,7 +19,7 @@ import { FilterContacts } from './contact.pipe';
 })
 export class SearchComponent {
 
-  constructor(private router: Router, private auth: Auth, private contact: Contact) {}
+  constructor(private contact: Contact) {}
 
   private contacts: Array<gmailContact>;
 

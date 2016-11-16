@@ -6,7 +6,7 @@ import {GmailLoginComponent} from '../gmail-login/gmail-login.component';
 
 @Component({
   selector: 'my-heroes',
-  providers: [Auth,GmailLoginComponent],
+  //providers: [Auth,GmailLoginComponent],
   template: `<p>Welcome </p>
             `,
 })
