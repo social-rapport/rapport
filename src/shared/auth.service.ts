@@ -54,7 +54,11 @@ export class Auth {
   
   handleLogin(data){
     console.log('new user?:', data.newUser);
-    
+    if(data.newUser){
+      this.router.navigate(['setup']);
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   public login() {
