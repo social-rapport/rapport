@@ -17,20 +17,20 @@ export class ManageComponent {
   constructor(private botService: BotService) {
     this.callback = this.callback.bind(this);
   }
- 
+
   title = 'My Bots';
-  
-  bots: Bot[];
+
+  bots: any;
   selectedBot: Bot;
-  
+
   activities: string [];
   selectedActivity: string;
-  
+
   contacts: Object[];
   selectedContact: string;
 
   tasks: string [];
-  selectedTask: string; 
+  selectedTask: string;
 
   getBots(): void {
     this.botService.getBots().then(bots => this.bots = bots);
@@ -40,7 +40,7 @@ export class ManageComponent {
     this.selectedBot = bot;
     this.activities = this.selectedBot.activities;
     this.contacts = this.selectedBot.contacts;
-    this.tasks = this.selectedBot.tasks; 
+    this.tasks = this.selectedBot.tasks;
   }
 
   onSelectActivity(activity): void {

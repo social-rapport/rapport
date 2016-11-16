@@ -16,10 +16,12 @@ module.exports = function (app, express) {
   app.post('/signIn', appController.checkIfNewUser);
 
 
-  //for assigning new tasks to bot
+  // <--------------- GMAIL ROUTES --------------->
   app.put('/api/bots', appController.updateBots);
 
   app.get('/api/bots', appController.getBotInfo);
+
+  app.get('/botTypes', appController.getBotTypes);
 
 
   // <--------------- GMAIL ROUTES --------------->

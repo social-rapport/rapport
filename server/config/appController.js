@@ -122,6 +122,24 @@ module.exports.checkIfNewUser = function(req, res){
       // });
   };
 
-
+module.exports.getBotTypes = function(req, res){
+  var data = {
+    bots: [{
+     botType: 'basic',
+     tasks: [
+            'sayHappyBirthdayGmail',
+            'sayHappyBirthdayFacebook',
+            'sayHiGmail',
+            'sayHiFacebook'
+     ],
+     selectedContacts: {},
+     botactivity:{
+        recent:[],
+        scheduled:[]
+      }
+    }]
+  };
+  res.end(JSON.stringify(data));
+};
 
 
