@@ -147,4 +147,8 @@ module.exports.getBotTypes = function(req, res){
   res.end(JSON.stringify(data));
 };
 
-
+module.exports.getTasksForChron = function(req, res){
+  dbModel.tasks.getTasksForChronJob(function(data){
+    res.end(JSON.stringify(data));
+  });
+};
