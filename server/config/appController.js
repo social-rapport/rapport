@@ -78,25 +78,42 @@ module.exports.checkIfNewUser = function(req, res){
   };
 
   module.exports.getBotInfo = function(req, res) {
-    // auth0Utils.getUserIdFromToken(req.params.idToken)
+    // console.log('-----The token is this ', req.query.idToken);
+    // auth0Utils.getUserIdFromToken(req.query.idToken)
     //   .then(userId => {
     //     auth0Utils.getAccesstoken()
     //       .then(accessToken => {
     //         auth0Utils.getUserAccessKeys(userId, accessToken)
     //           .then(userObj => {
-                // console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
-                // var gmailInfo = auth0Utils.getGmailInfo(userObj);
-                var gmailInfo = {
-                  name: 'James Rocket',
-                  email: 'james@teamrocket.com',
-                  oauth: 'some secret oauth token for james'
-                };
-                dbModel.users.getIdFromEmail(gmailInfo.email, function(userId){
+    //             console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
+    //             var gmailInfo = auth0Utils.getGmailInfo(userObj);
+                // var gmailInfo = {
+                //   name: 'James Rocket',
+                //   email: 'vi.uyen.vo@gmail.com',
+                //   oauth: 'some secret oauth token for james'
+                // };
+                dbModel.users.getIdFromEmail(req.query.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
-                  console.log('the userId is ', userId[0].id);
-                  dbModel.bot.getBotTasks('basic', userId[0].id, function(status){
-                    console.log(status);
-                    res.end();
+                  // console.log('the userId is ', userId[0].id);
+                  dbModel.bot.getBotTasks('basic', userId[0].id, function(selectedContacts){
+                    var data = {
+                      "bots":[{
+                        "botType":'basic',
+                        "tasks":[
+                          'sayHappyBirthdayGmail',
+                          'sayHappyBirthdayFacebook',
+                          'sayHiGmail',
+                          'sayHiFacebook'
+                        ],
+                        "selectedContacts": selectedContacts,
+                        botActivity:{
+                          "recent":[],
+                          "scheduled":[]
+                        }
+                      }]
+                    };
+                    console.log(selectedContacts);
+                    res.end(JSON.stringify(data));
                   });
                 });
       //         });
