@@ -101,7 +101,11 @@ module.exports.sendMail = function(req, res){
   });
 };
 
-module.exports.configureMail = function(auth, cb) {
+//takes a oauth token and an object, with params, name, email,recipientEmail, subject and message
+module.exports.configureMail = function(auth, cb, emailObj) {
+
+    console.log("auth ======>", auth);
+
     var gmailClass = google.gmail('v1');
     var email_lines = [];
     email_lines.push('From: "Vi Vo" <vi.uyen.vo@gmail.com>');
@@ -110,18 +114,28 @@ module.exports.configureMail = function(auth, cb) {
     email_lines.push('MIME-Version: 1.0');
     email_lines.push('Subject: whooooot! this is from vi\'s app');
     email_lines.push('');
-    email_lines.push('Hello there! How have you been?<br/>');
+    // email_lines.push('Hello there! How have you been?<br/>');
+
+    // email_lines.push(`From: "${emailObj.name}" <${emailObj.email}>`);
+    // email_lines.push(`To: ${emailObj.recipientEmail}`);
+    // email_lines.push(`Content-type: text/html;charset=iso-8859-1`);
+    // email_lines.push(`MIME-Version: 1.0`);
+    // email_lines.push(`Subject: ${emailObj.subject}`);
+    // email_lines.push(``);
+    // email_lines.push(`${emailObj.message}<br/>`);
 
     var email = email_lines.join('\r\n').trim();
     var base64EncodedEmail = new Buffer(email).toString('base64');
     base64EncodedEmail = base64EncodedEmail.replace(/\+/g, '-').replace(/\//g, '_');
+
     gmailClass.users.messages.send({
-      auth: auth,
-      userId: 'me',
-      resource: {
-        raw: base64EncodedEmail
-      }
-    }, cb);
+        auth: auth,
+        userId: 'me',
+        resource: {
+          raw: base64EncodedEmail
+        }
+      }, cb);
+    
   };
 
 // for the bot
