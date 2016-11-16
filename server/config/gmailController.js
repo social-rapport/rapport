@@ -160,8 +160,8 @@ module.exports.sendMailBot = function(msgData,callback){
 module.exports.configureMailBot = function(msgData, auth, cb) {
     var gmailClass = google.gmail('v1');
     var email_lines = [];
-    email_lines.push('From: ' + msgData.name + '<' +msgData.email+ '>');
-    email_lines.push('To: '+ msgData.email);
+    email_lines.push('From: ' + msgData.username + '<' +msgData.useremail+ '>');
+    email_lines.push('To: '+ msgData.emailTo);
     email_lines.push('Content-type: text/html;charset=iso-8859-1');
     email_lines.push('MIME-Version: 1.0');
     email_lines.push('Subject: ' + msgData.subject);

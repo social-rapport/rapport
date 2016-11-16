@@ -64,9 +64,9 @@ CREATE TABLE `Log` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `id_recipient` INTEGER,
   `date` VARCHAR(100),
-  `platform` CHAR,
-  `message` CHAR,
-  `task` CHAR,
+  `platform` VARCHAR(100),
+  `message` VARCHAR(500),
+  `task` VARCHAR(100),
   `id_bot` INTEGER,
   PRIMARY KEY (`id`)
 ) COMMENT ' identical to task';
