@@ -4,7 +4,7 @@ const authClientId = process.env.AUTH0_CLIENT_ID || require('../../env.js').AUTH
 const authClientSecret = process.env.AUTH0_CLIENT_SECRET || require('../../env.js').AUTH0_CLIENT_SECRET;
 
 
-//takes the JWT token passed from the auth0 login and handshakes to get the user object and returns the user id
+//takes the JWT token passed from the auth0 login and handshakes to get the user object and returns a promise of the user id
 function getUserIdFromToken (token) {
    const url = `https://${authDomain}/tokeninfo`;
 
@@ -26,7 +26,7 @@ function getUserIdFromToken (token) {
    }); 
 }
 
-//handshakes to get the auth0 user access token
+//handshakes to return a promise of the auth0 user access token
 function getAccesstoken() {
     const requestParams = {
         method: 'POST',
@@ -52,7 +52,7 @@ function getAccesstoken() {
 }
 
 //takes the access token and the user id and handshakes to get the user acces keys
-//returns an array of IdP objects
+//returns an promise of the full access user object
 function getUserAccessKeys(userId, accessToken) {
     const requestParams = {
         method: 'GET',
