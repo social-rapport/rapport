@@ -168,10 +168,11 @@ module.exports = {
       var data = [];
       var oneTask = {};
       var date = new Date();
-      date = date.slice(0, 10);
+      date = String(date).slice(4, 15);
+      console.log(date);
       //get everything from tasks table with today's date
       module.exports.tasks.getTasksByDate(date, true, function(formatedTasks){
-        console.log(formatedTasks);
+        cb(formatedTasks);
       });
 
       //RECURSE so that for each task
@@ -184,7 +185,7 @@ module.exports = {
       //call recurse
     },
     getTasksByDate: function(date, format, cb){
-      var query = "SELECT FROM tasks WHERE date="+db.escape(date);
+      var query = "SELECT * FROM tasks WHERE date="+db.escape(date);
       db.query(query, function(err, tasks){
         if(err){throw err;}
         if(format){
@@ -234,7 +235,7 @@ module.exports = {
           return;
         }
         var date = new Date();
-        date = date.slice(0, 10);
+        date = String(date).slice(4, 15);
         var recipientEmail = instructions[0].selectedContacts[keys[index]].email;
         var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(keys[index])+","+db.escape(recipientEmail)+","+db.escape(instructions[0].selectedContacts[keys[index]].birthday)+")";
 
