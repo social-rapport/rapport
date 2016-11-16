@@ -7,12 +7,12 @@ DROP TABLE IF EXISTS `Tasks`;
 
 CREATE TABLE `Tasks` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `recipient` VARCHAR(20) ,
-  `date` DATE ,
-  `platform` VARCHAR(20) ,
+  `id_recipient` INTEGER ,
+  `date` VARCHAR(100) ,
+  `platform` VARCHAR(100) ,
   `id_bot` INTEGER ,
   `message` VARCHAR(500) ,
-  `task` VARCHAR(20) ,
+  `task` VARCHAR(100) ,
   PRIMARY KEY (`id`)
 );
 
@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `userName` VARCHAR(20),
+  `userName` VARCHAR(100),
   `id_gmail` INTEGER,
   `id_facebook` INTEGER,
   `authId` INTEGER,
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `bot`;
 
 CREATE TABLE `bot` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `botName` VARCHAR(20),
+  `botName` VARCHAR(100),
   `id_users` INTEGER,
   PRIMARY KEY (`id`)
 );
@@ -62,8 +62,8 @@ DROP TABLE IF EXISTS `Log`;
 
 CREATE TABLE `Log` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `recipient` CHAR,
-  `date` DATE,
+  `id_recipient` INTEGER,
+  `date` VARCHAR(100),
   `platform` CHAR,
   `message` CHAR,
   `task` CHAR,
@@ -72,9 +72,23 @@ CREATE TABLE `Log` (
 ) COMMENT ' identical to task';
 
 
+
+DROP TABLE IF EXISTS `recipient`;
+
+CREATE TABLE `recipient` (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50),
+  `email` VARCHAR(100),
+  `birthday` VARCHAR(50),
+  PRIMARY KEY (`id`)
+);
+
+
 ALTER TABLE `Tasks` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
+ALTER TABLE `Tasks` ADD FOREIGN KEY (id_recipient) REFERENCES `recipient` (`id`);
 ALTER TABLE `users` ADD FOREIGN KEY (id_gmail) REFERENCES `gmail` (`id`);
 ALTER TABLE `users` ADD FOREIGN KEY (id_facebook) REFERENCES `facebook` (`id`);
 ALTER TABLE `bot` ADD FOREIGN KEY (id_users) REFERENCES `users` (`id`);
 ALTER TABLE `Log` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
+ALTER TABLE `Log` ADD FOREIGN KEY (id_recipient) REFERENCES `recipient` (`id`);
 
