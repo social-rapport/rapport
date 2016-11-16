@@ -12,7 +12,6 @@ import 'rxjs/add/operator/catch';
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
 
-
 declare var Auth0Lock: any;
 
 @Injectable()
@@ -40,9 +39,6 @@ export class Auth {
         this.http.post('/signIn', body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => this.updateUserInfo(data));
-       
-      
-      
     });
    
   }
