@@ -82,6 +82,13 @@ module.exports = {
         }
       });
     },
+    getEmailOauthFromGmailId: function(gmailId, callback){
+      var query = 'SELECT emailAddress, credentials FROM gmail where id='+db.escape(gmailId);
+      db.query(query, function(err, emailInfo){
+        if(err){throw err;}
+        callback(emailInfo);
+      });
+    },
     post: function (params, callback) {
       var query = 'INSERT INTO gmail(credentials) values (?)';
       db.query(query, params, function(err, gmail) {
@@ -173,7 +180,28 @@ module.exports = {
       console.log(date);
       //get everything from tasks table with today's date
       module.exports.tasks.getTasksByDate(date, true, function(formatedTasks){
-        cb(formatedTasks);
+
+        var recurse = function(length, index){
+          if(length===index){
+            cb(data);
+            return;
+          }
+          oneTask.tasks = formatedTasks[index];
+          var botId = formatedTasks[index].id_bot;
+          var query =
+            "SELECT userName, id_gmail FROM users where id=(SELECT id_users FROM bot where id ="+db.escape(botId)+")";
+          db.query(query, function(err, users){
+            if(err){throw err;}
+            oneTask.user = users[0];
+            module.exports.gmail.getEmailOauthFromGmailId(users[0].id_gmail, function(email){
+              oneTask.user.userEmail = email[0].emailAddress;
+              oneTask.user.oauth = email[0].credentials;
+              data.push(oneTask);
+              recurse(length, index+1);
+            });
+          });
+        };
+        recurse(formatedTasks.length, 0);
       });
 
       //RECURSE so that for each task
@@ -183,6 +211,7 @@ module.exports = {
         //format users and add to oneTask
         //use recipientId to look up recipientInfo
         //formate recipients and add to one Task
+          //push oneTask to data;
       //call recurse
     },
     getTasksByDate: function(date, format, cb){
