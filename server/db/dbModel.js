@@ -127,7 +127,30 @@ module.exports = {
       //from those tasks, use recipient id to find recipient info
       var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
       db.query(botQuery, function(err, botId){
-        cb(botId);
+        var botIdNum = botId[0].id;
+        var tasksByBotQuery = "SELECT * FROM tasks where id_bot="+db.escape(botIdNum);
+        db.query(tasksByBotQuery, function(err, tasksByBot){
+          if(err){throw err;}
+          var selectedContacts = {};
+
+          // cb(tasksByBot[0].id_recipient);
+          //for each id_recipient, get their name, birthday, email
+          var recurse = function(length, index){
+            if(length===index){
+              cb(selectedContacts);
+              return;
+            }
+            var recipQuery = "SELECT * FROM recipient WHERE id="+db.escape(tasksByBot[index].id_recipient);
+            db.query(recipQuery, function(err, recips){
+              if(err){throw err;}
+              selectedContacts[recips[0].name] = {};
+              selectedContacts[recips[0].name].birthday = recips[0].birthday;
+              selectedContacts[recips[0].name].email = recips[0].email;
+              recurse(length, index+1);
+            });
+          };
+          recurse(tasksByBot.length, 0);
+        });
       });
     }
   },
