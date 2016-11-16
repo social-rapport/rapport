@@ -87,16 +87,21 @@ module.exports = {
   },
   tasks: {
     updateTasks:function(instructions, userId, callback){
-      // callback(instructions[0].selectedContacts);
-      for(var key in instructions[0].selectedContacts){
-        var recipientEmail = instructions[0].selectedContacts[key].email;
-        var date = new Date();
-        var query = "INSERT INTO tasks(recipient, date, platform, id_bot, task) values("+db.escape(recipientEmail)+","+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
-        db.query(query,function(err, added){
-          if(err){throw err;}
-        });
-      }
-      callback('added successfully');
+    //   var botQuery = "INSERT into bot(botName, id_users) values('basic', "+db.escape(userId)+")";
+    //   db.query(botQuery, function(err, addedBot){
+    //     if(err){throw err;}
+    //   });
+
+
+    //   for(var key in instructions[0].selectedContacts){
+    //     var recipientEmail = instructions[0].selectedContacts[key].email;
+    //     var date = new Date();
+    //     var query = "INSERT INTO tasks(recipient, date, platform, id_bot, task) values("+db.escape(recipientEmail)+","+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+    //     db.query(query,function(err, added){
+    //       if(err){throw err;}
+    //     });
+    //   }
+    //   callback('added successfully');
     }
   },
   Log: {
