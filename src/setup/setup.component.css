@@ -1,3 +1,11 @@
+html {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
+
 [class*='col-'] {
   float: left;
   padding-right: 20px;

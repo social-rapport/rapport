@@ -48,6 +48,7 @@ module.exports = function (app, express) {
   app.get("/oauthcallback",function(req,res){
     res.sendFile('index.html', {root: '../'})
   })
+
 };
 
 

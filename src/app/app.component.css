@@ -29,3 +29,12 @@ nav a:hover {
 nav a.active {
   color: #039be5;
 }
+
+html{
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
+

@@ -30,6 +30,10 @@ export class AppComponent {
         this.auth.logout();
         this.authAction = 'Login';
       }
+
+      if(path.url === '/home') {
+        
+      }
     });
   }
   authenticated(){

@@ -23,7 +23,12 @@ li a {
   color: black;
 }
 
+html{
+  margin: 0;
+}
+
 body {
   background-image: url("http://i.imgur.com/Fkt1vEL.jpg");
   margin: 0px;
   padding: 0px;
+}
