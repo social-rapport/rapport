@@ -14,10 +14,10 @@ export class BotService {
     return Promise.resolve(BOTS);
   }
 
-  getBot(id: number): Promise<Bot> {
-    return this.getBots()
-                .then(bots => bots.find(bot => bot.id === id));
-  }
+  // getBot(id: number): Promise<Bot> {
+  //   return this.getBots()
+  //               .then(bots => bots.find(bot => bot.id === id));
+  // }
     
   getBots(){
     let token = localStorage.getItem('id_token');
@@ -26,7 +26,7 @@ export class BotService {
     return this.http.get(`/api/bots?email=${email}`)
       .map(function(data: any) {
         console.log(data);
-      });
+      }).toPromise();
   }
 
   xupdateBots(botObject: any){
