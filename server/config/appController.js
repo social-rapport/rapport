@@ -60,9 +60,9 @@ module.exports.checkIfNewUser = function(req, res){
     //             console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
                 // var gmailInfo = auth0Utils.getGmailInfo(userObj);
                 var gmailInfo = {
-                  name: 'Jesse Rocket',
-                  email: 'jesse@teamrocket.com',
-                  oauth: 'some secret oauth token'
+                  name: 'James Rocket',
+                  email: 'james@teamrocket.com',
+                  oauth: 'some secret oauth token for james'
                 };
                 dbModel.users.getIdFromEmail(gmailInfo.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
