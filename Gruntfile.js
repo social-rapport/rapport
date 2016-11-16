@@ -15,6 +15,10 @@ module.exports = function(grunt) {
             command: 'lite-server'
           },
 
+          test: {
+            command: 'mocha '+__dirname+'/spec/serverSpec.js'
+          },
+
           electroncompile:{
             command: 'electron main.js'
           }
@@ -71,6 +75,13 @@ module.exports = function(grunt) {
           }
         },
 
+        "mocha-server": {
+          src: 'spec/serverSpec.js',
+          options: {
+              ui: 'bdd',
+          },
+        },
+
     });
 
     grunt.loadNpmTasks('grunt-browser-sync');
@@ -80,7 +91,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-tsc');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-server-mocha');
 
     grunt.registerTask('default',['copy','shell:tsc','browserSync','watch']);
-
+    grunt.registerTask('test',['shell:test']);
 };
