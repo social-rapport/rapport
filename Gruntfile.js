@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         shell: {
-  
+
           tsc: {
             command: 'tsc'
           },
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
         tsc: {
                 options: {
-                    // task options 
+                    // task options
                 },
                 files: [{
                     expand : true,
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                         "!*.d.ts"
                     ]
                 }]
-            
+
         },
         copy: {
           main: {
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
             options: {
               //watchTask: true,
               //files: ["./app"],
-              port : 8080,
+              port : 5050,
               //proxy: 'localhost:3000',
               server: './',
               // background must be true in order for grunt watch task to run
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
         },
 
     });
-   
+
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-ts');
@@ -82,5 +82,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default',['copy','shell:tsc','browserSync','watch']);
-    
+
 };
