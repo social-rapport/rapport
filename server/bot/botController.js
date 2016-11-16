@@ -68,12 +68,42 @@ module.exports = {
     });
   },
   logTasks: function(tasks){
-    dbModel.log.saveTasks(tasks, function(status){
-      console.log('status');
-    });
+
+    var runGenerator = function(length, index){
+      if(length === index){
+        return;
+      } else{
+        dbModel.log.saveTasks(tasks[index], function(status){
+          console.log('status');
+          runGenerator(length, index+1)
+        });
+      }
+    }
+    runGenerator(tasks.length, 0);
   }
 }
 
+// unit test
+// var tasks = [{
+//     date: '2016-11-15',
+//     platform: 'gmail',
+//     message: null,
+//     task: 'sayHiGmail',
+//     id_bot: 1,
+//     id_recipient: 2
+// },
+// {
+//     date: '2016-11-15',
+//     platform: 'gmail',
+//     message: null,
+//     task: 'sayHiGmail',
+//     id_bot: 2,
+//     id_recipient: 2,
+// }];
 
+
+// module.exports.logTasks(tasks, function(result){
+//   console.log(result);
+// });
 
 
