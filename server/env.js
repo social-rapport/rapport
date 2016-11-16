@@ -1,1 +1,0 @@
-process.env.DBPASS = 'dev';
