@@ -67,7 +67,7 @@ module.exports.checkIfNewUser = function(req, res){
                 dbModel.users.getIdFromEmail(gmailInfo.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
                   // console.log('the userId is ', userId[0].id);
-                  dbModel.tasks.updateTasks(req.body.bots, userId[0].id, function(status){
+                  dbModel.tasks.updateTasksFlow(req.body.bots, userId[0].id, function(status){
                     console.log(status);
                     res.end();
                   });
