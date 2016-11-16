@@ -16,7 +16,7 @@ module.exports = function (app, express) {
   app.post('/signIn', appController.checkIfNewUser);
 
 
-  // <--------------- GMAIL ROUTES --------------->
+  // <--------------- BOT ROUTES --------------->
   app.put('/api/bots', appController.updateBots);
 
   app.get('/api/bots', appController.getBotInfo);
@@ -27,7 +27,6 @@ module.exports = function (app, express) {
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH
   app.get("/signInWithGoogle", function(req, res){
-    console.log("sign in with google");
     res.sendFile(__dirname+'/static/gmailLogin.html');
   });
 
@@ -39,10 +38,13 @@ module.exports = function (app, express) {
 
   //FOR GMAIL OAUTH, don't access directly
   app.get("/tokens", gmail.getTokens);
+
   app.get("/url", gmail.sendUrl);
+
   app.get("/app",function(req,res){
     res.sendFile('index.html', {root: '../'})
   });
+
   app.get("/oauthcallback",function(req,res){
     res.sendFile('index.html', {root: '../'})
   })

@@ -95,25 +95,31 @@ module.exports.checkIfNewUser = function(req, res){
                 dbModel.users.getIdFromEmail(req.query.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
                   // console.log('the userId is ', userId[0].id);
-                  dbModel.bot.getBotTasks('basic', userId[0].id, function(selectedContacts){
-                    var data = {
-                      "bots":[{
-                        "botType":'basic',
-                        "tasks":[
-                          'sayHappyBirthdayGmail',
-                          'sayHappyBirthdayFacebook',
-                          'sayHiGmail',
-                          'sayHiFacebook'
-                        ],
-                        "selectedContacts": selectedContacts,
-                        botActivity:{
-                          "recent":[],
-                          "scheduled":[]
-                        }
-                      }]
-                    };
-                    console.log(selectedContacts);
-                    res.end(JSON.stringify(data));
+                  dbModel.bot.exists(userId[0].id, 'standard', function(bool){
+                    if(!bool){
+                      res.end('no bots with this name and userId');
+                    } else {
+                      dbModel.bot.getBotTasks('basic', userId[0].id, function(selectedContacts){
+                        var data = {
+                          "bots":[{
+                            "botType":'basic',
+                            "tasks":[
+                              'sayHappyBirthdayGmail',
+                              'sayHappyBirthdayFacebook',
+                              'sayHiGmail',
+                              'sayHiFacebook'
+                            ],
+                            "selectedContacts": selectedContacts,
+                            botActivity:{
+                              "recent":[],
+                              "scheduled":[]
+                            }
+                          }]
+                        };
+                        console.log(selectedContacts);
+                        res.end(JSON.stringify(data));
+                      });
+                    }
                   });
                 });
       //         });
