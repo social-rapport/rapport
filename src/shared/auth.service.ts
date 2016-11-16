@@ -28,16 +28,20 @@ export class Auth {
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
-      if(localStorage.getItem('id_token')){
+      localStorage.setItem('id_token', authResult.idToken);
+      if(!localStorage.getItem('previous_user')){
+        localStorage.setItem('previous_user', 'true');
         this.router.navigate(['setup']);
+      } else {
+        this.router.navigate(['home']);
       }
-      if(!localStorage.getItem('id_token')){
-        localStorage.setItem('id_token', authResult.idToken);
-        this.http.post('/signIn', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => this.handleLogin(data));
-        this.first = true;
-      }
+      //if(!localStorage.getItem('id_token')){
+        
+        // this.http.post('/signIn', body, {headers: headers})
+        // .map(res => res.json())
+        // .subscribe(data => this.handleLogin(data));
+        //this.first = true;
+      //}
       
     });
    
