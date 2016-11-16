@@ -11,21 +11,24 @@ module.exports = {
        if(err){ throw err;}
       console.log('tasks', tasks);
       console.log('email', tasks[0].recipient);
-      tasks.forEach(function(contact){
+
+      function runGenerator(length, index) {
+        if(length === index) {
+          return;
+        }
+        console.log(index)
         var msgData = {
-          name: tasks[0].recipient,
-          email: tasks[0].recipient,
+          name: tasks[index].recipient,
+          email: tasks[index].recipient,
           subject: "whooooot! this is from Nam",
           body: 'Hello there! How have you been?<br/>'
         }
         gmail.sendMailBot(msgData, function(results){
           console.log('results',results);
+          runGenerator(length, index+1);
         });
-      });
-
-      // gmail.sendMailBot(function(results){
-      //   console.log('results',results);
-      // });
+      }
+      runGenerator(tasks.length, 0);
     });
   }
 }
