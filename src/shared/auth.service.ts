@@ -53,7 +53,8 @@ export class Auth {
   }
   
   handleLogin(data){
-    console.log('login result:', data);
+    console.log('new user?:', data.newUser);
+    
   }
 
   public login() {
