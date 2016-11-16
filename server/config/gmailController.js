@@ -104,11 +104,11 @@ module.exports.sendMail = function(req, res){
 module.exports.configureMail = function(auth, cb) {
     var gmailClass = google.gmail('v1');
     var email_lines = [];
-    email_lines.push('From: "Nam" <nthwinn@gmail.com>');
-    email_lines.push('To: nthwinn@gmail.com');
+    email_lines.push('From: "Vi Vo" <vi.uyen.vo@gmail.com>');
+    email_lines.push('To: vi.uyen.vo@gmail.com');
     email_lines.push('Content-type: text/html;charset=iso-8859-1');
     email_lines.push('MIME-Version: 1.0');
-    email_lines.push('Subject: whooooot! this is from Nam app');
+    email_lines.push('Subject: whooooot! this is from vi\'s app');
     email_lines.push('');
     email_lines.push('Hello there! How have you been?<br/>');
 
