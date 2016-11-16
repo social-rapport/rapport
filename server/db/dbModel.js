@@ -246,7 +246,7 @@ module.exports = {
   // },
   log: {
     saveTasks: function(task, callback){
-    var taskQuery = 'INSERT INTO Log(date, platform, message, task) values('+db.escape(task.date)+','+db.escape(task.platform)+','+db.escape(task.message)+', '+db.escape(task.task)+')';
+    var taskQuery = 'INSERT INTO Log(id_recipient,id_bot,date, platform, message, task) values('+db.escape(task.id_recipient)+','+db.escape(task.id_bot)+','+db.escape(task.date)+','+db.escape(task.platform)+','+db.escape(task.message)+', '+db.escape(task.task)+')';
       db.query(taskQuery, function(err, result){
         if(err){throw err;}
         callback('success');
