@@ -181,6 +181,7 @@ module.exports = {
         });
       };
         recurse(keys.length, 0);
+        callback('works');
       }
     },
     // addToTables: function(instructions, userId, callback){
