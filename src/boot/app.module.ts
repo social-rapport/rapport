@@ -19,6 +19,8 @@ import {SetupComponent}    from '../setup/setup.component';
 import {ManageComponent}    from '../manage/manage.component';
 import {ContactComponent}    from '../contact/contact.component';
 import { HomePageComponent } from '../home-page/home.component';
+import { SearchComponent } from '../search/search.component';
+import { FilterContacts } from '../search/contact.pipe';
 
 @NgModule({
   imports: [
@@ -35,6 +37,8 @@ import { HomePageComponent } from '../home-page/home.component';
     SetupComponent,
     ManageComponent,
     ContactComponent,
+    SearchComponent,
+    FilterContacts
   ],
   providers: [
     { provide: 'Window',  useValue: window },

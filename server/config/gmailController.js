@@ -105,6 +105,8 @@ module.exports.sendMail = function(req, res){
 //takes a oauth token and an object, with params, name, email,recipientEmail, subject and message
 module.exports.configureMail = function(auth, cb, emailObj) {
 
+    console.log("auth", auth);
+
     var gmailClass = google.gmail('v1');
     var email_lines = [];
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Auth } from '../shared/auth.service';
 import { Router } from '@angular/router';
 import { Contact } from '../shared/contact.service';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'my-app',
@@ -11,6 +12,7 @@ import { Contact } from '../shared/contact.service';
     <h1>{{title}}</h1>
     <nav>
         <a routerLink="/home" routerLinkActive="active">home</a>
+        <a routerLink="/search" routerLinkActive="active">search</a>
         <a *ngIf="authenticated()" (click)="getContacts()">Log Contacts</a>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
