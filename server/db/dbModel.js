@@ -1,5 +1,12 @@
 var db = require('./db');
 
+//ROUTE FOR NAM
+// tasks.getAllTasksToday = function(){
+//   var date = new Date();
+//   var data = [recipientName, recipientEmail, userEmail, userName, message];
+// }
+
+
 // mysql calls
 module.exports = {
   users: {
@@ -112,6 +119,16 @@ module.exports = {
           cb(true);
         }
       });
+    },
+    getBotTasks: function(botType, userId, cb){
+      //want all tasks with bot id
+      //to get id need to search bot table for botsName with userId
+      //use botId to get all tasks with that iD
+      //from those tasks, use recipient id to find recipient info
+      var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
+      db.query(botQuery, function(err, botId){
+        cb(botId);
+      });
     }
   },
   tasks: {
@@ -123,10 +140,11 @@ module.exports = {
           var botQuery = "INSERT into bot(botName, id_users) values('basic', "+db.escape(userId)+")";
           db.query(botQuery, function(err, addedBot){
             if(err){throw err;}
-            module.exports.tasks.updateTasks(instructions, userId, callback);
+            module.exports.tasks.updateTasksRecursive(instructions, userId, callback);
           });
+        } else {
+          module.exports.tasks.updateTasksRecursive(instructions, userId, callback);
         }
-        module.exports.tasks.updateTasks(instructions, userId, callback);
       });
     },
     updateTasks:function(instructions, userId, callback){
