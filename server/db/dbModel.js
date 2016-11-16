@@ -71,6 +71,17 @@ module.exports = {
         }
       });
     },
+    recipientEmailExists: function(email, callback){
+      var query = "SELECT * FROM recipient WHERE email="+db.escape(email);
+      db.query(query, function(err, recips){
+        if(err){throw err;}
+        if(recips.length!==0){
+          callback(true);
+        } else {
+          callback(false);
+        }
+      });
+    },
     post: function (params, callback) {
       var query = 'INSERT INTO gmail(credentials) values (?)';
       db.query(query, params, function(err, gmail) {
@@ -119,6 +130,7 @@ module.exports = {
       });
     },
     updateTasks:function(instructions, userId, callback){
+      //try recursive loop
       for(var key in instructions[0].selectedContacts){
             var date = new Date();
             var recipientEmail = instructions[0].selectedContacts[key].email;
@@ -127,11 +139,15 @@ module.exports = {
 
             var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(key)+","+db.escape(recipientEmail)+","+db.escape(instructions[0].selectedContacts[key].birthday)+")";
 
+            //ADDING TO RECIPIENTS TABLE
             db.query(recipQuery, function(err, newRecip){
               if(err){throw err;}
               console.log('from recip query ',newRecip);
+              module.exports.tasks.addToTables(instructions, userId, callback);
 
+              //ADDING TO TASKS TABLE
               var query = "INSERT INTO tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+              console.log('recipientEmail is ', recipientEmail);
 
               db.query(query,function(err, added){
                 if(err){throw err;}
@@ -140,8 +156,52 @@ module.exports = {
             });
         }
       callback('added successfully');
-    }
-  },
+    },
+    updateTasksRecursive: function(instructions, userId, callback){
+      var keys = Object.keys(instructions[0].selectedContacts);
+
+      var recurse = function(length, index){
+        if (length === index) {
+          return;
+        }
+        var date = new Date();
+        var recipientEmail = instructions[0].selectedContacts[keys[index]].email;
+        var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(keys[index])+","+db.escape(recipientEmail)+","+db.escape(instructions[0].selectedContacts[keys[index]].birthday)+")";
+
+        db.query(recipQuery, function(err, newRecip){
+          if(err){throw err;}
+          var query = "INSERT INTO tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+            console.log('recipientEmail is ', recipientEmail);
+
+              db.query(query,function(err, added){
+                if(err){throw err;}
+                console.log('from query ', added);
+                recurse(length, index+1);
+              });
+        });
+      };
+        recurse(keys.length, 0);
+      }
+    },
+    // addToTables: function(instructions, userId, callback){
+    //   for(var key in instructions[0].selectedContacts){
+    //     var recipientEmail = instructions[0].selectedContacts[key].email;
+    //     module.exports.gmail.recipientEmailExists(recipientEmail, function(res){
+    //       if(res){
+    //         var date = new Date();
+    //         var query = "INSERT INTO tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+    //           console.log('recipientEmail is ', recipientEmail);
+
+    //         db.query(query,function(err, added){
+    //           if(err){throw err;}
+    //           console.log('from query ', added);
+    //           callback(added);
+    //         });
+    //       }
+    //     });
+    //   }
+    // }
+  // },
   Log: {
 
   }
