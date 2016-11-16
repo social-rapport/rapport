@@ -19,41 +19,36 @@ declare var Auth0Lock: any;
 export class Auth {
   // Configure Auth0
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
-  first = false;
   constructor(private http: Http, private router:Router) {
 
-
-    // Add callback for lock `authenticated` event
     var self = this;
     this.lock.on("authenticated", (authResult) => {
       let body = JSON.stringify(authResult);
       let headers = new Headers({'Content-Type': 'application/json'});
       localStorage.setItem('id_token', authResult.idToken);
+
+      //redirect for firsttime and second time users based on localStorage variable
       if(!localStorage.getItem('previous_user')){
         localStorage.setItem('previous_user', 'true');
+        //setup is for first-time users to choose their bot
         this.router.navigate(['setup']);
       } else {
         this.router.navigate(['home']);
       }
-      //if(!localStorage.getItem('id_token')){
-        
-        // this.http.post('/signIn', body, {headers: headers})
-        // .map(res => res.json())
-        // .subscribe(data => this.handleLogin(data));
-        //this.first = true;
-      //}
+      
+        //update user info from backend
+        this.http.post('/signIn', body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => this.updateUserInfo(data));
+       
+      
       
     });
    
   }
   
-  handleLogin(data){
-    console.log('new user?:', data.newUser);
-    if(data.newUser){
-      this.router.navigate(['setup']);
-    } else {
-      this.router.navigate(['home']);
-    }
+  updateUserInfo(data){
+    localStorage.setItem('user_email', data.email);
   }
 
   public login() {
