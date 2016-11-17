@@ -52,30 +52,24 @@ module.exports.checkIfNewUser = function(req, res){
   };
 
   module.exports.updateBots = function(req, res){
-    auth0Utils.getUserIdFromToken(req.body.idToken)
-      .then(userId => {
-        auth0Utils.getAccesstoken()
-          .then(accessToken => {
-            auth0Utils.getUserAccessKeys(userId, accessToken)
-              .then(userObj => {
-                // console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
-                var gmailInfo = auth0Utils.getGmailInfo(userObj);
-                // var gmailInfo = {
-                //   name: 'James Rocket',
-                //   email: 'james@teamrocket.com',
-                //   oauth: 'some secret oauth token for james'
-                // };
-                dbModel.users.getIdFromEmail(gmailInfo.email, function(userId){
-                  // console.log('the req.body.bots is ', req.body.bots);
-                  // console.log('the userId is ', userId[0].id);
-                  dbModel.tasks.updateTasksFlow(req.body.bots, userId[0].id, function(status){
-                    console.log(status);
-                    res.end();
-                  });
-                });
-              });
-          });
+    const email = req.query.email;
+    const botsArray = req.body;
+    console.log("email", email);
+    console.log("body", botsArray);
+
+    //if no body is provided. TODO:change 200 to correct status code
+    if(botsArray.length === 0 ){
+      res.status(200).send('body object needed!');
+      return;
+    }
+
+    dbModel.users.getIdFromEmail(email, (userId) => {
+      dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
+        console.log("updated bots array status", status);
+        res.status(200).send('bots array updated');
       });
+    });
+
   };
 
   module.exports.getBotInfo = function(req, res) {

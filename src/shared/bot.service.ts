@@ -32,9 +32,13 @@ export class BotService {
     return this.http.get(`/api/bots?email=${email}`) 
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
-        self.userBots.push(...bots);
+        self.userBots = bots.bots;
         return self.userBots; 
       }).toPromise();
+  }
+
+  getUserBots(){
+    return this.userBots;
   }
 
   addBotTypeToUser(bot: any){
@@ -42,23 +46,20 @@ export class BotService {
     console.log('selected user bots', this.userBots);
   }
 
-  xupdateBots(){
-    let token = localStorage.getItem('id_token');
-    const updateObject = {
-      idToken: token,
-      bots: this.userBots
-    };
-    
-    const bodyString = JSON.stringify(updateObject);
-    const headers = new Headers({'Content-Type': 'application/json'});
+  updateBots(userBotsArray){
+   let email = localStorage.getItem('user_email');
+   const body = JSON.stringify(userBotsArray);
+   const headers = new Headers({'Content-Type': 'application/json'})
 
-    this.http.put(`/api/bots?token=${token}`, bodyString, headers)
+   console.log("userbots array stringified", body);
+
+   this.http.put(`/api/bots?email=${email}`, body, {headers: headers})
       .map((data: any) => data.json())
       .subscribe(
         response => console.log("response", response),
         error => console.log("error", error),
         () => console.log("bot update completed")
-      );
+      )
   }
 
 }
