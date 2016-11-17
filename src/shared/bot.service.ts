@@ -32,13 +32,16 @@ export class BotService {
     return this.http.get(`/api/bots?email=${email}`) 
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
-        self.userBots = bots.bots;
-        return self.userBots; 
+        console.log("bots returned", bots);
+        if(bots) {
+          self.userBots = bots.bots;
+          return self.userBots; 
+        }
       }).toPromise();
   }
 
   getUserBots(){
-    return this.userBots;
+    return this.userBots || [];
   }
 
   addBotTypeToUser(bot: any){

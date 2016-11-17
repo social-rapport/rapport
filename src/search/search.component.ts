@@ -26,11 +26,13 @@ export class SearchComponent {
 
   onAddContact(selectedContact): void{
     console.log('selectedContact',selectedContact);
+    let selectedContactIndex = this.contacts.indexOf(selectedContact);
     this.bot.selectedContacts.push ({
       name: selectedContact.name,
       email: selectedContact.email,
       birthday: null,
     });
+    this.contacts.splice(selectedContactIndex,1);
     console.log('bot updated',this.bot);
   }
 
