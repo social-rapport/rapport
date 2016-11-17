@@ -15,6 +15,8 @@ module.exports = function (app, express) {
   //route for handling sign in and sign up
   app.post('/signIn', appController.checkIfNewUser);
 
+  app.get('/tasksForChron', appController.getTasksForChron);
+
 
   // <--------------- BOT ROUTES --------------->
   app.put('/api/bots', appController.updateBots);

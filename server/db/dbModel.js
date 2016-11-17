@@ -1,12 +1,5 @@
 var db = require('./db');
 
-//ROUTE FOR NAM
-// tasks.getAllTasksToday = function(){
-//   var date = new Date();
-//   var data = [recipientName, recipientEmail, userEmail, userName, message];
-// }
-
-
 // mysql calls
 module.exports = {
   users: {
@@ -89,6 +82,13 @@ module.exports = {
         }
       });
     },
+    getEmailOauthFromGmailId: function(gmailId, callback){
+      var query = 'SELECT emailAddress, credentials FROM gmail where id='+db.escape(gmailId);
+      db.query(query, function(err, emailInfo){
+        if(err){throw err;}
+        callback(emailInfo);
+      });
+    },
     post: function (params, callback) {
       var query = 'INSERT INTO gmail(credentials) values (?)';
       db.query(query, params, function(err, gmail) {
@@ -99,6 +99,15 @@ module.exports = {
   },
   facebook: {
 
+  },
+  recipient:{
+    getInfoWithId: function(id, callback){
+      var query = "SELECT * FROM recipient WHERE id="+db.escape(id);
+      db.query(query, function(err, recipInfo) {
+        if(err){throw err;}
+        callback(recipInfo);
+      });
+    }
   },
   bot: {
     getAllTasks: function (callback) {
@@ -170,10 +179,79 @@ module.exports = {
         }
       });
     },
+    //CONTOLLER
+    getTasksForChronJob:function(cb){
+      var data = [];
+      var oneTask = {};
+      var date = new Date();
+      date = String(date).slice(4, 15);
+      // var date = 'Nov 12 2016';
+      console.log(date);
+      //get everything from tasks table with today's date
+      module.exports.tasks.getTasksByDate(date, true, function(formatedTasks){
+
+        var recurse = function(length, index){
+          if(length===index){
+            cb(data);
+            return;
+          }
+          oneTask.tasks = formatedTasks[index];
+          var botId = formatedTasks[index].id_bot;
+          var recipId = formatedTasks[index].id_recipient;
+          var query =
+            "SELECT userName, id_gmail FROM users where id=(SELECT id_users FROM bot where id ="+db.escape(botId)+")";
+          db.query(query, function(err, users){
+            if(err){throw err;}
+            oneTask.user = users[0];
+            module.exports.gmail.getEmailOauthFromGmailId(users[0].id_gmail, function(email){
+              oneTask.user.userEmail = email[0].emailAddress;
+              oneTask.user.oauth = email[0].credentials;
+              module.exports.recipient.getInfoWithId(recipId, function(recipInfo){
+                oneTask.recipient = {
+                  name : recipInfo[0].name,
+                  email : recipInfo[0].email,
+                  birthday : recipInfo[0].birthday
+                };
+                data.push(oneTask);
+                recurse(length, index+1);
+              });
+            });
+          });
+        };
+        recurse(formatedTasks.length, 0);
+      });
+
+      //RECURSE so that for each task
+        //if finished recursing, cb(data);
+        //format task and add results to oneTask
+        //use botid to look up user
+        //format users and add to oneTask
+        //use recipientId to look up recipientInfo
+        //formate recipients and add to one Task
+          //push oneTask to data;
+      //call recurse
+    },
+    getTasksByDate: function(date, format, cb){
+      var query = "SELECT * FROM tasks WHERE date="+db.escape(date);
+      db.query(query, function(err, tasks){
+        if(err){throw err;}
+        if(tasks.length===0){
+          cb('no tasks for provided day');
+        } else if(format){
+          module.exports.tasks.formatTasks(tasks, cb);
+        } else {
+          cb(tasks);
+        }
+      });
+    },
+    formatTasks: function(tasks, cb){
+      cb(tasks);
+    },
     updateTasks:function(instructions, userId, callback){
       //try recursive loop
       for(var key in instructions[0].selectedContacts){
             var date = new Date();
+            date = date.slice(0, 10);
             var recipientEmail = instructions[0].selectedContacts[key].email;
             console.log('key is ', key);
             console.log('recipientEmail is', recipientEmail);
@@ -206,12 +284,14 @@ module.exports = {
           return;
         }
         var date = new Date();
+        date = String(date).slice(4, 15);
         var recipientEmail = instructions[0].selectedContacts[keys[index]].email;
         var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(keys[index])+","+db.escape(recipientEmail)+","+db.escape(instructions[0].selectedContacts[keys[index]].birthday)+")";
 
         db.query(recipQuery, function(err, newRecip){
           if(err){throw err;}
-          var query = "INSERT INTO tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+          var query =
+          "INSERT INTO tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
             console.log('recipientEmail is ', recipientEmail);
 
               db.query(query,function(err, added){

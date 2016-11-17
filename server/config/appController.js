@@ -10,6 +10,7 @@ module.exports.checkIfNewUser = function(req, res){
       email:'',
       newUser:null
     };
+    console.log(req.body);
     auth0Utils.getUserIdFromToken(req.body.idToken)
       .then(userId => {
         auth0Utils.getAccesstoken()
@@ -147,4 +148,9 @@ module.exports.getBotTypes = function(req, res){
   res.end(JSON.stringify(data));
 };
 
-
+module.exports.getTasksForChron = function(req, res){
+  dbModel.tasks.getTasksForChronJob(function(data){
+    res.send(data);
+    res.end();
+  });
+};
