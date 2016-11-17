@@ -35,6 +35,9 @@ module.exports = function (app, express) {
   //SENDS EMAIL
   app.get("/sendMail", gmail.sendMail);
 
+  // nam send botctrol test
+  app.get('/api/runalltasks', appController.runalltasks);
+
   //GETS GMAIL CONTACTS
   app.get("/api/gmail/contacts", gmail.getContacts);
 
