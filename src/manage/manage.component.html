@@ -25,6 +25,10 @@
         </div>
 
         <div class="list-container">
+          <search-component [bot]="selectedBot"></search-component>
+        </div>
+
+        <div class="list-container">
           <ul class="heroes">
             <p class="text">Contacts</p>
             <li class="contactli" *ngFor="let contact of contacts"

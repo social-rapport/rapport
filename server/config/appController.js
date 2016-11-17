@@ -138,7 +138,7 @@ module.exports.getBotTypes = function(req, res){
             'sayHiGmail',
             'sayHiFacebook'
      ],
-     selectedContacts: {},
+     selectedContacts: [] ,
      botactivity:{
         recent:[],
         scheduled:[]
