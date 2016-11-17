@@ -144,7 +144,7 @@ module.exports.getBotTypes = function(req, res){
             'sayHiFacebook'
      ],
      selectedContacts: [],
-     botactivity:{
+     botActivity:{
         recent:[],
         scheduled:[]
       }

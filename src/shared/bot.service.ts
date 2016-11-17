@@ -33,8 +33,9 @@ export class BotService {
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
         console.log("bots returned", bots);
-        if(bots) {
+        if(bots.length !== 0) {
           self.userBots = bots.bots;
+          console.log("user bots from service", self.userBots);
           return self.userBots; 
         }
       }).toPromise();
