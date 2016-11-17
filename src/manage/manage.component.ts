@@ -43,7 +43,7 @@ export class ManageComponent {
 
   onSelectBot(bot: any): void {
     this.selectedBot = bot;
-    this.activities = this.selectedBot.activities;
+    this.activities = this.selectedBot.botActivity.scheduled;
     this.contacts = this.selectedBot.selectedContacts;
     this.tasks = this.selectedBot.tasks;
   }
@@ -73,6 +73,9 @@ export class ManageComponent {
   }
 
   ngOnInit(): void {
-    this.getBots();
+    this.bots = this.botService.getUserBots();
+    console.log("user bots", this.bots);
+    this.onSelectBot(this.bots[0]);
+   
   }
 }
