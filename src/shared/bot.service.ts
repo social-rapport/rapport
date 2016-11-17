@@ -58,11 +58,18 @@ export class BotService {
    console.log("userbots array stringified", body);
 
    this.http.put(`/api/bots?email=${email}`, body, {headers: headers})
-      .map((data: any) => data.json())
       .subscribe(
         response => console.log("response", response),
         error => console.log("error", error),
-        () => console.log("bot update completed")
+        () => {
+          this.http.get('/api/runalltasks')
+            .map(resp => resp.json())
+            .subscribe(
+              response => console.log("response", response),
+              error => console.log("error", error),
+              () => console.log("finished")
+            );
+        }
       )
   }
 
