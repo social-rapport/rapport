@@ -7,10 +7,10 @@ module.exports = function (app, express) {
 
   console.log("routes loaded");
 
-  app.get('/',function(request, response){
-    console.log('Server Alive');
-    response.status(200).send('Server is alive!');
-  });
+  // app.get('/',function(request, response){
+  //   console.log('Server Alive');
+  //   response.status(200).send('Server is alive!');
+  // });
 
   //route for handling sign in and sign up
   app.post('/signIn', appController.checkIfNewUser);
