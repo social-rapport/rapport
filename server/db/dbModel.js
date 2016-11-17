@@ -285,7 +285,9 @@ module.exports = {
       callback('added successfully');
     },
     updateTasksRecursive: function(instructions, userId, callback){
-      var arr = instructions[0].selectedContacts;
+      console.log('instruction is -------',instructions.bots[0].selectedContacts);
+      var arr = instructions.bots[0].selectedContacts;
+      // var arr = instructions[0].selectedContacts;
 
       var recurse = function(length, index){
         if (length === index) {
@@ -294,25 +296,32 @@ module.exports = {
         var date = new Date();
         date = String(date).slice(4, 15);
         var recipientEmail = arr[index].email;
-        var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(arr[index].name)+","+db.escape(recipientEmail)+","+db.escape(arr[index].birthday)+")";
 
-        db.query(recipQuery, function(err, newRecip){
-          if(err){throw err;}
-          var query =
-          "INSERT INTO Tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
-            console.log('recipientEmail is ', recipientEmail);
+        module.exports.gmail.recipientEmailExists(recipientEmail, function(bool){
+          if(!bool){
+            var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(arr[index].name)+","+db.escape(recipientEmail)+","+db.escape(arr[index].birthday)+")";
 
-              db.query(query,function(err, added){
-                if(err){throw err;}
-                console.log('from query ', added);
-                recurse(length, index+1);
-              });
+            db.query(recipQuery, function(err, newRecip){
+              if(err){throw err;}
+              var query =
+              "INSERT INTO Tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+                console.log('recipientEmail is ', recipientEmail);
+
+                  db.query(query,function(err, added){
+                    if(err){throw err;}
+                    console.log('from query ', added);
+                    recurse(length, index+1);
+                  });
+            });
+          } else {
+            recurse(length, index+1);
+          }
         });
       };
-        recurse(arr.length, 0);
-        callback('works');
-      }
-    },
+      recurse(arr.length, 0);
+      callback('works');
+    }
+  },
     // addToTables: function(instructions, userId, callback){
     //   for(var key in instructions[0].selectedContacts){
     //     var recipientEmail = instructions[0].selectedContacts[key].email;
