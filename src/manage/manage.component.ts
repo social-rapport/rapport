@@ -41,18 +41,10 @@ export class ManageComponent {
     });
   }
 
-  toArray(obj: any): array{
-    var arr = [];
-    var keys = Object.keys(obj);
-    if(keys.length === 0){
-      return [];
-    }
-  }
-
   onSelectBot(bot: any): void {
     this.selectedBot = bot;
     this.activities = this.selectedBot.activities;
-    this.contacts = this.toArray(this.selectedBot.selectedContacts);
+    this.contacts = this.selectedBot.selectedContacts;
     this.tasks = this.selectedBot.tasks;
   }
 
