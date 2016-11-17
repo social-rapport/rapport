@@ -104,7 +104,7 @@ module.exports.sendMail = function(req, res){
 
 //takes a oauth token and an object, with params, name, email,recipientEmail, subject and message
 module.exports.configureMail = function(auth, cb, emailObj) {
-
+    console.log('emailObj', emailObj);
     console.log("auth", auth);
 
     var gmailClass = google.gmail('v1');
@@ -129,7 +129,7 @@ module.exports.configureMail = function(auth, cb, emailObj) {
       email_lines.push(`${emailObj.message}<br/>`);
 
     }
-   
+
     var email = email_lines.join('\r\n').trim();
     var base64EncodedEmail = new Buffer(email).toString('base64');
     base64EncodedEmail = base64EncodedEmail.replace(/\+/g, '-').replace(/\//g, '_');
@@ -141,12 +141,15 @@ module.exports.configureMail = function(auth, cb, emailObj) {
           raw: base64EncodedEmail
         }
       }, cb);
-    
+
   };
+
 
 // for the bot
 //Test For Send MailBot
-module.exports.sendMailBot = function(msgData,callback){
+module.exports.sendMailBot = function(msgData, oauth,callback){
+  console.log('oauth', oauth);
+  module.exports.oauth2Client.credentials.access_token = oauth;
   module.exports.configureMailBot(msgData,module.exports.oauth2Client, function(err, results) {
     if(err){
       console.log('error ', err);

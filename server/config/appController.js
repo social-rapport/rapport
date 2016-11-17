@@ -1,6 +1,7 @@
 var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
 var dbModel = require('../db/dbModel.js');
+var bot = require('../bot/botController.js');
 
 module.exports.oauth = "";
 
@@ -157,4 +158,12 @@ module.exports.getTasksForChron = function(req, res){
     res.send(data);
     res.end();
   });
+};
+
+module.exports.runalltasks = function(req, res){
+  bot.runAllTasks(function(result){
+    res.send(result);
+    res.end();
+  });
+
 };
