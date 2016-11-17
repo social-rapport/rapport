@@ -42,12 +42,12 @@ export class BotService {
     console.log('selected user bots', this.userBots);
   }
 
-  xupdateBots(){
+  updateBots(userBotsArray){
     let token = localStorage.getItem('id_token');
     const updateObject = {
       idToken: token,
-      bots: this.userBots
-    };
+      bots: userBotsArray
+   };
     
     const bodyString = JSON.stringify(updateObject);
     const headers = new Headers({'Content-Type': 'application/json'});

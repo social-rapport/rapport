@@ -22,7 +22,7 @@ export class ManageComponent {
 
   bots: any;
   selectedBot: any;
-
+  
   activities: string [];
   selectedActivity: string;
 
@@ -69,7 +69,7 @@ export class ManageComponent {
   }
 
   submitAllSettings(): void{
-    //this.botService.submit(this.bots);
+    this.botService.updateBots(this.bots);
   }
 
   ngOnInit(): void {
