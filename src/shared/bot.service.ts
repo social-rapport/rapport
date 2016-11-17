@@ -43,22 +43,38 @@ export class BotService {
   }
 
   updateBots(userBotsArray){
-    let token = localStorage.getItem('id_token');
-    const updateObject = {
-      idToken: token,
-      bots: userBotsArray
-   };
-    
-    const bodyString = JSON.stringify(updateObject);
-    const headers = new Headers({'Content-Type': 'application/json'});
+    // let token = localStorage.getItem('id_token');
+    // const updateObject = {
+    //   idToken: token,
+    //   bots: userBotsArray
+    // };
 
-    this.http.put(`/api/bots?token=${token}`, bodyString, headers)
+    // console.log("update object", updateObject);
+    
+    // const bodyString = JSON.stringify(updateObject);
+    // const headers = new Headers({'Content-Type': 'application/json'});
+
+    // this.http.put(`/api/bots?token=${token}`, bodyString, headers)
+    //   .map((data: any) => data.json())
+    //   .subscribe(
+    //     response => console.log("response", response),
+    //     error => console.log("error", error),
+    //     () => console.log("bot update completed")
+    //   );
+
+   let email = localStorage.getItem('user_email');
+   const body = JSON.stringify(userBotsArray);
+   const headers = new Headers({'Content-Type': 'application/json'})
+
+   console.log("userbots array stringified", body);
+
+   this.http.put(`/api/bots?email=${email}`, body, {headers: headers})
       .map((data: any) => data.json())
       .subscribe(
         response => console.log("response", response),
         error => console.log("error", error),
         () => console.log("bot update completed")
-      );
+      )
   }
 
 }

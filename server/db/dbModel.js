@@ -137,7 +137,7 @@ module.exports = {
       var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
       db.query(botQuery, function(err, botId){
         var botIdNum = botId[0].id;
-        var tasksByBotQuery = "SELECT * FROM tasks where id_bot="+db.escape(botIdNum);
+        var tasksByBotQuery = "SELECT * FROM Tasks where id_bot="+db.escape(botIdNum);
         db.query(tasksByBotQuery, function(err, tasksByBot){
           if(err){throw err;}
           var selectedContacts = {};
@@ -232,7 +232,7 @@ module.exports = {
       //call recurse
     },
     getTasksByDate: function(date, format, cb){
-      var query = "SELECT * FROM tasks WHERE date="+db.escape(date);
+      var query = "SELECT * FROM Tasks WHERE date="+db.escape(date);
       db.query(query, function(err, tasks){
         if(err){throw err;}
         if(tasks.length===0){
@@ -291,7 +291,7 @@ module.exports = {
         db.query(recipQuery, function(err, newRecip){
           if(err){throw err;}
           var query =
-          "INSERT INTO tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
+          "INSERT INTO Tasks(id_recipient, date, platform, id_bot, task) values((SELECT id from recipient WHERE email="+db.escape(recipientEmail)+"),"+db.escape(date)+","+"'gmail', (SELECT id FROM bot WHERE botName='basic' AND id_users="+db.escape(userId)+"), 'sayHiGmail')";
             console.log('recipientEmail is ', recipientEmail);
 
               db.query(query,function(err, added){
