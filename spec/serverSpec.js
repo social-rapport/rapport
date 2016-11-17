@@ -40,18 +40,29 @@ describe ('static assets: /',function(){
   });
 });
 
+//authenticated routs
+
 describe('api route: signIn',function(){
 
 
 });
 
+//not yet authenticated
 describe('api route: bots',function(){
 
 
 });
 
+//AUTHENTICATED ROUTES 
 describe('api route: contacts',function(){
-  
 
+  it.only('returns a list of contacts',function(done){
+    rp.get(`${server}/api/gmail/contacts?token=${idToken}`).then(function(r){
+      console.log('get contacts result:', r);
+    })
+    .then(done())
+    .catch();
+  }) 
+    
 });
 
