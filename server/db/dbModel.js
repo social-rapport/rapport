@@ -206,13 +206,21 @@ module.exports = {
             module.exports.gmail.getEmailOauthFromGmailId(users[0].id_gmail, function(email){
               oneTask.user.userEmail = email[0].emailAddress;
               oneTask.user.oauth = email[0].credentials;
+              // console.log('recipID is -----------------',recipId);
               module.exports.recipient.getInfoWithId(recipId, function(recipInfo){
+                // console.log('recipt info ----------', recipInfo);
                 oneTask.recipient = {
                   name : recipInfo[0].name,
                   email : recipInfo[0].email,
                   birthday : recipInfo[0].birthday
                 };
-                data.push(oneTask);
+                console.log('one task is ------',oneTask);
+                // var copy = {};
+                // for(var key in oneTask){
+                //   copy[key] = oneTask[key];
+                // }
+                var copy = Object.assign({}, oneTask);
+                data.push(copy);
                 recurse(length, index+1);
               });
             });
