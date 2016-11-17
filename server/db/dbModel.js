@@ -100,6 +100,15 @@ module.exports = {
   facebook: {
 
   },
+  recipient:{
+    getInfoWithId: function(id, callback){
+      var query = "SELECT * FROM recipient WHERE id="+db.escape(id);
+      db.query(query, function(err, recipInfo) {
+        if(err){throw err;}
+        callback(recipInfo);
+      });
+    }
+  },
   bot: {
     getAllTasks: function (callback) {
       // Get all tastks
@@ -188,6 +197,7 @@ module.exports = {
           }
           oneTask.tasks = formatedTasks[index];
           var botId = formatedTasks[index].id_bot;
+          var recipId = formatedTasks[index].id_recipient;
           var query =
             "SELECT userName, id_gmail FROM users where id=(SELECT id_users FROM bot where id ="+db.escape(botId)+")";
           db.query(query, function(err, users){
@@ -196,8 +206,15 @@ module.exports = {
             module.exports.gmail.getEmailOauthFromGmailId(users[0].id_gmail, function(email){
               oneTask.user.userEmail = email[0].emailAddress;
               oneTask.user.oauth = email[0].credentials;
-              data.push(oneTask);
-              recurse(length, index+1);
+              module.exports.recipient.getInfoWithId(recipId, function(recipInfo){
+                oneTask.recipient = {
+                  name : recipInfo[0].name,
+                  email : recipInfo[0].email,
+                  birthday : recipInfo[0].birthday
+                };
+                data.push(oneTask);
+                recurse(length, index+1);
+              });
             });
           });
         };
