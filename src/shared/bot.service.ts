@@ -52,7 +52,7 @@ export class BotService {
 
   updateBots(userBotsArray){
    let email = localStorage.getItem('user_email');
-   const body = JSON.stringify(userBotsArray);
+   const body = JSON.stringify({bots: userBotsArray});
    const headers = new Headers({'Content-Type': 'application/json'})
 
    console.log("userbots array stringified", body);
