@@ -11,8 +11,6 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class ContactComponent {
   constructor() {
-
-    console.log('created contact')
   }
 
   activateContact(){
@@ -21,7 +19,6 @@ export class ContactComponent {
 
   @Input() contact;
 
-  //@Output() onVoted = new EventEmitter<boolean>();
 }
 
 

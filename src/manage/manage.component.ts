@@ -5,10 +5,10 @@ import { BotService } from '../shared/bot.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContactComponent } from '../contact/contact.component';
+import {SearchComponent} from '../search/search.component';
 
 @Component({
   selector: 'manage-component',
-  //providers: [BotService],
   templateUrl: 'app/manage/manage.component.html',
   styleUrls: ['app/manage/manage.component.css']
 })
@@ -21,7 +21,7 @@ export class ManageComponent {
   title = 'My Bots';
 
   bots: any;
-  selectedBot: Bot;
+  selectedBot: any;
 
   activities: string [];
   selectedActivity: string;
@@ -41,10 +41,18 @@ export class ManageComponent {
     });
   }
 
-  onSelectBot(bot: Bot): void {
+  toArray(obj: any): array{
+    var arr = [];
+    var keys = Object.keys(obj);
+    if(keys.length === 0){
+      return [];
+    }
+  }
+
+  onSelectBot(bot: any): void {
     this.selectedBot = bot;
     this.activities = this.selectedBot.activities;
-    this.contacts = this.selectedBot.contacts;
+    this.contacts = this.toArray(this.selectedBot.selectedContacts);
     this.tasks = this.selectedBot.tasks;
   }
 
@@ -54,6 +62,10 @@ export class ManageComponent {
 
   callback(): void{
     console.log('contact activated');
+  }
+
+  onAddContact(contact): void {
+    this.selectedBot.selectedContacts;
   }
 
   onSelectContact(contact): void {
