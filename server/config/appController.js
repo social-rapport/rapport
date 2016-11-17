@@ -101,6 +101,16 @@ module.exports.checkIfNewUser = function(req, res){
                       res.end(JSON.stringify([]));
                     } else {
                       dbModel.bot.getBotTasks('basic', userId[0].id, function(selectedContacts){
+                        var contacts = [];
+
+                        for(var key in selectedContacts){
+                          contacts.push({
+                            name: key,
+                            birthday: selectedContacts[key].birthday,
+                            email: selectedContacts[key].email
+                          });
+                        }
+
                         var data = {
                           "bots":[{
                             "botType":'basic',
@@ -110,7 +120,7 @@ module.exports.checkIfNewUser = function(req, res){
                               'sayHiGmail',
                               'sayHiFacebook'
                             ],
-                            "selectedContacts": selectedContacts,
+                            "selectedContacts":contacts,
                             botActivity:{
                               "recent":[],
                               "scheduled":[]
