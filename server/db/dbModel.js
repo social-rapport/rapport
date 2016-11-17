@@ -277,7 +277,7 @@ module.exports = {
       callback('added successfully');
     },
     updateTasksRecursive: function(instructions, userId, callback){
-      var keys = Object.keys(instructions[0].selectedContacts);
+      var arr = instructions[0].selectedContacts;
 
       var recurse = function(length, index){
         if (length === index) {
@@ -285,8 +285,8 @@ module.exports = {
         }
         var date = new Date();
         date = String(date).slice(4, 15);
-        var recipientEmail = instructions[0].selectedContacts[keys[index]].email;
-        var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(keys[index])+","+db.escape(recipientEmail)+","+db.escape(instructions[0].selectedContacts[keys[index]].birthday)+")";
+        var recipientEmail = arr[index].email;
+        var recipQuery = "INSERT into recipient(name, email, birthday) values("+db.escape(arr[index].name)+","+db.escape(recipientEmail)+","+db.escape(arr[index].birthday)+")";
 
         db.query(recipQuery, function(err, newRecip){
           if(err){throw err;}
@@ -301,7 +301,7 @@ module.exports = {
               });
         });
       };
-        recurse(keys.length, 0);
+        recurse(arr.length, 0);
         callback('works');
       }
     },
