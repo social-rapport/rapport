@@ -43,6 +43,7 @@ export class ManageComponent {
 
   onSelectBot(bot: any): void {
     this.selectedBot = bot;
+    console.log("selected bot", this.selectedBot);
     this.activities = this.selectedBot.botActivity.scheduled;
     this.contacts = this.selectedBot.selectedContacts;
     this.tasks = this.selectedBot.tasks;
