@@ -67,6 +67,11 @@ module.exports.checkIfNewUser = function(req, res){
     dbModel.users.getIdFromEmail(email, (userId) => {
       dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
         console.log("updated bots array status", status);
+        //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
+        // bot.runAllTasks((statusMessage) => {
+        //   console.log("email sent status", status);
+        // });
+
         res.status(200).send('bots array updated');
       });
     });
