@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Bot } from '../shared/bot';
-
+//change
 import { BotService } from '../shared/bot.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
