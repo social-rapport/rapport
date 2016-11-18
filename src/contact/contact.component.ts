@@ -1,4 +1,4 @@
-import { Contact } from '../shared/contact';
+import { gmailContact } from '../shared/custom-type-classes';
 // Keep the Input import for now, we'll remove it later:
 import { Component, Input, OnInit } from '@angular/core';
 

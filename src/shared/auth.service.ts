@@ -9,6 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { BotService } from './bot.service';
+import { gmailContact } from '../shared/custom-type-classes';
 
 //import { Auth0Lock } from 'auth0-lock'
 // Avoid name not found warnings
@@ -22,24 +23,13 @@ export class Auth {
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
   constructor(private http: Http, private router:Router,  private botService: BotService) {
 
-    var self = this;
     this.lock.on("authenticated", (authResult) => {
-      console.log("lock on called");
-
-      let body = JSON.stringify(authResult);
-      let headers = new Headers({'Content-Type': 'application/json'});
       localStorage.setItem('id_token', authResult.idToken);
-      
-      //update user info from backend
-      this.http.post('/signIn', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(userObj => this.updateUserInfo(userObj));
+      this.onAuthentication(authResult);
     });
-   
   }
   
   updateUserInfo(data){
-    console.log("data", data);
     localStorage.setItem('user_email', data.email);
     this.botService.importUserBots()
       .then(userBots => this.redirectForUserType(data));
@@ -49,6 +39,27 @@ export class Auth {
     // Call the show method to display the widget./
     this.lock.show();
   };
+
+  public onAuthentication(authResult) {
+    console.log("on Auth called");
+    let userObj;
+    //localStorage.setItem('id_token', authResult.idToken);
+    this.signInUser(authResult)
+      .then(userInfo => {
+        userObj = userInfo;
+        this.botService.setInitialState()
+      }).then(() => this.redirectForUserType(userObj))
+        .then(() => console.log("on authentication completed", this.botService));
+  }
+
+  public signInUser(authResult) {
+     let body = JSON.stringify(authResult);
+     let headers = new Headers({'Content-Type': 'application/json'});
+           
+      //update user info from backend
+      return this.http.post('/signIn', body, {headers: headers})
+        .map(res => res.json()).toPromise();
+  }
 
   public redirectForUserType(userObj) {
     userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['home']);

@@ -1,12 +1,11 @@
-import { Bot } from '../shared/bot';
-export const BOTS: Bot[] = [
-  { id: 0, 
-    description: 'keeps it real',
-    name: 'Default', 
-    activities: ['said hi', 'said hello'], 
-    contacts: [{name: "John", birthday:"8/88/8888", active: false},
-                {name: "Jane", birthday:"9/9/9999", active: false}
-                ],
+import { customBot } from '../shared/custom-type-classes';
+export const BOTS: customBot[] = [
+  { botType: 'basic', 
+    botActivity:{
+      recent: ['said hi', 'said hello'],
+      scheduled: []
+    }, 
+    selectedContacts: [{name: "John", email:"john@gmail.com", photo: ""},{name: "Jane", email:"john@gmail.com", photo: ""}],
     tasks: ['say hi'],
     },
 ];
