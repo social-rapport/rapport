@@ -13,14 +13,11 @@ export class BotService {
   public contacts: Array<gmailContact>;
   public tasks: Array<string>;
    
-
   constructor(private http: Http) {}
 
   public setInitialState(){
-    return this.getBotTypes()
-      .then(() => this.getContacts())
-        //.then(() => this.getTasks())
-      .then(() =>this.importUserBots())
+    //add get tasks when api endpoint is implemented
+    return Promise.all([this.getBotTypes(), this.importUserBots(), this.getContacts()]);
   }
 
   public getBotTypes(){
@@ -67,6 +64,8 @@ export class BotService {
         if(bots.length !== 0) {
           self.userBots = bots.bots;
           return self.userBots; 
+        } else {
+          self.userBots = [];
         }
       }).toPromise();
   }
@@ -88,7 +87,7 @@ export class BotService {
       .subscribe(
         response => console.log("response", response),
         error => console.log("error", error),
-        () => {
+        () => { console.log("save finished")
           //TODO: remove this run tasks when cron is working
           this.http.get('/api/runalltasks')
             .map(resp => resp.json())
