@@ -6,7 +6,11 @@ var bot = require('../bot/botController.js');
 module.exports.oauth = "";
 
 module.exports.checkIfNewUser = function(req, res){
+<<<<<<< HEAD
   //first step gets userObj from the Auth0 JWT 
+=======
+  //first step gets userObj from the Auth0 JWT
+>>>>>>> cleaned checkIfNewUser
   auth0Utils.getUserIdFromToken(req.body.idToken || req.req.query.token)
     .then(userObj => {
       const email = userObj.email;
@@ -79,11 +83,7 @@ module.exports.checkIfNewUser = function(req, res){
           res.status(200).send('bots array updated');
         });
       });
-
     }
-
-    
-
   };
 
   module.exports.getBotInfo = function(req, res) {
