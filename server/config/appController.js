@@ -61,24 +61,27 @@ module.exports.checkIfNewUser = function(req, res){
     //if no body is provided. TODO:change 200 to correct status code
     if(botsArray.length === 0 ){
       dbModel.users.getIdFromEmail(email,function(userId){
-        dbModel.bot.deleteAll(userId[0].id, function(res){
+        dbModel.bot.deleteAll(userId[0].id, function(data){
           console.log('deleted all bots');
-          return;
+          res.status(200).send('deleted all');
         })
       })
+    } else {
+      dbModel.users.getIdFromEmail(email, (userId) => {
+        dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
+          console.log("updated bots array status", status);
+          //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
+          // bot.runAllTasks((statusMessage) => {
+          //   console.log("email sent status", status);
+          // });
+
+          res.status(200).send('bots array updated');
+        });
+      });
+
     }
 
-    dbModel.users.getIdFromEmail(email, (userId) => {
-      dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
-        console.log("updated bots array status", status);
-        //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
-        // bot.runAllTasks((statusMessage) => {
-        //   console.log("email sent status", status);
-        // });
-
-        res.status(200).send('bots array updated');
-      });
-    });
+    
 
   };
 

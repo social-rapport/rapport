@@ -143,6 +143,7 @@ describe('api route: contacts',function(){
 
 
 describe('api route: getBots',function(){
+
   it('returns empty array if no bots',function(done){
     getBots()
     .then(parse)
@@ -154,14 +155,11 @@ describe('api route: getBots',function(){
     .catch(done);
   }) 
 
-  it.only('returns empty array after bots are deleted',function(done){
-    this.timeout(300000);
-
+  it('returns empty array after bots are deleted',function(done){
     postBots({json: []})
     .then(getBots)
     .then(parse)
     .then(function(res){
-      console.log(res);
       expect(res.length).to.equal(0);
     })
     .then(done)            
@@ -170,20 +168,18 @@ describe('api route: getBots',function(){
 });
 
 describe('api route: postBots',function(){
-  it('gets bot type, modifies, returns, gets updated',function(done){
+  it.only('gets bot type, modifies, returns, gets updated',function(done){
     this.timeout(300000);
     getBotTypes()
     .then(parse)
     .then(function(res){
-      console.log('captured res',res);
       return postBots({json: res});
     })
-    
-    // .then(getBots)
-    // .then(parse)
-    // .then(function(res){
-    //   console.log('getbots res',res);
-    // })
+    .then(getBots)
+    .then(parse)
+    .then(function(res){
+      expect(res.bots.length).to.equal(1);
+    })
     .then(done)            
     .catch(done);
   }) 
