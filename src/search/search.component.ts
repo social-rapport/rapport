@@ -30,6 +30,9 @@ export class SearchComponent {
   }
 
   ngOnInit(): void {
+    console.log("bot service from search", this.botService);
+    console.log("bot service contacts from search", this.botService.contacts);
+    console.log("bot contacs from getter", this.botService.returnContacts());
     this.contacts = this.botService.contacts.filter(contact => {
      const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
      return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;

@@ -74,6 +74,10 @@ export class BotService {
     return this.userBots || [];
   }
 
+  public returnContacts(){
+    return this.contacts || [];
+  }
+
   public addBotTypeToUser(bot: any){
     this.userBots.push(bot);
   }

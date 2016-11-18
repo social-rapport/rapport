@@ -104,7 +104,7 @@ module.exports.checkIfNewUser = function(req, res){
                 dbModel.users.getIdFromEmail(req.query.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
                   // console.log('the userId is ', userId[0].id);
-                  dbModel.bot.exists(userId[0].id, 'standard', function(bool){
+                  dbModel.bot.exists(userId[0].id, 'basic', function(bool){
                     if(!bool){
                       res.end(JSON.stringify([]));
                     } else {
