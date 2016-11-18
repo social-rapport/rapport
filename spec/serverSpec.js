@@ -78,7 +78,6 @@ describe ('static assets: index page',function(){
   xit('serves index',function(done){
     rp(server+'/')
     .then(res=>{
-      console.log(res);
     })
     .then(done)            
     .catch(done);
@@ -115,7 +114,6 @@ describe('api route: signIn',function(){
     postSignIn()
     .then(parse)
     .then(function(res){
-      console.log('newUser',res);
       //expect(res.length).to.equal(100);
       expect(T.hasAll(res,'userObj')).to.equal(true);
     })
@@ -130,8 +128,6 @@ describe('api route: contacts',function(){
     getContacts()
     .then(parse)
     .then(function(res){
-      console.log(res.length);
-      console.log(res[0]);
       expect(T.hasAll(res,'contacts')).to.equal(true);
       expect(res.length).to.equal(emailInfo.contactsLength);
     })
@@ -143,17 +139,6 @@ describe('api route: contacts',function(){
 
 
 describe('api route: getBots',function(){
-
-  it('returns empty array if no bots',function(done){
-    getBots()
-    .then(parse)
-    .then(function(res){
-      console.log(res);
-      expect(res.length).to.equal(0);
-    })
-    .then(done)            
-    .catch(done);
-  }) 
 
   it('returns empty array after bots are deleted',function(done){
     postBots({json: []})
@@ -168,7 +153,7 @@ describe('api route: getBots',function(){
 });
 
 describe('api route: postBots',function(){
-  it.only('gets bot type, modifies, returns, gets updated',function(done){
+  it('gets bot type, modifies, returns, gets updated',function(done){
     this.timeout(300000);
     getBotTypes()
     .then(parse)
