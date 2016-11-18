@@ -12,6 +12,7 @@ module.exports.checkIfNewUser = function(req, res){
       newUser:null
     };
     console.log(req.body);
+    
     auth0Utils.getUserIdFromToken(req.body.idToken || req.query.token)
       .then(userId => {
         auth0Utils.getAccesstoken()
@@ -21,11 +22,6 @@ module.exports.checkIfNewUser = function(req, res){
                 console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
                 var gmailInfo = auth0Utils.getGmailInfo(userObj);
                 module.exports.oauth = gmailInfo.oauth;
-                // var gmailInfo = {
-                //   name: 'James Rocket',
-                //   email: 'james@teamrocket.com',
-                //   oauth: 'some secret oauth token james'
-                // };
                   dbModel.gmail.emailExists(gmailInfo.email, function(bool){
                       if(bool){
                         dbModel.users.getBasicUserData(gmailInfo.email, function(info){
@@ -47,10 +43,11 @@ module.exports.checkIfNewUser = function(req, res){
                         });
                       }
                   });
+                  
               });
           });
       });
-  };
+}
 
   module.exports.updateBots = function(req, res){
     const email = req.query.email;

@@ -95,6 +95,19 @@ function jsonChecker(itemToBeChecked) {
     return typeof itemToBeChecked === 'string' ? JSON.parse(itemToBeChecked) : itemToBeChecked;
 }
 
+function userObjFromToken(token,cb){
+    getUserIdFromToken(token,cb)
+      .then(userId => {
+        getAccesstoken()
+          .then(accessToken => {
+            getUserAccessKeys(userId, accessToken)
+              .then(userObj => {
+                cb(userObj);
+              })
+          })
+      })
+}
+
 
 
 module.exports = {
@@ -103,5 +116,6 @@ module.exports = {
     getAccesstoken: getAccesstoken,
     getUserIdFromToken: getUserIdFromToken,
     getGmailInfo: getGmailInfo,
-    gmailInfo: null
+    gmailInfo: null,
+    userObjFromToken: userObjFromToken
 };
