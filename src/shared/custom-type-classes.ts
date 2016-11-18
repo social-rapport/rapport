@@ -1,13 +1,4 @@
-export class Bot {
-  id: number;
-  description: string;
-  name: string;
-  activities: Array<string>;
-  contacts: Array<Object>;
-  tasks: Array<string>;
-}
-
-class gmailContact {
+export class gmailContact {
     email: string;
     name: string;
     photo: string;

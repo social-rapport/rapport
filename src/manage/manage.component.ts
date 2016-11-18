@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { Bot, customBot } from '../shared/bot';
+import { customBot, gmailContact } from '../shared/custom-type-classes';
 //change
 import { BotService } from '../shared/bot.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
-import { gmailContact } from '../shared/contact';
 
 @Component({
   selector: 'manage-component',

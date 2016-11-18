@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Bot, customBot } from '../shared/bot';
+import { customBot, gmailContact } from '../shared/custom-type-classes';
 import { BOTS } from '../data/mock-bots';
-import { gmailContact } from '../shared/contact';
 
 @Injectable()
 export class BotService {

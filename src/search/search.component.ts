@@ -1,5 +1,5 @@
 import { Component,OnInit, Input} from '@angular/core';
-import { gmailContact } from '../shared/contact';
+import { gmailContact } from '../shared/custom-type-classes';
 import { FilterContacts } from './contact.pipe';
 import { BotService } from '../shared/bot.service';
 

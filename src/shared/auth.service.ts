@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { BotService } from './bot.service';
-import { gmailContact } from '../shared/contact';
+import { gmailContact } from '../shared/custom-type-classes';
 
 //import { Auth0Lock } from 'auth0-lock'
 // Avoid name not found warnings

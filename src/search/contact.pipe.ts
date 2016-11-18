@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { gmailContact } from '../shared/contact';
+import { gmailContact } from '../shared/custom-type-classes';
 
 @Pipe({name: 'filterContacts'})
 export class FilterContacts implements PipeTransform {
