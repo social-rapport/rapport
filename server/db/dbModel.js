@@ -1,23 +1,42 @@
 var db = require('./db');
 
 function handleError(cb, err,result){
+  if(typeof cb !== 'function'){err = cb}
   if(err){
     throw err;
   } else {
-    cb(result);
+    if(cb)cb(result);
+  }
+}
+
+function lengthToBool(cb, data){
+  if(data.length!==0){
+    if(cb)cb(true);
+  } else {
+    if(cb)cb(false);
   }
 }
 
 module.exports = {
+  database: {
+    drop: function(callback){
+      var q = 'DROP DATABASE rapport';
+      db.query(q,handleError.bind(null,callback));
+    },
+    deleteAll: function(callback){
+      var q = 'DELETE * FROM bot';
+      db.query(q,handleError.bind(null,callback));
+    },
+    init: function(cb){
+      var q = 'SOURCE ../db/schema.sql'
+      db.query(q,handleError);
+    }
+  },
   users: {
+    //<---------remove if not using
     get: function (callback) {
-      // Get all users
       var query = 'SELECT * FROM users';
-      db.query(query, function(err, users) {
-        if(err){ throw err;}
-        console.log(users);
-        //callback(err, users);
-      });
+      db.query(query, handleError.bind(null,console.log));
     },
     post: function (params, callback) {
       var query = 'INSERT INTO users(userName) values (?)';
@@ -31,6 +50,10 @@ module.exports = {
       var userQuery = 'INSERT INTO users(userName, id_gmail) values('+db.escape(params.name)+',(SELECT id from gmail where emailAddress='+db.escape(params.email)+'))';
       db.query(userQuery, handleError.bind(null,callback));
     },
+    getIdFromEmail: function(email, callback){
+      var query = 'SELECT id FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
+      db.query(query, handleError.bind(null,callback));
+    },
     getBasicUserData: function(email, callback){
       var query = 'SELECT * FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
       db.query(query, function(err, result){
@@ -43,10 +66,6 @@ module.exports = {
         callback(data);
       });
     },
-    getIdFromEmail: function(email, callback){
-      var query = 'SELECT id FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
-      db.query(query, handleError.bind(null,callback));
-    }
   },
   gmail: {
     get: function (callback) {
@@ -56,26 +75,13 @@ module.exports = {
     },
     emailExists: function(email, callback){
       var query = 'SELECT * FROM gmail WHERE emailAddress = '+db.escape(email);
-      // var query = 'select * from gmail';
-      db.query(query, function(err, users) {
-        if(err){ throw err;}
-        if(users.length!==0){
-          callback(true);
-        } else {
-          callback(false);
-        }
-      });
+      var cb = lengthToBool.bind(null,callback);
+      db.query(query,handleError.bind(null,cb));
     },
     recipientEmailExists: function(email, callback){
       var query = "SELECT * FROM recipient WHERE email="+db.escape(email);
-      db.query(query, function(err, recips){
-        if(err){throw err;}
-        if(recips.length!==0){
-          callback(true);
-        } else {
-          callback(false);
-        }
-      });
+      var cb = lengthToBool.bind(null,callback);
+      db.query(query, handleError.bind(null,cb));
     },
     getEmailOauthFromGmailId: function(gmailId, callback){
       var query = 'SELECT emailAddress, credentials FROM gmail where id='+db.escape(gmailId);
@@ -100,27 +106,26 @@ module.exports = {
       var query = 'SELECT * FROM Tasks';
       db.query(query, handleError.bind(null,callback));
     },
-    exists:function(userId, botType, cb){
+    exists:function(userId, botType, callback){
       var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
-      db.query(botQuery, function(err, result){
-        if(result.length===0){
-          cb(false);
-        } else {
-          cb(true);
-        }
-      });
+      var cb = lengthToBool.bind(null,callback);
+      db.query(botQuery, handleError.bind(null,cb));
     },
     deleteAll: function(userId,cb){
       var q = "DELETE FROM bot WHERE id_users="+db.escape(userId);
       db.query(q, handleError.bind(null,cb));
+    },
+    _getBotTasks: function(userId, botName,cb){
+      var q = `select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot = 
+(select id from bot where botName = 'basic' AND id_users = 1)));`;
+      db.query(q,handleError.bind(null,cb));
     },
     getBotTasks: function(botType, userId, cb){
 
       //<------------needs to be a join--------->
 
  
-`select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot = 
-(select id from bot where botName = 'basic')));`
+
 
 
       //want all tasks with bot id

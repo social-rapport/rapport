@@ -14,6 +14,11 @@ module.exports = {
         if (err) { throw err; }
         res.sendStatus(201);
       });
+    },
+    getBots: function(req, res){
+      //get all the bot identifiers for the user
+        //get all the contact info for the bot
+          //
     }
   },
   gmail: {
@@ -31,5 +36,6 @@ module.exports = {
       });
     }
   },
+
 
 }
