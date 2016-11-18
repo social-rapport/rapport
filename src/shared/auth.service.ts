@@ -29,12 +29,6 @@ export class Auth {
     });
   }
   
-  updateUserInfo(data){
-    localStorage.setItem('user_email', data.email);
-    this.botService.importUserBots()
-      .then(userBots => this.redirectForUserType(data));
-  }
-
   public login() {
     // Call the show method to display the widget./
     this.lock.show();
@@ -48,8 +42,9 @@ export class Auth {
       .then(userInfo => {
         userObj = userInfo;
         this.botService.setInitialState()
-      }).then(() => this.redirectForUserType(userObj))
-        .then(() => console.log("on authentication completed", this.botService));
+          .then(() => this.redirectForUserType(userObj))
+          .then(() => console.log("on authentication completed", this.botService));
+      });
   }
 
   public signInUser(authResult) {
