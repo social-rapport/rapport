@@ -4,11 +4,14 @@ var dbModel = require('../db/dbModel.js');
 
 auth0Utils.userObjFromToken(token,function(userObj){
     
+})
+
+function resolveUserAction((userObj){
     dbModel.gmail.emailExists(userObj.email, function(exists){
         if(exists){
             getUserData(userObj);
         } else if (!exists){
-            saveNewUser(userObj);
+            //saveNewUser(userObj);
         }
     });
 })
@@ -27,11 +30,5 @@ function getUserData(){
     dbModel.users.getBasicUserData(userObj.email, function(info){
         return info;
     });
-}
-
-function resolveUserModel(userObj){
-    return new Promise(resolve,reject){
-
-    }
 }
 
