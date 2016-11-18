@@ -27,3 +27,70 @@ body, input[text], button {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Rapport Layout */
+
+/* GLOBAL */
+.signup-login {
+
+}
+
+/* LANDING PAGE */
+video#bgvid {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background: '../../assets/rapport+intro.png';
+  background-size: cover;
+}
+
+.title-main {
+
+}
+
+.title-main .tagline {
+
+}
+
+.button-signup {
+
+}
+
+/* PAGES */
+.title-anchor {
+
+}
+
+.title-section {
+
+}
+
+.title-section .description {
+
+}
+
+/* CHOOSE BOT PAGE */
+.carousel {
+
+}
+
+.carousel .box-choose-bot{
+
+}
+
+.carousel .img-choose-bot {
+
+}
+
+.carousel .name-bottype {
+
+}
+
+.carousel .description {
+
+}
+
+.carousel .img-prev-next {
+
+}
