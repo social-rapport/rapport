@@ -4,8 +4,25 @@ var dbModel = require('../db/dbModel.js');
 var db = require('../db/db.js');
 
 
+function addUser(){
+    dbModel.users.getIdFromEmail('jproche5@gmail.com', function(userId){
+                  dbModel.bot.exists(userId[0].id, 'standard', function(bool){
+                    if(!bool){
+                      res.end(JSON.stringify([]));
+                    } else {
+                      dbModel.bot._getBotTasks('basic', userId[0].id, function(selectedContacts){
+                        var contacts = [];
+                      });
+                    }
+                  })
+    });
+}
+
+addUser();
+
+
 //dbModel.database.drop(function(data){
-    dbModel.database.init();
+    //dbModel.database.init();
 //})
 // auth0Utils.userObjFromToken(token,function(userObj){
     

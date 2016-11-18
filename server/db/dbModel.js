@@ -24,7 +24,7 @@ module.exports = {
       db.query(q,handleError.bind(null,callback));
     },
     deleteAll: function(callback){
-      var q = 'DELETE * FROM *';
+      var q = 'DELETE * FROM bot';
       db.query(q,handleError.bind(null,callback));
     },
     init: function(cb){
@@ -106,7 +106,7 @@ module.exports = {
       var query = 'SELECT * FROM Tasks';
       db.query(query, handleError.bind(null,callback));
     },
-    exists:function(userId, botType, cb){
+    exists:function(userId, botType, callback){
       var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
       var cb = lengthToBool.bind(null,callback);
       db.query(botQuery, handleError.bind(null,cb));
@@ -115,13 +115,17 @@ module.exports = {
       var q = "DELETE FROM bot WHERE id_users="+db.escape(userId);
       db.query(q, handleError.bind(null,cb));
     },
+    _getBotTasks: function(userId, botName,cb){
+      var q = `select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot = 
+(select id from bot where botName = 'basic' AND id_users = 1)));`;
+      db.query(q,handleError.bind(null,cb));
+    },
     getBotTasks: function(botType, userId, cb){
 
       //<------------needs to be a join--------->
 
  
-`select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot = 
-(select id from bot where botName = 'basic')));`
+
 
 
       //want all tasks with bot id
