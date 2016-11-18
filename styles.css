@@ -32,7 +32,15 @@ body, input[text], button {
 
 /* GLOBAL */
 .signup-login {
-
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 13px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 /* LANDING PAGE */
@@ -46,11 +54,27 @@ video#bgvid {
 }
 
 .title-main {
-
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 50px/1 Arial, Helvetica, sans-serif;
+  color: #5a5a5a;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 .title-main .tagline {
-
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 15px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 .button-signup {
@@ -66,7 +90,7 @@ video#bgvid {
 
 }
 
-.title-section .description {
+.title-section .desc {
 
 }
 
@@ -92,5 +116,30 @@ video#bgvid {
 }
 
 .carousel .img-prev-next {
+
+}
+
+/* DASHBOARD */
+.menu-bottype {
+
+}
+
+.table-dashboard {
+
+}
+
+.table-dashboard .title-col {
+
+}
+
+.table-dashboard .description-col {
+
+}
+
+.advanced-settings {
+
+}
+
+.button-bot-action {
 
 }
