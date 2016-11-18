@@ -12,7 +12,7 @@ module.exports.checkIfNewUser = function(req, res){
       newUser:null
     };
     console.log(req.body);
-    auth0Utils.getUserIdFromToken(req.body.idToken)
+    auth0Utils.getUserIdFromToken(req.body.idToken || req.query.token)
       .then(userId => {
         auth0Utils.getAccesstoken()
           .then(accessToken => {
@@ -60,8 +60,12 @@ module.exports.checkIfNewUser = function(req, res){
 
     //if no body is provided. TODO:change 200 to correct status code
     if(botsArray.length === 0 ){
-      res.status(200).send('body object needed!');
-      return;
+      dbModel.users.getIdFromEmail(email,function(userId){
+        dbModel.bot.deleteAll(userId[0].id, function(res){
+          console.log('deleted all bots');
+          return;
+        })
+      })
     }
 
     dbModel.users.getIdFromEmail(email, (userId) => {

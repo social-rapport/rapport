@@ -19,12 +19,9 @@ module.exports = function (app, express) {
 
 
   // <--------------- BOT ROUTES --------------->
-  app.put('/api/bots', appController.updateBots);
-
-  app.get('/api/bots', appController.getBotInfo);
-
   app.get('/api/botTypes', appController.getBotTypes);
-
+  app.get('/api/bots', appController.getBotInfo);
+  app.put('/api/bots', appController.updateBots);
 
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH

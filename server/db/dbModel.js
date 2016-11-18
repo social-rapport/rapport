@@ -1,6 +1,13 @@
 var db = require('./db');
 
-// mysql calls
+function handleError(cb, err,result){
+  if(err){
+    throw err;
+  } else {
+    cb(result);
+  }
+}
+
 module.exports = {
   users: {
     get: function (callback) {
@@ -128,6 +135,10 @@ module.exports = {
           cb(true);
         }
       });
+    },
+    deleteAll: function(userId,cb){
+      var q = "DELETE FROM bot WHERE id_users="+db.escape(userId);
+      db.query(q, handleError.bind(null,cb));
     },
     getBotTasks: function(botType, userId, cb){
       //want all tasks with bot id
