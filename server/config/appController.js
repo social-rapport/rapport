@@ -6,47 +6,51 @@ var bot = require('../bot/botController.js');
 module.exports.oauth = "";
 
 module.exports.checkIfNewUser = function(req, res){
-    var result = {
-      username:'',
-      email:'',
-      newUser:null
-    };
-    console.log(req.body);
-    
-    auth0Utils.getUserIdFromToken(req.body.idToken || req.query.token)
-      .then(userId => {
-        auth0Utils.getAccesstoken()
-          .then(accessToken => {
-            auth0Utils.getUserAccessKeys(userId, accessToken)
-              .then(userObj => {
-                console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
-                var gmailInfo = auth0Utils.getGmailInfo(userObj);
-                module.exports.oauth = gmailInfo.oauth;
-                  dbModel.gmail.emailExists(gmailInfo.email, function(bool){
-                      if(bool){
-                        dbModel.users.getBasicUserData(gmailInfo.email, function(info){
-                          res.status(200).send(info);
-                          res.end();
-                        });
-                      } else if (!bool){
-                        result.username = gmailInfo.name;
-                        result.email = gmailInfo.email;
-                        result.newUser = true;
-                        dbModel.users.saveNewUser(gmailInfo, function(saved){
-                          if(saved){
-                            res.status(200).send(result);
-                            res.end();
-                          }
-                          else {
-                            res.status(200).end('error occured while trying to save new user');
-                          }
-                        });
-                      }
+  //first step gets userObj from the Auth0 JWT 
+  auth0Utils.getUserIdFromToken(req.body.idToken || req.req.query.token)
+    .then(userObj => {
+      const email = userObj.email;
+      const name = userObj.name;
+
+      //checks db to see if we have a user for that email
+      //if yes, send back to FE
+      //if no creates new user
+      dbModel.gmail.emailExists(email, (exists) => {
+        if(exists) {
+         dbModel.users.getBasicUserData(email, (info) => {
+           res.status(200).send(info);
+         });
+
+        } else {
+          let newUserObj = {
+            username: name,
+            email: email,
+            newUser: true
+          }
+
+          //does Auth0 handshaking to get oAuth token for gmail
+          auth0Utils.getAccesstoken()
+            .then(accessToken => {
+              auth0Utils.getUserAccessKeys(userObj, accessToken)
+                .then(authUserObj => {
+                  const gmailInfo = auth0Utils.getGmailInfo(authUserObj);
+
+                  //creates new user
+                  dbModel.users.saveNewUser(gmailInfo, (saved) => {
+                    if (saved) {
+                      res.status(200).send(newUserObj);
+                      res.end();
+                    } else {
+                      //TODO check error code
+                      res.status(500).send('error occured while saving to the db')
+                    }
                   });
-                  
-              });
-          });
+                });
+            });
+        }
       });
+
+    });
 }
 
   module.exports.updateBots = function(req, res){
@@ -100,7 +104,7 @@ module.exports.checkIfNewUser = function(req, res){
                 dbModel.users.getIdFromEmail(req.query.email, function(userId){
                   // console.log('the req.body.bots is ', req.body.bots);
                   // console.log('the userId is ', userId[0].id);
-                  dbModel.bot.exists(userId[0].id, 'standard', function(bool){
+                  dbModel.bot.exists(userId[0].id, 'basic', function(bool){
                     if(!bool){
                       res.end(JSON.stringify([]));
                     } else {

@@ -21,7 +21,7 @@ function getUserIdFromToken (token) {
                 console.log=('error getting user object from token id ====> ', error);
                 reject(error);
             }
-            resolve(jsonChecker(body).user_id);
+            resolve(jsonChecker(body));
         });
    }); 
 }
@@ -53,7 +53,9 @@ function getAccesstoken() {
 
 //takes the access token and the user id and handshakes to get the user acces keys
 //returns an promise of the full access user object
-function getUserAccessKeys(userId, accessToken) {
+function getUserAccessKeys(userObject, accessToken) {
+    let userId = userObject.user_id;
+
     const requestParams = {
         method: 'GET',
         url: `https://${authDomain}/api/v2/users/${userId}`,
