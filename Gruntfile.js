@@ -19,6 +19,10 @@ module.exports = function(grunt) {
             command: 'mocha '+__dirname+'/spec/serverSpec.js'
           },
 
+          testDB: {
+            command: 'mocha '+__dirname+'/spec/dbBotSpec.js'
+          },
+
           electroncompile:{
             command: 'electron main.js'
           }
@@ -95,4 +99,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default',['copy','shell:tsc','browserSync','watch']);
     grunt.registerTask('test',['shell:test']);
+    grunt.registerTask('testDB',['shell:testDB']);
 };
