@@ -12,7 +12,8 @@ module.exports.checkIfNewUser = function(req, res){
       newUser:null
     };
     console.log(req.body);
-    auth0Utils.getUserIdFromToken(req.body.idToken)
+    
+    auth0Utils.getUserIdFromToken(req.body.idToken || req.query.token)
       .then(userId => {
         auth0Utils.getAccesstoken()
           .then(accessToken => {
@@ -21,11 +22,6 @@ module.exports.checkIfNewUser = function(req, res){
                 console.log("local gmail info",auth0Utils.getGmailInfo(userObj));
                 var gmailInfo = auth0Utils.getGmailInfo(userObj);
                 module.exports.oauth = gmailInfo.oauth;
-                // var gmailInfo = {
-                //   name: 'James Rocket',
-                //   email: 'james@teamrocket.com',
-                //   oauth: 'some secret oauth token james'
-                // };
                   dbModel.gmail.emailExists(gmailInfo.email, function(bool){
                       if(bool){
                         dbModel.users.getBasicUserData(gmailInfo.email, function(info){
@@ -47,10 +43,11 @@ module.exports.checkIfNewUser = function(req, res){
                         });
                       }
                   });
+                  
               });
           });
       });
-  };
+}
 
   module.exports.updateBots = function(req, res){
     const email = req.query.email;
@@ -60,21 +57,28 @@ module.exports.checkIfNewUser = function(req, res){
 
     //if no body is provided. TODO:change 200 to correct status code
     if(botsArray.length === 0 ){
-      res.status(200).send('body object needed!');
-      return;
+      dbModel.users.getIdFromEmail(email,function(userId){
+        dbModel.bot.deleteAll(userId[0].id, function(data){
+          console.log('deleted all bots');
+          res.status(200).send('deleted all');
+        })
+      })
+    } else {
+      dbModel.users.getIdFromEmail(email, (userId) => {
+        dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
+          console.log("updated bots array status", status);
+          //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
+          // bot.runAllTasks((statusMessage) => {
+          //   console.log("email sent status", status);
+          // });
+
+          res.status(200).send('bots array updated');
+        });
+      });
+
     }
 
-    dbModel.users.getIdFromEmail(email, (userId) => {
-      dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
-        console.log("updated bots array status", status);
-        //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
-        // bot.runAllTasks((statusMessage) => {
-        //   console.log("email sent status", status);
-        // });
-
-        res.status(200).send('bots array updated');
-      });
-    });
+    
 
   };
 

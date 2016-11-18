@@ -11,25 +11,26 @@ function handleError(cb, err,result){
 module.exports = {
   users: {
     get: function (callback) {
-      // Get all users
       var query = 'SELECT * FROM users';
-      db.query(query, function(err, users) {
-        if(err){ throw err;}
-        console.log(users);
-        //callback(err, users);
+        db.query(query, function(err, users) {        
       });
     },
     post: function (params, callback) {
       var query = 'INSERT INTO users(userName) values (?)';
-      db.query(query, params, handleError.bind(null,callback));
+      db.query(query, params, handleError.bind(callback));
     },
+    //<----refactor serial calls to the controller layer---->
+    
     saveNewUser: function(params, callback) {
       var gmailQuery = 'INSERT INTO gmail(emailAddress, credentials) values('+db.escape(params.email)+','+db.escape(params.oauth)+')';
       db.query(gmailQuery, function(err, result){
         if(err){throw err;}
       });
       var userQuery = 'INSERT INTO users(userName, id_gmail) values('+db.escape(params.name)+',(SELECT id from gmail where emailAddress='+db.escape(params.email)+'))';
-      db.query(userQuery, handleError.bind(null,callback));
+      db.query(userQuery, function(err, result){
+        if(err){throw err;}
+        callback(result);
+      });
     },
     getBasicUserData: function(email, callback){
       var query = 'SELECT * FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
@@ -45,14 +46,20 @@ module.exports = {
     },
     getIdFromEmail: function(email, callback){
       var query = 'SELECT id FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
-      db.query(query, handleError.bind(null,callback));
+      db.query(query, function(err, userId){
+        if(err){throw err;}
+        callback(userId);
+      });
     }
   },
   gmail: {
     get: function (callback) {
       // Get all gmail data
       var query = 'SELECT * FROM gmail';
-      db.query(queryStr, handleError.bind(null,callback));
+      db.query(queryStr, function(err, users) {
+        if(err){ throw err;}
+        callback(err, users);
+      });
     },
     emailExists: function(email, callback){
       var query = 'SELECT * FROM gmail WHERE emailAddress = '+db.escape(email);
@@ -79,11 +86,17 @@ module.exports = {
     },
     getEmailOauthFromGmailId: function(gmailId, callback){
       var query = 'SELECT emailAddress, credentials FROM gmail where id='+db.escape(gmailId);
-      db.query(query, handleError.bind(null,callback));
+      db.query(query, function(err, emailInfo){
+        if(err){throw err;}
+        callback(emailInfo);
+      });
     },
     post: function (params, callback) {
       var query = 'INSERT INTO gmail(credentials) values (?)';
-      db.query(query, params, handleError.bind(null,callback));
+      db.query(query, params, function(err, gmail) {
+        if(err){ throw err;}
+        callback(err, gmail);
+      });
     }
   },
   facebook: {
@@ -92,13 +105,21 @@ module.exports = {
   recipient:{
     getInfoWithId: function(id, callback){
       var query = "SELECT * FROM recipient WHERE id="+db.escape(id);
-      db.query(query, handleError.bind(null,callback));
+      db.query(query, function(err, recipInfo) {
+        if(err){throw err;}
+        callback(recipInfo);
+      });
     }
   },
   bot: {
     getAllTasks: function (callback) {
+      // Get all tastks
       var query = 'SELECT * FROM Tasks';
-      db.query(query, handleError.bind(null,callback));
+      db.query(query, function(err, tasks) {
+        if(err){ throw err;}
+        //console.log(tasks);
+        callback(err, tasks);
+      });
     },
     exists:function(userId, botType, cb){
       var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
@@ -115,14 +136,6 @@ module.exports = {
       db.query(q, handleError.bind(null,cb));
     },
     getBotTasks: function(botType, userId, cb){
-
-      //<------------needs to be a join--------->
-
- 
-`select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot = 
-(select id from bot where botName = 'basic')));`
-
-
       //want all tasks with bot id
       //to get id need to search bot table for botsName with userId
       //use botId to get all tasks with that iD
@@ -344,24 +357,4 @@ module.exports = {
     }
   }
 
-}; //end exports
-
-// unit test
-// var tasks = {
-//     date: '2016-11-15',
-//     platform: 'gmail',
-//     message: "hello",
-//     task: 'sayHiGmail',
-//     id_bot: 1,
-//     id_recipient: 2,
-// };
-
-// module.exports.log.saveTasks(tasks, function(result){
-//   console.log(result);
-// });
-
-
-//module.exports.users.get();
-// helper
-//var query = 'insert into chatData(username, text, roomname) \
-//                      value (?, ?, ?)';
+}; 
