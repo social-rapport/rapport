@@ -5,24 +5,23 @@ import {BotService } from '../shared/bot.service';
 @Component({
   moduleId: module.id,
   selector: 'setup-component',
-  //providers: [BotService],
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.css']
 })
 
 export class SetupComponent {
   bots = []; 
-  constructor(private BotService: BotService, private router: Router) {
-      var self = this;
-      BotService.getBotTypes().then(function(types){
+  constructor(private botService: BotService, private router: Router) {
+      botService.getBotTypes().then(types => {
         console.log('botTypes', types);
-        self.bots = types;
+        this.bots = types;
       })
+      //this.bots = botService.botTypes;
+      // console.log("bot types", this.bots);
   }
   
   handleClick(selectedType){
-    this.BotService.addBotTypeToUser(selectedType);
-    console.log("updated userBots", this.BotService.userBots);
+    this.botService.addBotTypeToUser(selectedType);
     this.router.navigate(['manage']);
   }
   

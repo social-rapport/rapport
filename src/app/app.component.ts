@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Auth } from '../shared/auth.service';
 import { Router } from '@angular/router';
-import { Contact } from '../shared/contact.service';
 import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'my-app',
   styleUrls: ['app/app/app.component.css'],
-  providers: [Auth, Contact],
+  providers: [Auth],
   template: `
     <h1>{{title}}</h1>
     <nav>
@@ -24,7 +23,7 @@ import { SearchComponent } from '../search/search.component';
   
 })
 export class AppComponent {
-  constructor(private auth: Auth,private router: Router, private contact: Contact) {
+  constructor(private auth: Auth,private router: Router) {
   
     this.router.events.subscribe(path => {
       console.log('path = ', path);
@@ -40,15 +39,6 @@ export class AppComponent {
   }
   authenticated(){
     return this.auth.authenticated();
-  }
-
-  getContacts() {
-    this.contact.getContacts()
-      .subscribe(
-        data => console.log("data", data),
-        error => console.log("error", error),
-        () => console.log("observable complete")
-      );
   }
 
   login(){

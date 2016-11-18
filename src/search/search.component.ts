@@ -1,15 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { OnInit, Input} from '@angular/core';
-import { Router } from '@angular/router';
-import { Auth } from '../shared/auth.service';
-import { GmailLoginComponent } from '../gmail-login/gmail-login.component';
+import { Component,OnInit, Input} from '@angular/core';
 import { gmailContact } from '../shared/contact';
-import { Contact } from '../shared/contact.service';
 import { FilterContacts } from './contact.pipe';
+import { BotService } from '../shared/bot.service';
 
 @Component({
   selector: 'search-component',
-  providers: [gmailContact, Contact, FilterContacts],
+  providers: [gmailContact, FilterContacts],
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
               <ul>
@@ -19,13 +15,11 @@ import { FilterContacts } from './contact.pipe';
 })
 export class SearchComponent {
 
-  //contact service added
-  constructor(private contact: Contact) {}
-
   private contacts: Array<gmailContact>;
 
+  constructor(private botService: BotService) {}
+
   onAddContact(selectedContact): void{
-    console.log('selectedContact',selectedContact);
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
     this.bot.selectedContacts.push ({
       name: selectedContact.name,
@@ -33,16 +27,13 @@ export class SearchComponent {
       birthday: null,
     });
     this.contacts.splice(selectedContactIndex,1);
-    console.log('bot updated',this.bot);
   }
 
   ngOnInit(): void {
-    this.contact.getContacts()
-      .subscribe(
-        data => this.contacts = data.filter(contact => contact.name && contact.email),
-        error => console.log("error retrieving contacts", error),
-        () => console.log("finished retrieving contacts", this.contacts)
-      );
+    this.contacts = this.botService.contacts.filter(contact => {
+     const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
+     return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
+    }); 
   }
 
   @Input() bot;

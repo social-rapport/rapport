@@ -7,14 +7,20 @@ export class Bot {
   tasks: Array<string>;
 }
 
+class gmailContact {
+    email: string;
+    name: string;
+    photo: string;
+}
+
 class BotActivity {
   recent: Array<any>;
   scheduled: Array<any>;
 }
 
-class customBot {
+export class customBot {
   botType: string;
   tasks: Array<string>;
-  selectedContacts: Array<Object>;
+  selectedContacts: Array<gmailContact>;
   botActivity: BotActivity;
 }

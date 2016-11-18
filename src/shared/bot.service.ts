@@ -1,30 +1,63 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Bot } from '../shared/bot';
+import { Bot, customBot } from '../shared/bot';
 import { BOTS } from '../data/mock-bots';
+import { gmailContact } from '../shared/contact';
 
 @Injectable()
 export class BotService {
   
-  botTypes;
-  userBots; 
+  //bots: Array<customBot>;
+  public userBots: Array<customBot>;
+  public botTypes: Array<customBot>;
 
-  constructor(private http: Http) {
-    this.botTypes = null;
-    this.userBots = [];
+  public contacts: Array<gmailContact>;
+  public tasks: Array<string>;
+   
+
+  constructor(private http: Http) {}
+
+  public setInitialState(){
+    return this.getBotTypes()
+      .then(() => this.getContacts())
+        //.then(() => this.getTasks())
+      .then(() =>this.importUserBots())
   }
 
-  getBotTypes(){
+  public getBotTypes(){
     let token = localStorage.getItem('id_token');
     let email = localStorage.getItem('user_email');
 
     return this.http.get(`/api/botTypes`)
       .map(function(data: any) {
-          return JSON.parse(data._body).bots;
+          this.botTypes = JSON.parse(data._body).bots;
+          console.log("bot types", this.botTypes);
+          return this.botTypes;
       }).toPromise();
   }
 
-  importUserBots(){
+  public getContacts() {
+    let token = localStorage.getItem('id_token');
+
+    return this.http.get(`/api/gmail/contacts?token=${token}`)
+      .map((data: any) => {
+        this.contacts = data.json();
+        return this.contacts;
+      }).toPromise();
+  }
+
+  public getTasks() {
+    let token = localStorage.getItem('id_token');
+
+    this.http.get(`/api/tasks?token=${token}`)
+      .map((data: any) => {
+        data = data.json();
+        this.contacts = data;
+        return data;
+      }).toPromise();
+  }
+
+  public importUserBots(){
     let token = localStorage.getItem('id_token');
     let email = localStorage.getItem('user_email');
     var self = this;
@@ -32,36 +65,32 @@ export class BotService {
     return this.http.get(`/api/bots?email=${email}`) 
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
-        console.log("bots returned", bots);
         if(bots.length !== 0) {
           self.userBots = bots.bots;
-          console.log("user bots from service", self.userBots);
           return self.userBots; 
         }
       }).toPromise();
   }
 
-  getUserBots(){
+  public getUserBots(){
     return this.userBots || [];
   }
 
-  addBotTypeToUser(bot: any){
+  public addBotTypeToUser(bot: any){
     this.userBots.push(bot);
-    console.log('selected user bots', this.userBots);
   }
 
-  updateBots(userBotsArray){
-   let email = localStorage.getItem('user_email');
+  public updateBots(userBotsArray){
+   const email = localStorage.getItem('user_email');
    const body = JSON.stringify({bots: userBotsArray});
-   const headers = new Headers({'Content-Type': 'application/json'})
-
-   console.log("userbots array stringified", body);
+   const headers = new Headers({'Content-Type': 'application/json'});
 
    this.http.put(`/api/bots?email=${email}`, body, {headers: headers})
       .subscribe(
         response => console.log("response", response),
         error => console.log("error", error),
         () => {
+          //TODO: remove this run tasks when cron is working
           this.http.get('/api/runalltasks')
             .map(resp => resp.json())
             .subscribe(
@@ -74,10 +103,4 @@ export class BotService {
   }
 
 }
-
-  
-  // getBot(id: number): Promise<Bot> {
-  //   return this.getBots()
-  //               .then(bots => bots.find(bot => bot.id === id));
-  // }
 

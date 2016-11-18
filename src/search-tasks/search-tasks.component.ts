@@ -1,35 +1,32 @@
-import { Component,OnInit, Input } from '@angular/core';
-import { gmailContact } from '../shared/contact';
-import { Contact } from '../shared/contact.service';
+import { Component, OnInit, Input} from '@angular/core';
+import { BotService } from '../shared/bot.service';
 
 @Component({
   selector: 'search-component',
-  providers: [gmailContact, Contact],
-  styleUrls: ['app/search/search.component.css'],
+  providers: [],
+  styleUrls: ['app/search/search-tasks.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
               <ul>
-                <li *ngFor="let task of tasks | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.name }} </li>
+                <li *ngFor="let task of tasks | filterTasks: filterText" (click)="onAddTask(task)"> {{ task }} </li>
               </ul>
   `,
 })
-export class SearchComponent {
-
-  constructor(private contact: Contact) {}
+export class SearchTasksComponent {
 
   private tasks: Array<string>;
 
-  onAddContact(selectedContact): void{
-    console.log('selectedContact',selectedContact);
-    this.bot.selectedContacts.push ({
-      name: selectedContact.name,
-      email: selectedContact.email,
-      birthday: null,
-    });
-    console.log('bot updated',this.bot);
+  constructor(private botService: BotService) {}
+
+  onAddTask(selectedTask): void{
+    let selectedTaskIndex = this.tasks.indexOf(selectedTask);
+    this.bot.tasks.push (selectedTask);
+    this.tasks.splice(selectedTaskIndex,1);
   }
 
   ngOnInit(): void {
-
+    this.tasks = this.botService.tasks.filter(task => {
+     return this.bot.tasks.indexOf(task) === -1;
+    }); 
   }
 
   @Input() bot;

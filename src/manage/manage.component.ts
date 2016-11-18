@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Bot } from '../shared/bot';
+import { Bot, customBot } from '../shared/bot';
 //change
 import { BotService } from '../shared/bot.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContactComponent } from '../contact/contact.component';
-import {SearchComponent} from '../search/search.component';
+import { SearchComponent } from '../search/search.component';
+import { gmailContact } from '../shared/contact';
 
 @Component({
   selector: 'manage-component',
@@ -14,69 +15,32 @@ import {SearchComponent} from '../search/search.component';
 })
 
 export class ManageComponent {
-  constructor(private botService: BotService) {
-    this.callback = this.callback.bind(this);
-  }
-
   title = 'My Bots';
 
-  bots: any;
-  selectedBot: any;
+  private bots: Array<customBot>;
+  private selectedBot: customBot;
   
-  activities: string [];
-  selectedActivity: string;
+  private activities: Array<string>;
+  private contacts: Array<gmailContact>;
+  private tasks: Array<string>;
 
-  contacts: Object[];
-  selectedContact: string;
+  constructor(private botService: BotService) {}
 
-  tasks: string [];
-  selectedTask: string;
-
-  getBots(): void {
-    this.botService.importUserBots().then(bots => {
-      this.bots = bots
-      this.onSelectBot(this.bots[0]);
-      console.log("bots array", this.bots);
-      console.log("selected bot", this.selectedBot);
-    });
-  }
-
-  onSelectBot(bot: any): void {
+  private onSelectBot(bot: any): void {
     this.selectedBot = bot;
     console.log("selected bot", this.selectedBot);
-    this.activities = this.selectedBot.botActivity.scheduled;
-    this.contacts = this.selectedBot.selectedContacts;
-    this.tasks = this.selectedBot.tasks;
+    this.activities = bot.botActivity.recent;
+    this.contacts = bot.selectedContacts;
+    this.tasks = bot.tasks;
   }
 
-  onSelectActivity(activity): void {
-    this.selectedActivity = activity;
-  }
-
-  callback(): void{
-    console.log('contact activated');
-  }
-
-  onAddContact(contact): void {
-    this.selectedBot.selectedContacts;
-  }
-
-  onSelectContact(contact): void {
-    this.selectedContact = contact;
-  }
-
-  onSelectTask(task): void {
-    this.selectedTask = task;
-  }
-
-  submitAllSettings(): void{
+  private submitAllSettings(): void{
     this.botService.updateBots(this.bots);
   }
 
-  ngOnInit(): void {
+  private ngOnInit(): void {
     this.bots = this.botService.getUserBots();
-    console.log("user bots", this.bots);
+    console.log("bots", this.bots);
     this.onSelectBot(this.bots[0]);
-   
   }
 }
