@@ -18,7 +18,7 @@ module.exports.checkIfNewUser = function(req, res){
 
         console.log("gmail info", gmailInfo);
         dbModel.gmail.emailExists(email, exists => {
-          //TODO: Save the oAuth token to the db at every login
+
           if(exists) {
           dbModel.users.getBasicUserData(email, (info) => {
             dbModel.users.updateUserOauth(email, gmailInfo.oauth, success => {
