@@ -21,6 +21,7 @@ function getUserIdFromToken (token) { //getUserObjFromToken
                 console.log=('error getting user object from token id ====> ', error);
                 reject(error);
             }
+            console.log(body);
             resolve(jsonChecker(body));
         });
    });
