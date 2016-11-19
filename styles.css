@@ -27,3 +27,191 @@ body, input[text], button {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Rapport Layout */
+
+/* GLOBAL */
+.signup-login {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 13px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+/* LANDING PAGE */
+video#bgvid {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background: '../../assets/rapport+intro.png';
+  background-size: cover;
+}
+
+.title-main {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 50px/1 Arial, Helvetica, sans-serif;
+  color: #5a5a5a;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.title-main .tagline {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 15px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.button-signup {
+
+}
+
+/* PAGES */
+.title-anchor {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 15px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.title-section {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 25px/1 Arial, Helvetica, sans-serif;
+  color: #5a5a5a;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.title-section .desc {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 12px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+/* CHOOSE BOT PAGE */
+.carousel {
+
+}
+
+.carousel .box-choose-bot{
+
+}
+
+.carousel .img-choose-bot {
+
+}
+
+.carousel .name-bottype {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 20px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.carousel .description {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 10px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.carousel .img-prev-next {
+
+}
+
+/* DASHBOARD */
+.menu-bottype {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 14px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.table-dashboard {
+
+}
+
+.table-dashboard .title-col {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 15px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.table-dashboard .description-col {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 12px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.advanced-settings {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 11px/1 Arial, Helvetica, sans-serif;
+  color: #282828;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.button-bot-action {
+
+}
