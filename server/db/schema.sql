@@ -27,6 +27,15 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 );
 
+DROP TABLE IF EXISTS `users_bots`;
+
+CREATE TABLE `users_bots`(
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `id_user` INTEGER,
+  `id_bot` INTEGER,
+  PRIMARY KEY (`id`)
+);
+
 DROP TABLE IF EXISTS `bot`;
 
 CREATE TABLE `bot` (
@@ -91,4 +100,5 @@ ALTER TABLE `users` ADD FOREIGN KEY (id_facebook) REFERENCES `facebook` (`id`);
 ALTER TABLE `bot` ADD FOREIGN KEY (id_users) REFERENCES `users` (`id`);
 ALTER TABLE `Log` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
 ALTER TABLE `Log` ADD FOREIGN KEY (id_recipient) REFERENCES `recipient` (`id`);
-
+ALTER TABLE `users_bots` ADD FOREIGN KEY (id_user) REFERENCES `users` (`id`);
+ALTER TABLE `users_bots` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);

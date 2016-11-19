@@ -30,20 +30,11 @@ module.exports = {
     init: function(cb){
       var q = 'SOURCE ../db/schema.sql'
       db.query(q,handleError);
-    },
+    }
   },
-  //<------------USERS--------->
 
   users: {
-    //<---------remove if not using
-    get: function (callback) {
-      var query = 'SELECT * FROM users';
-      db.query(query, handleError.bind(null,console.log));
-    },
-    post: function (params, callback) {
-      var query = 'INSERT INTO users(userName) values (?)';
-      db.query(query, params, handleError.bind(null,callback));
-    },
+
     updateUserOauth: function(email, newOauthToken, callback) {
       var query = `UPDATE gmail SET credentials=${db.escape(newOauthToken)}WHERE emailAddress=${db.escape(email)}`;
       db.query(query, handleError.bind(null, callback));
@@ -77,17 +68,13 @@ module.exports = {
       });
     },
   },
-  //<------------GMAIL--------->
+
   gmail: {
-    get: function (callback) {
-      // Get all gmail data
-      var query = 'SELECT * FROM gmail';
-      db.query(queryStr, handleError.bind(null,callback));
-    },
+
     emailExists: function(email, callback){
-      var q = 'SELECT * FROM gmail WHERE emailAddress = '+db.escape(email);
+      var query = 'SELECT * FROM gmail WHERE emailAddress = '+db.escape(email);
       var cb = lengthToBool.bind(null,callback);
-      db.query(q,handleError.bind(null,cb));
+      db.query(query,handleError.bind(null,cb));
     },
     recipientEmailExists: function(email, callback){
       var query = "SELECT * FROM recipient WHERE email="+db.escape(email);
@@ -97,60 +84,51 @@ module.exports = {
     getEmailOauthFromGmailId: function(gmailId, callback){
       var query = 'SELECT emailAddress, credentials FROM gmail where id='+db.escape(gmailId);
       db.query(query, handleError.bind(null,callback));
-    },
-    post: function (params, callback) {
-      var query = 'INSERT INTO gmail(credentials) values (?)';
-      db.query(query, params, handleError.bind(null,callback));
     }
   },
+
   facebook: {
 
   },
+
   recipient:{
     getInfoWithId: function(id, callback){
       var query = "SELECT * FROM recipient WHERE id="+db.escape(id);
       db.query(query, handleError.bind(null,callback));
     }
   },
-  //<------------BOT--------->
 
   bot: {
-    botId: function(userId, botName, callback){
-      var q = "select id from bot where id_users="+db.escape(userId)+" and botName="+db.escape(botName);
-      db.query(q, handleError.bind(null, callback));
-    },
-    deleteById: function(botId,callback){
-      var q1 = "delete from Tasks where id_bot="+db.escape(botId);
-      db.query(q1, function(err,res){
-        var q2 = "delete from bot where id="+db.escape(botId);
-        db.query(q2, handleError.bind(null,callback));
-      });
-    },
     getAllTasks: function (callback) {
       var query = 'SELECT * FROM Tasks';
       db.query(query, handleError.bind(null,callback));
     },
     exists:function(userId, callback){
-      var q = "SELECT id FROM bot WHERE id_users="+db.escape(userId);
+      var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId);
       var cb = lengthToBool.bind(null,callback);
-      console.log('passed');
-      db.query(q, handleError.bind(null,cb));
+      db.query(botQuery, handleError.bind(null,cb));
     },
     deleteAll: function(userId,cb){
       var q = "DELETE FROM bot WHERE id_users="+db.escape(userId);
       db.query(q, handleError.bind(null,cb));
     },
     _getBotTasks: function(userId, botName,cb){
-      var q = `select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot =
-(select id from bot where botName = 'basic' AND id_users = 1)));`;
+      var q = `SELECT name, email, birthday FROM recipient WHERE id= (SELECT id_recipient FROM Tasks WHERE id = (SELECT id FROM Tasks WHERE id_bot =
+(SELECT id FROM bot WHERE botName = 'basic' AND id_users = 1)));`;
       db.query(q,handleError.bind(null,cb));
     },
+    
+    //get user bots
     getBotTasks: function(botType, userId, cb){
 
       //<------------needs to be a join--------->
-      // agreed
+      // agreed  
 
-
+    // `SELECT * FROM users u 
+    //  INNER JOIN users_bots j on j.id_user = u.id 
+    //  INNER JOIN Tasks t on t.id_bot = j.id_bot  
+    //  INNER JOIN recipient r on r.id = t.id_recipient`
+    //  FULL OUTER JOIN Log l on j.id_bot = l.id_bot 
 
 
       //want all tasks with bot id
@@ -186,12 +164,12 @@ module.exports = {
       });
     }
   },
+
   tasks: {
     //TODO: add a param for botTYpe
     updateTasksFlow:function(instructions, userId, callback){
       //if bot does not exist, add new bot
       //if exists, get bot id
-      //<-------------------need to check if this particular bot exists, not any bot for this user------------>
       module.exports.bot.exists(userId, function(bool){
         if(!bool){
           var botQuery = "INSERT into bot(botName, id_users) values('basic', "+db.escape(userId)+")";
