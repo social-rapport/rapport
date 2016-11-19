@@ -30,7 +30,7 @@ module.exports = {
     init: function(cb){
       var q = 'SOURCE ../db/schema.sql'
       db.query(q,handleError);
-    }
+    },
   },
   users: {
     //<---------remove if not using
