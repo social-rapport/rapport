@@ -6,7 +6,7 @@ var app = express();
 
 
 module.exports = {
-
+//<----may go, using old oauth
   runTasks: function(){
     dbModel.bot.getAllTasks(function(err, tasks){
        if(err){ throw err;}
@@ -32,6 +32,7 @@ module.exports = {
       runGenerator(tasks.length, 0);
     });
   },
+  //tasks in a database -> preps to send to gmail(using oauth) -> send emails ->log to database all completed tasks 
   runAllTasks: function(callback){
     console.log('runAllTasks running');
     dbModel.tasks.getTasksForChronJob(function(tasks){

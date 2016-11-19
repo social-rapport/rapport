@@ -30,8 +30,10 @@ module.exports = {
     init: function(cb){
       var q = 'SOURCE ../db/schema.sql'
       db.query(q,handleError);
-    }
+    },
   },
+  //<------------USERS--------->
+
   users: {
     //<---------remove if not using
     get: function (callback) {
@@ -75,6 +77,7 @@ module.exports = {
       });
     },
   },
+  //<------------GMAIL--------->
   gmail: {
     get: function (callback) {
       // Get all gmail data
@@ -82,9 +85,9 @@ module.exports = {
       db.query(queryStr, handleError.bind(null,callback));
     },
     emailExists: function(email, callback){
-      var query = 'SELECT * FROM gmail WHERE emailAddress = '+db.escape(email);
+      var q = 'SELECT * FROM gmail WHERE emailAddress = '+db.escape(email);
       var cb = lengthToBool.bind(null,callback);
-      db.query(query,handleError.bind(null,cb));
+      db.query(q,handleError.bind(null,cb));
     },
     recipientEmailExists: function(email, callback){
       var query = "SELECT * FROM recipient WHERE email="+db.escape(email);
@@ -109,15 +112,29 @@ module.exports = {
       db.query(query, handleError.bind(null,callback));
     }
   },
+  //<------------BOT--------->
+
   bot: {
+    botId: function(userId, botName, callback){
+      var q = "select id from bot where id_users="+db.escape(userId)+" and botName="+db.escape(botName);
+      db.query(q, handleError.bind(null, callback));
+    },
+    deleteById: function(botId,callback){
+      var q1 = "delete from Tasks where id_bot="+db.escape(botId);
+      db.query(q1, function(err,res){
+        var q2 = "delete from bot where id="+db.escape(botId);
+        db.query(q2, handleError.bind(null,callback));
+      });
+    },
     getAllTasks: function (callback) {
       var query = 'SELECT * FROM Tasks';
       db.query(query, handleError.bind(null,callback));
     },
     exists:function(userId, callback){
-      var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId);
+      var q = "SELECT id FROM bot WHERE id_users="+db.escape(userId);
       var cb = lengthToBool.bind(null,callback);
-      db.query(botQuery, handleError.bind(null,cb));
+      console.log('passed');
+      db.query(q, handleError.bind(null,cb));
     },
     deleteAll: function(userId,cb){
       var q = "DELETE FROM bot WHERE id_users="+db.escape(userId);
@@ -174,6 +191,7 @@ module.exports = {
     updateTasksFlow:function(instructions, userId, callback){
       //if bot does not exist, add new bot
       //if exists, get bot id
+      //<-------------------need to check if this particular bot exists, not any bot for this user------------>
       module.exports.bot.exists(userId, function(bool){
         if(!bool){
           var botQuery = "INSERT into bot(botName, id_users) values('basic', "+db.escape(userId)+")";
