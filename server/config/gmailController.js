@@ -19,7 +19,7 @@ module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   scope: scopes
 });
 
-module.exports.emailInfoFromToken = function(token, next){
+module.exports.emailInfoFromToken = function(token, next) {
   auth.getUserIdFromToken(token)
       .then(userId => {
         auth.getAccesstoken()
@@ -45,7 +45,7 @@ module.exports.sendUrl = function(req, res) {
 module.exports.getTokens = function(req, res) {
   var code = req.query.code;
   console.log('getting tokens');
-  module.exports.oauth2Client.getToken(code, function(err, tokens) {
+  module.exports.oauth2Client.getToken(code, (err, tokens) => {
     if (err) {
       console.log(err);
       res.send(err);
@@ -58,114 +58,26 @@ module.exports.getTokens = function(req, res) {
   });
 };
 
-//not being used
-module.exports.getContactsWithAuth = function(authobj){
-  var opts = {
-    token: authobj.oauth
-  };
-  console.log('options is ', opts);
-  googleContacts(opts)
-    .then(function (data) {
-        console.log(data);
-        // res.send(data);
-    })
-    .catch(function (err) {
-        console.log(err);
-        // res.end();
-    });
-};
-
-module.exports.getContacts = function(req, res){
-  1;
-  module.exports.emailInfoFromToken(req.query.token,function(userObj){
+module.exports.getContacts = function(req, res) {
+  console.log('getContacts');
+  module.exports.emailInfoFromToken(req.query.token, userObj => {
      googleContacts({token: userObj.oauth})
-    .then(function (data) {
+    .then( data => {
         res.send(data);
     })
-    .catch(function (err) {
+    .catch( err => {
         console.log(err);
         res.end();
     });
   });
- 
 };
-
-module.exports.getContactsFromAuth = function(userObj) {
-  const opts = {
-    token: userObj.oauth
-  };
-
-  googleContacts(opts)
-    .then(function (data) {
-      console.log(data);
-    })
-    .catch(function (err){
-      console.log(err);
-    });
-}
-
-module.exports.sendMail = function(req, res){
-  module.exports.oauth2Client.credentials.access_token = appController.oauth;
-  module.exports.configureMail(module.exports.oauth2Client, function(err, results) {
-    if(err){
-      console.log('error ', err);
-      res.send(err);
-    } else {
-      console.log(results);
-      res.send(results);
-    }
-  });
-};
-
-//takes a oauth token and an object, with params, name, email,recipientEmail, subject and message
-module.exports.configureMail = function(auth, cb, emailObj) {
-    console.log('emailObj', emailObj);
-    console.log("auth", auth);
-
-    var gmailClass = google.gmail('v1');
-    var email_lines = [];
-
-    if(!emailObj) {
-      email_lines.push('From: "Vi Vo" <vi.uyen.vo@gmail.com>');
-      email_lines.push('To: vi.uyen.vo@gmail.com');
-      email_lines.push('Content-type: text/html;charset=iso-8859-1');
-      email_lines.push('MIME-Version: 1.0');
-      email_lines.push('Subject: whooooot! this is from vi\'s app');
-      email_lines.push('');
-      email_lines.push('Hello there! How have you been?<br/>');
-
-    } else {
-      email_lines.push(`From: "${emailObj.name}" <${emailObj.email}>`);
-      email_lines.push(`To: ${emailObj.recipientEmail}`);
-      email_lines.push(`Content-type: text/html;charset=iso-8859-1`);
-      email_lines.push(`MIME-Version: 1.0`);
-      email_lines.push(`Subject: ${emailObj.subject}`);
-      email_lines.push(``);
-      email_lines.push(`${emailObj.message}<br/>`);
-
-    }
-
-    var email = email_lines.join('\r\n').trim();
-    var base64EncodedEmail = new Buffer(email).toString('base64');
-    base64EncodedEmail = base64EncodedEmail.replace(/\+/g, '-').replace(/\//g, '_');
-
-    gmailClass.users.messages.send({
-        auth: auth,
-        userId: 'me',
-        resource: {
-          raw: base64EncodedEmail
-        }
-      }, cb);
-
-  };
-
 
 // for the bot
 //Test For Send MailBot
-module.exports.sendMailBot = function(msgData, oauth,callback){
+module.exports.sendMailBot = function(msgData, oauth, callback) {
   console.log('oauth', oauth);
   module.exports.oauth2Client.credentials.access_token = oauth;
-  module.exports.configureMailBot(msgData,module.exports.oauth2Client, function(err, results) {
+  module.exports.configureMailBot(msgData,module.exports.oauth2Client, (err, results) => {
     if(err){
       console.log('error ', err);
       callback(err);
@@ -175,7 +87,9 @@ module.exports.sendMailBot = function(msgData, oauth,callback){
     }
   });
 };
+
 module.exports.configureMailBot = function(msgData, auth, cb) {
+  console.log('configureMailBot');
     var gmailClass = google.gmail('v1');
     var email_lines = [];
     email_lines.push('From: ' + msgData.username + '<' +msgData.useremail+ '>');

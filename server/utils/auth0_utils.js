@@ -23,7 +23,7 @@ function getUserIdFromToken (token) {
             }
             resolve(jsonChecker(body));
         });
-   }); 
+   });
 }
 
 //handshakes to return a promise of the auth0 user access token
@@ -55,7 +55,6 @@ function getAccesstoken() {
 //returns an promise of the full access user object
 function getUserAccessKeys(userObject, accessToken) {
     let userId = userObject.user_id;
-
     const requestParams = {
         method: 'GET',
         url: `https://${authDomain}/api/v2/users/${userId}`,
