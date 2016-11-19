@@ -51,6 +51,8 @@ video#bgvid {
   height: auto;
   background: repeat;
   background-size: cover;
+  position: absolute;
+  left: -20%;
   z-index: -1;
 
 }
