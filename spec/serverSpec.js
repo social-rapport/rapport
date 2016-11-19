@@ -158,7 +158,9 @@ describe('api route: postBots',function(){
     getBotTypes()
     .then(parse)
     .then(function(res){
+      console.log(JSON.stringify(res));
       return postBots({json: res});
+      
     })
     .then(getBots)
     .then(parse)

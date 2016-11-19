@@ -7,7 +7,7 @@ module.exports.oauth = "";
 
 module.exports.checkIfNewUser = function(req, res){
 
-  Promise.all([auth0Utils.getUserIdFromToken(req.body.idToken || req.req.query.token),auth0Utils.getAccesstoken()])
+  Promise.all([auth0Utils.getUserIdFromToken(req.body.idToken || req.query.token),auth0Utils.getAccesstoken()])
     .then(arrayOfResolves => {
       auth0Utils.getUserAccessKeys(...arrayOfResolves)
       .then(authUserObj => {
@@ -46,47 +46,45 @@ module.exports.checkIfNewUser = function(req, res){
   });
 }
 
-  module.exports.updateBots = function(req, res){
-    const email = req.query.email;
-    const botsArray = req.body;
-    console.log("email", email);
-    console.log("body", botsArray);
-
-    //if no body is provided. TODO:change 200 to correct status code
-    if(botsArray.length === 0 ){
-      dbModel.users.getIdFromEmail(email,function(userId){
-        dbModel.bot.deleteAll(userId[0].id, function(data){
-          console.log('deleted all bots');
-          res.status(200).send('deleted all');
-        })
-      })
-    } else {
-      dbModel.users.getIdFromEmail(email, (userId) => {
-        dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
-          console.log("updated bots array status", status);
-          //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
-          // bot.runAllTasks((statusMessage) => {
-          //   console.log("email sent status", status);
-          // });
-
-          res.status(200).send('bots array updated');
-        });
-      });
-    }
+//<-------------------return the bot type so FE can change it------------------->
+module.exports.getBotTypes = function(req, res){
+  var data = {
+    bots: [{
+     botType: 'basic',
+     tasks: [
+            'sayHappyBirthdayGmail',
+            'sayHappyBirthdayFacebook',
+            'sayHiGmail',
+            'sayHiFacebook'
+     ],
+     selectedContacts: [],
+     botActivity:{
+        recent:[],
+        scheduled:[]
+      }
+    }]
   };
+  res.end(JSON.stringify(data));
+};
 
+//<-------------------get all the users bot information------------------->
   module.exports.getBotInfo = function(req, res) {
+    //get the users dbId
     dbModel.users.getIdFromEmail(req.query.email, userId => {
       const id = userId[0].id;
 
+      //check if the bot exists using the dbId, if it does not return an empty array 
       dbModel.bot.exists(id, exists => {
         if(!exists){
           res.end(JSON.stringify([]));
         } else {
 
+          //<-------------------to do: refactor for iterating over each bot------------------->
+          //get tasks for the users bots
           dbModel.bot.getBotTasks('basic', id, selectedContacts => {
             let contacts = [];
 
+            //convert db selected contacts to returned contacts form
             for(let key in selectedContacts) {
               contacts.push({
                 name: key,
@@ -95,6 +93,9 @@ module.exports.checkIfNewUser = function(req, res){
               });
             }
 
+            //append the users contacts to the data for the bot
+            //<-------------------to do: return the correct botType------------------->
+            
             var data = {
               "bots":[{
                 "botType":'basic',
@@ -118,25 +119,41 @@ module.exports.checkIfNewUser = function(req, res){
     });
   };
 
-module.exports.getBotTypes = function(req, res){
-  var data = {
-    bots: [{
-     botType: 'basic',
-     tasks: [
-            'sayHappyBirthdayGmail',
-            'sayHappyBirthdayFacebook',
-            'sayHiGmail',
-            'sayHiFacebook'
-     ],
-     selectedContacts: [],
-     botActivity:{
-        recent:[],
-        scheduled:[]
-      }
-    }]
-  };
-  res.end(JSON.stringify(data));
+//<-------------------change the users bots on a post------------------->
+
+module.exports.updateBots = function(req, res){
+  const email = req.query.email;
+  const botsArray = req.body;
+  console.log("email", email);
+  console.log("body", botsArray);
+
+  //if no body is provided. TODO:change 200 to correct status code
+  if(botsArray.length === 0 ){
+    //if no bots in array, delete all the bots
+    dbModel.users.getIdFromEmail(email,function(userId){
+      dbModel.bot.deleteAll(userId[0].id, function(data){
+        console.log('deleted all bots');
+        res.status(200).send('deleted all');
+      })
+    })
+  } else {
+    //if there are bots, get the users id
+    dbModel.users.getIdFromEmail(email, (userId) => {
+      //with the user id, change the all the associated bots
+      dbModel.tasks.updateTasksFlow(req.body, userId[0].id, (status) => {
+        console.log("updated bots array status", status);
+        //FOR DEMO ONLY: TODO: REMOVE AND REPLACE WITH CRON
+        // bot.runAllTasks((statusMessage) => {
+        //   console.log("email sent status", status);
+        // });
+
+        res.status(200).send('bots array updated');
+      });
+    });
+  }
 };
+
+
 
 module.exports.getTasksForChron = function(req, res){
   dbModel.tasks.getTasksForChronJob( data =>{
