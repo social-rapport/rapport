@@ -49,7 +49,7 @@ video#bgvid {
   min-height: 100%;
   width: auto;
   height: auto;
-  background: '../../assets/rapport+intro.png';
+  background: '../assets/rapport+intro.png';
   background-size: cover;
 }
 
