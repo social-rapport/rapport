@@ -43,9 +43,10 @@ module.exports = {
       var gmailQuery = 'INSERT INTO gmail(emailAddress, credentials) values('+db.escape(params.email)+','+db.escape(params.oauth)+')';
       db.query(gmailQuery, function(err, result){
         if(err){throw err;}
+        var userQuery = 'INSERT INTO users(userName, id_gmail) values('+db.escape(params.name)+',(SELECT id from gmail where emailAddress='+db.escape(params.email)+'))';
+        db.query(userQuery, handleError.bind(null,callback));
       });
-      var userQuery = 'INSERT INTO users(userName, id_gmail) values('+db.escape(params.name)+',(SELECT id from gmail where emailAddress='+db.escape(params.email)+'))';
-      db.query(userQuery, handleError.bind(null,callback));
+      
     },
     getIdFromEmail: function(email, callback){
       var query = 'SELECT id FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
@@ -128,6 +129,7 @@ module.exports = {
     //  INNER JOIN users_bots j on j.id_user = u.id 
     //  INNER JOIN Tasks t on t.id_bot = j.id_bot  
     //  INNER JOIN recipient r on r.id = t.id_recipient`
+
     //  FULL OUTER JOIN Log l on j.id_bot = l.id_bot 
 
 
@@ -167,6 +169,33 @@ module.exports = {
 
   tasks: {
     //TODO: add a param for botTYpe
+
+    addBotToUser: function(bot, userId, cb){
+      const insertBotQuery = `INSERT INTO bot(botName, id_users) values(${db.escape(bot.botType)}, ${db.escape(userId)})`;
+
+      db.query(insertBotQuery, (err, addedBot, thirdArg) => {
+        if(err) console.log("error saving bot to database ===>", err);
+        console.log("added bot". addedBot);
+        const botId = addedBot.insertId;
+        const updateJoinQuery = `INSERT INTO users_bots(id_user, id_bot) values(${db.escape(userId)}, ${db.escape(botId)})`;
+
+        db.query(updateJoinQuery, (err, updatedJoinRow) => {
+          if(err) console.log("error updating join table ===>", error);
+
+          cb(botId);
+        });
+      });
+    },
+
+    deleteUsersBot: function(userId, botId) {
+      const deleteBotQuery = `DELETE FROM bot WHERE id_users=${db.escape(userId)} AND id=${db.escape(botId)}`
+      "DELETE FROM bot WHERE id_users="+db.escape(userId)
+    },
+
+    updateUsersBot: function(){
+
+    },
+
     updateTasksFlow:function(instructions, userId, callback){
       //if bot does not exist, add new bot
       //if exists, get bot id
@@ -175,6 +204,7 @@ module.exports = {
           var botQuery = "INSERT into bot(botName, id_users) values('basic', "+db.escape(userId)+")";
           db.query(botQuery, function(err, addedBot){
             if(err){throw err;}
+            console.log("added bot", addedBot);
             module.exports.tasks.updateTasksRecursive(instructions, userId, callback);
           });
         } else {
