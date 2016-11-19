@@ -97,7 +97,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-server-mocha');
 
-    grunt.registerTask('default',['copy','shell:tsc','browserSync','watch']);
+    grunt.registerTask('sync',['copy','shell:tsc','browserSync','watch']);
     grunt.registerTask('test',['shell:test']);
     grunt.registerTask('testDB',['shell:testDB']);
+    grunt.registerTask('default',['copy','shell:tsc','watch']);
+
 };

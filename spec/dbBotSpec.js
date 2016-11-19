@@ -111,7 +111,7 @@ var bot2 = {
 
 describe ('identifying user',function(){
 
-  xit('converts tokens to emails and auth0ids',function(done){
+  it('converts tokens to emails and auth0ids',function(done){
     auth0.getUserIdFromToken(idToken)
     .then(function(a,b){
         console.log(a);
