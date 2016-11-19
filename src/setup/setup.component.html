@@ -1,3 +1,4 @@
+
 <!-- <h3>Top Bots</h3> -->
 
 <!-- nam -->
@@ -25,6 +26,29 @@
     </div>
   </a>
   </div> -->
+  <div class="container">
+    <div class="row">
+    <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
+        <!-- vi section -->
+      <div class="module hero">
+        <h4>{{bot.botType}}</h4>
+      </div>
 
-  <!-- vi -->
+    </a>
+    <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
+
+      <div class="module hero">
+        <h4>{{bot.botType}}</h4>
+      </div>
+
+    </a>
+    <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
+
+      <div class="module hero">
+        <h4>{{bot.botType}}</h4>
+      </div>
+
+    </a>
+  </div>
+  </div>
 
