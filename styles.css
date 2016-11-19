@@ -31,14 +31,20 @@ body, input[text], button {
 /* Rapport Layout */
 
 /* GLOBAL */
-.signup-login {
+#container-top-header {
+  z-index: 1;
+}
+
+#signup-login {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
-  font: normal 13px/1 Arial, Helvetica, sans-serif;
+  font: normal 15px/1 Arial, Helvetica, sans-serif;
   color: #282828;
-  text-align: center;
+  text-align: right;
+  position: absolute;
+  right:1%;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
@@ -99,11 +105,21 @@ video#bgvid {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
-  font: normal 15px/1 Arial, Helvetica, sans-serif;
+  font: normal 20px/1 Arial, Helvetica, sans-serif;
   color: #282828;
-  text-align: center;
+  text-align: left;
+  position: absolute;
+  left: 1%;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+}
+
+
+#container-header {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  z-index: 1;
 }
 
 #title-section {
@@ -113,7 +129,7 @@ video#bgvid {
   border: none;
   font: normal 25px/1 Arial, Helvetica, sans-serif;
   color: #5a5a5a;
-  text-align: center;
+  text-align: left;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
@@ -125,7 +141,7 @@ video#bgvid {
   border: none;
   font: normal 12px/1 Arial, Helvetica, sans-serif;
   color: #282828;
-  text-align: center;
+  text-align: left;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
