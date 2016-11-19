@@ -58,6 +58,10 @@ module.exports = {
       var query = 'SELECT id FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
       db.query(query, handleError.bind(null,callback));
     },
+    getOauthFromEmail: function(email, callback) {
+      var query = `SELECT credentials FROM gmail WHERE emailAddress=${db.escape(email)}`;
+      db.query(query, handleError.bind(null, callback));
+    },
     getBasicUserData: function(email, callback){
       var query = 'SELECT * FROM users WHERE id_gmail=(SELECT id FROM gmail WHERE emailAddress ='+db.escape(email)+')';
       db.query(query, function(err, result){
