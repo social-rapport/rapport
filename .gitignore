@@ -13,3 +13,7 @@ server/config/api-services.js
 private_keys.js
 env.js
 ./env.js
+
+## intro video ##
+app/assets/rapport+intro.mp4
+src/assets/rapport+intro.mp4

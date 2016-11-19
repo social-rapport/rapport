@@ -7,8 +7,9 @@ import {GmailLoginComponent} from '../gmail-login/gmail-login.component';
 @Component({
   selector: 'my-heroes',
   //providers: [Auth,GmailLoginComponent],
-  template: `<p>Welcome </p>
-            `,
+  //template: `<p>Welcome </p>`
+  templateUrl: 'app/landing-page/landing-page.component.html',
+  styleUrls: ['app/landing-page/landing-page.component.css']
 })
 
 export class LandingPageComponent {
@@ -16,6 +17,6 @@ export class LandingPageComponent {
   ) {}
 
   ngOnInit(): void {
-    
+
   }
 }
