@@ -42,6 +42,10 @@ module.exports = {
       var query = 'INSERT INTO users(userName) values (?)';
       db.query(query, params, handleError.bind(null,callback));
     },
+    updateUserOauth: function(email, newOauthToken, callback) {
+      var query = `UPDATE gmail SET credentials=${db.escape(newOauthToken)}WHERE emailAddress=${db.escape(email)}`;
+      db.query(query, handleError.bind(null, callback));
+    },
     saveNewUser: function(params, callback) {
       var gmailQuery = 'INSERT INTO gmail(emailAddress, credentials) values('+db.escape(params.email)+','+db.escape(params.oauth)+')';
       db.query(gmailQuery, function(err, result){
@@ -106,8 +110,8 @@ module.exports = {
       var query = 'SELECT * FROM Tasks';
       db.query(query, handleError.bind(null,callback));
     },
-    exists:function(userId, botType, callback){
-      var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId)+" AND botName='basic'";
+    exists:function(userId, callback){
+      var botQuery = "SELECT id FROM bot WHERE id_users="+db.escape(userId);
       var cb = lengthToBool.bind(null,callback);
       db.query(botQuery, handleError.bind(null,cb));
     },
@@ -116,15 +120,15 @@ module.exports = {
       db.query(q, handleError.bind(null,cb));
     },
     _getBotTasks: function(userId, botName,cb){
-      var q = `select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot = 
+      var q = `select name, email, birthday from recipient where id= (select id_recipient from Tasks where id = (select id from Tasks where id_bot =
 (select id from bot where botName = 'basic' AND id_users = 1)));`;
       db.query(q,handleError.bind(null,cb));
     },
     getBotTasks: function(botType, userId, cb){
 
       //<------------needs to be a join--------->
+      // agreed
 
- 
 
 
 
@@ -162,10 +166,11 @@ module.exports = {
     }
   },
   tasks: {
+    //TODO: add a param for botTYpe
     updateTasksFlow:function(instructions, userId, callback){
       //if bot does not exist, add new bot
       //if exists, get bot id
-      module.exports.bot.exists(userId, 'basic', function(bool){
+      module.exports.bot.exists(userId, function(bool){
         if(!bool){
           var botQuery = "INSERT into bot(botName, id_users) values('basic', "+db.escape(userId)+")";
           db.query(botQuery, function(err, addedBot){

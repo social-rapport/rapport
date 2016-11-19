@@ -29,9 +29,6 @@ module.exports = function (app, express) {
     res.sendFile(__dirname+'/static/gmailLogin.html');
   });
 
-  //SENDS EMAIL
-  app.get("/sendMail", gmail.sendMail);
-
   // nam send botctrol test
   app.get('/api/runalltasks', appController.runalltasks);
 
