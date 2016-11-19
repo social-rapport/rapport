@@ -5,7 +5,7 @@ const authClientSecret = process.env.AUTH0_CLIENT_SECRET || require('../../env.j
 
 
 //takes the JWT token passed from the auth0 login and handshakes to get the user object and returns a promise of the user id
-function getUserIdFromToken (token) {
+function getUserIdFromToken (token) { //getUserObjFromToken
    const url = `https://${authDomain}/tokeninfo`;
 
    return new Promise((resolve, reject) =>{
