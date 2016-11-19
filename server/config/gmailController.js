@@ -20,21 +20,6 @@ module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   scope: scopes
 });
 
-module.exports.emailInfoFromToken = function(token, next) {
-  auth.getUserIdFromToken(token)
-      .then(userId => {
-        auth.getAccesstoken()
-          .then(accessToken => {
-            auth.getUserAccessKeys(userId, accessToken)
-              .then(userObj => {
-                console.log("local gmail info",auth.getGmailInfo(userObj));
-                var gmailInfo = auth.getGmailInfo(userObj);
-                next(gmailInfo);
-              })
-          })
-      })
-};
-
 module.exports.tokens = auth.gmailInfo;
 
 //BEGIN METHODS
@@ -77,17 +62,6 @@ module.exports.getContacts = function(req, res) {
           });
       });
     });
-  // module.exports.emailInfoFromToken(req.query.token, userObj => {
-
-  //    googleContacts({token: userObj.oauth})
-  //   .then( data => {
-  //       res.send(data);
-  //   })
-  //   .catch( err => {
-  //       console.log(err);
-  //       res.end();
-  //   });
-  // });
 };
 
 // for the bot
