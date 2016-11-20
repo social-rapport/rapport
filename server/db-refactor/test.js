@@ -44,11 +44,56 @@ mysql.createConnection({
     console.log(err);
 });
 
-
+function log(data){
+  console.log(data);
+}
 function runTests(){
-  dbModel.addBotToUser(bot1.bots[0],1,function(res){
-    console.log(res);
-  });
+
+
+  // dbModel.addUser('Fakey McFake', 'fake@fake.com', 'authToken')
+  // .then(log);
+
+  //<---------require userId
+
+  // dbModel.deleteUser(4)
+  // .then(log);
+
+  // dbModel.updateUser(5, 'Fakey McFakesalot', 'fake@fake.com', 'authToken')
+  // .then(log);
+
+//  dbModel.addBotToUser(5, bot1.bots[0])
+//   .then(log);
+
+
+  //<---------require botId
+
+//botId
+  // dbModel.deleteBot(6)
+  // .then(log);
+  //botId, name, email, birthday
+
+  //<---------require contactsId
+
+  //dbModel.updateBot(7, 'John').then(log);
+
+//userId, contact info
+
+  // dbModel.addToSelectedContacts(7,'aa','bb','1111111')
+  //  .then(log);
+
+  //dbModel.getSelectedContacts(7).then(log);
+
+//contactId->
+
+  //dbModel.removeSelectedContact(3).then(log);
+  
+  //dbModel.updateSelectedContact(2,'z','z','2222222').then(log);
+
+
+  dbModel.addToTasks(7,'111','gmail','hi','task1').then(log);
+
+
+
 }
 
 

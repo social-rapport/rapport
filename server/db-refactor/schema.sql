@@ -64,7 +64,7 @@ CREATE TABLE `log` (
 DROP TABLE IF EXISTS `tasks_bots`;
 		
 CREATE TABLE `tasks_bots` (
-  `id` INTEGER NOT NULL,
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
   `id_bot` INTEGER,
   `id_task` INTEGER,
   PRIMARY KEY (`id`)
