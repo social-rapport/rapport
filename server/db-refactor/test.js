@@ -1,9 +1,11 @@
 //const auth0Utils = require('../utils/auth0_utils.js');
 //var token = require('../../env.js').ADMIN_IDTOKEN;
+
 var dbQ = require('../db-refactor/dbQueries.js');
 var dbM = require('./dbModel.js');
 var auth0 = require('../utils/auth0_utils');
 var appController = require('../config/appController');
+
 
 var db = require('./db');
 
@@ -22,7 +24,7 @@ var connection;
 mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'dev',
+    password: 'cichlid1022',
     database: 'rapport'
 }).then(function(conn,x){
     dbQ.importConnection(conn);
@@ -39,9 +41,67 @@ function runTests(){
   //botTest();
   testOldUser();
 
+var contacts = [
+    {
+        email: 'a@b',
+        name: 'John',
+        photo: 'xyz',
+    },
+    {
+        email: 'b@c',
+        name: 'Jack',
+        photo: 'xyz',
+    },
+    {
+        email: 'c@d',
+        name: 'Paul',
+        photo: 'xyz',
+    }
+];
+
+var tasks = [
+    {
+        date: 'today',
+        platform: 'gmail',
+        message: 'happy birthday!',
+        task: 'sayHappyBirthdayGmail'
+    },
+    {
+        date: 'today',
+        platform: 'gmail',
+        message: 'Howdy Partner!',
+        task: 'sayHiGmail'
+    },
+    {
+        date: 'today',
+        platform: 'facebook',
+        message: 'happy birthday!',
+        task: 'sayHappyBirthdayFacebook'
+    },
+    {
+        date: 'today',
+        platform: 'facebook',
+        message: 'Howdy Partner!',
+        task: 'sayHiFacebook'
+    }
+];
+
+var bot1 = {
+            botType:'basic',
+            botName: 'myBot',
+            tasks:tasks,
+            selectedContacts :contacts,
+            botActivity:{
+                recent:[],
+                scheduled:[]
+            }
+        };
+
+var userObj = {name: 'Fakey McFake', gmail:'fake@fake.com' , gmailAuthToken:'authToken'};
+
 //<-------------------------------- QUERY TESTS 
 
-  // dbModel.addUser('Fakey McFake', 'fake@fake.com', 'authToken')
+   
   // .then(log);
 
 
@@ -118,7 +178,11 @@ function botTest(){
 
 
 
-
+//  dbQ.addBotToUser(1, bot1.bots[0])
+//   .then(log);
+    dbQ.addUser(userObj)
+        .then((userId) => dbModel.createAllBotInfo(userId, bot1).then(log));
+    
 
   //<---------require botId
 

@@ -8,25 +8,25 @@ const updateOrCreateUserBots = function(botsArray) {
 
 const getAllUserBots = function(userId) {
 
-  return new Promise((resolve, reject) => {
-    dbq.getUserBots(userId)
-      .then(botIdArray => {
-        Promise.all(botIdArray.map(botId => getAllBotInfo(botId)))
-          .then(botsArray => {
-            console.log("bots array", botsArray);
-            resolve(botsArray);
-          }).catch(reject);
-      });
-  });
-
   // return new Promise((resolve, reject) => {
   //   dbq.getUserBots(userId)
-  //     .then(botIdArray => Promise.all(botIdArray.map(botId => getAllBotInfo(botId))))
-  //     .then(botsArray => {
-  //       console.log("bots array", botsArray);
-  //       resolve(botsArray);
-  //     }).catch(reject);
+  //     .then(botIdArray => {
+  //       Promise.all(botIdArray.map(botId => getAllBotInfo(botId)))
+  //         .then(botsArray => {
+  //           console.log("bots array", botsArray);
+  //           resolve(botsArray);
+  //         }).catch(reject);
+  //     });
   // });
+
+  return new Promise((resolve, reject) => {
+    dbq.getUserBots(userId)
+      .then(botIdArray => Promise.all(botIdArray.map(botId => getAllBotInfo(botId))))
+      .then(botsArray => {
+        console.log("bots array", botsArray);
+        resolve(botsArray);
+      }).catch(reject);
+  });
 
 };
 
@@ -45,8 +45,8 @@ const createAllBotInfo = function(userId, botObj) {
 
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
-    .then(() => addOrUpdateSelectedContacts(botObj))
-    .then(() => addOrUpdateTasks(botObj))
+    .then(() => addOrUpdateSelectedContacts(botObj.selectedContacts))
+    .then(() => addOrUpdateTasks(botObj.tasks))
     .then(resolve)
     .catch(reject);
   });
@@ -57,8 +57,8 @@ const updateAllBotInfo = function(botObj) {
 
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
-      .then(() => addOrUpdateSelectedContacts(botObj))
-      .then(() => addOrUpdateTasks(botObj))
+      .then(() => addOrUpdateSelectedContacts(botObj.selectedContacts))
+      .then(() => addOrUpdateTasks(botObj.tasks))
       .then(resolve)
       .then(reject);
   });
@@ -119,11 +119,21 @@ const addOrUpdateTask = function(botId, taskObj) {
 };
 
 
+
+
+
+
+
+//<----------------------Exports---------------------->>
 module.exports = {
     getAllBotInfo: getAllBotInfo,
     getAllUserBots: getAllUserBots,
+    addOrUpdateRegisteredTasks: addOrUpdateRegisteredTasks,
+    addOrUpdateTask: addOrUpdateTask,
     addOrUpdateContact: addOrUpdateContact,
     addOrUpdateSelectedContacts: addOrUpdateSelectedContacts,
-    addOrUpdateRegisteredTasks: addOrUpdateRegisteredTasks,
-}
+    updateAllBotInfo: updateAllBotInfo,
+    createAllBotInfo: createAllBotInfo,
+    updateOrCreateUserBots: updateOrCreateUserBots 
+};
 
