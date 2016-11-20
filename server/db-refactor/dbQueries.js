@@ -21,11 +21,16 @@ const deleteUser = function({userId: userId}) {
   return sqp.query(deleteUserquery).then((data)=>data.affectedRows);
 };
 
-const updateUser = function({userId: userId, name: name, gmail: gmail, gmailAuthToken: gmailAuthToken, fbPassword: fbPassword, fbUsername: fbUsername}) {
+const updateUser = function(userId,{name: name, gmail: gmail, gmailAuthToken: gmailAuthToken, fbPassword: fbPassword, fbUsername: fbUsername}) {
   const updateUserQuery = `UPDATE users SET name=${sqp.escape(name)},gmail=${sqp.escape(gmail)},
   gmailAuthToken=${sqp.escape(gmailAuthToken)},fbPassword=${sqp.escape(fbPassword)}, 
   fbUsername=${sqp.escape(fbUsername)} WHERE id=${sqp.escape(userId)}`;
   return sqp.query(updateUserQuery).then((data)=>data.affectedRows);
+};
+
+const getUser = function(userId){
+  const q = `SELECT * FROM users WHERE id=${sqp.escape(userId)}`
+  return sqp.query(q).then((data)=>data[0]);
 };
 
 //<----------------------BOTS---------------------->>
@@ -164,6 +169,7 @@ module.exports = {
   getSelectedTasks: getSelectedTasks,
   importConnection: importConnection,
   addUser: addUser,
+  getUser: getUser,
   updateUser: updateUser,
   deleteUser: deleteUser,
 }

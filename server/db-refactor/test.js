@@ -2,6 +2,8 @@
 //var token = require('../../env.js').ADMIN_IDTOKEN;
 var dbQ = require('../db-refactor/dbQueries.js');
 var dbM = require('./dbModel.js');
+var auth0 = require('../utils/auth0_utils');
+var appController = require('../config/appController');
 
 var db = require('./db');
 
@@ -34,6 +36,9 @@ function log(data){
 }
 function runTests(){
 
+  //botTest();
+  testOldUser();
+
 //<-------------------------------- QUERY TESTS 
 
   // dbModel.addUser('Fakey McFake', 'fake@fake.com', 'authToken')
@@ -56,7 +61,7 @@ function runTests(){
   // dbModel.updateUser(5, 'Fakey McFakesalot', 'fake@fake.com', 'authToken')
   // .then(log);
 
-botTest();
+
 
 function botTest(){
 
@@ -105,9 +110,9 @@ function botTest(){
 
 //per user methods
 //dbQ.getBot(11).then(log);
-dbM.getAllBotInfo(11).then((data)=>{
-  1+1;
-});
+  dbM.getAllBotInfo(11).then((data)=>{
+    1+1;
+  });
 
 }
 
@@ -243,6 +248,24 @@ var taskB2 = {
 
 }
 
+function testNewUser(){
+  var token = require('../../env').ADMIN_IDTOKEN;
+  var req = {body: {}, query: {token: token}};
+  var res = {};
+  auth0.authenticateFromToken(req, res, function(req, res, data){
+    appController.updateUserInfo(req, res, data);
+  });
+}
+
+function testOldUser(){
+  
+  var token = require('../../env').ADMIN_IDTOKEN;
+  var req = {body: {}, query: {token: token, userId: 6}};
+  var res = {};
+  auth0.authenticateFromToken(req, res, function(req, res, data){
+    appController.updateUserInfo(req, res, data);
+  });
+}
 
 
 
