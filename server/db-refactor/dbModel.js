@@ -1,22 +1,64 @@
 var dbq = require('./dbQueries');
 
+//<----------------------Per User---------------------->>
+
+const updateOrCreateUserBots = function(botsArray) {
+   return Promise.all(botsArray.map(botObj => updateOrCreateNewBot(botObj)));
+};
+
 const getAllUserBots = function(userId) {
 
   return new Promise((resolve, reject) => {
     getUserBots(userId)
       .then(botIdArray => {
-        let promisedArrayOfBots = botIdArray.map(botId => getAllBotInfo(botId));
-        Promise.all(promisedArrayOfBots)
+        Promise.all(botIdArray.map(botId => getAllBotInfo(botId)))
           .then(botsArray => {
             console.log("bots array", botsArray);
             resolve(botsArray);
           }).catch(reject);
       });
-  });  
+  });
+
+};
+
+//<----------------------Per Bot---------------------->>
+
+const updateOrCreateNewBot = function(botObj) {
+  if(botObj.id) {
+    return updateAllBotInfo(botObj);
+  } else {
+    return createAllBotInfo(botObj);
+  }
+}
+
+const createAllBotInfo = function(userId, botObj) {
+
+  return new Promise((resolve, reject) => {
+    dbq.addBotToUser(userId, botObj)
+    .then(() => addOrUpdateSelectedContacts(botObj))
+    .then(() => addOrUpdateTasks(botObj))
+    .then(resolve)
+    .catch(reject);
+  });
+
+};
+
+const updateAllBotInfo = function(botObj) {
+
+  return new Promise((resolve, reject) => {
+    dbq.updateBot(botObj)
+      .then(() => addOrUpdateSelectedContacts(botObj))
+      .then(() => addOrUpdateTasks(botObj))
+      .then(resolve)
+      .then(reject);
+  });
+
 };
 
 const getAllBotInfo = function(botId) {
+
   let botObj = {
+    botId: null,
     botType: null,
     botName: null,
     tasks: [],
@@ -28,10 +70,9 @@ const getAllBotInfo = function(botId) {
   };
 
   return new Promise ((resolve, reject) => {
-    Promise.all([getBot(botId),getSelectedContacts(botId), getTasks(botId)])
+    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId)])
       .then(arrayOfBotInfo => {
         console.log("array of db returns", arrayOfBotInfo);
-
         //massage data into botObj; 
         resolve(botObj)
       }).catch(resolve);

@@ -30,7 +30,7 @@ const updateUser = function({userId: userId, name: name, gmail: gmail, gmailAuth
 
 //<----------------------BOTS---------------------->>
 
-const addBotToUser = function(userId, {botName: botName, botType: botType = 'basic'}){
+const addBotToUser = function(userId, {botName: botName, botType: botType}){
   //insert into bot
   const insertBotQuery = `INSERT INTO bot(botName, botType) values(${sqp.escape(botName)}, ${sqp.escape(botType)})`;
   return sqp.query(insertBotQuery)
@@ -55,7 +55,7 @@ const deleteBot = function({botId: botId}){
   .then((data)=>data.affectedRows);
 }
 
-const getBot = function({botId: botId}){
+const getBot = function(botId){
     const q = `SELECT * FROM bot G WHERE id=${botId}`;
     return sqp.query(q);
 }
@@ -94,7 +94,7 @@ const removeSelectedContact = function({contactId: contactId}) {
     });
 };
 
-const getSelectedContacts = function({botId:botId}) {
+const getSelectedContacts = function(botId) {
   const selectContactsQuery = `SELECT * FROM selectedGmailContacts G 
   INNER JOIN bot_contacts J ON J.id_contact=G.id WHERE J.id_bot=${botId}`;
   return sqp.query(selectContactsQuery);
@@ -135,7 +135,7 @@ const updateSelectedTask = function({taskId: taskId, date: date, platform: platf
     return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
 
-const getSelectedTasks = function({botId: botId}) {
+const getSelectedTasks = function(botId) {
   const selectContactsQuery = `SELECT * FROM tasks G 
   INNER JOIN tasks_bots J ON J.id_task=G.id WHERE J.id_bot=${botId}`;
   return sqp.query(selectContactsQuery);
@@ -153,6 +153,7 @@ module.exports = {
   addBotToUser: addBotToUser,
   deleteBot: deleteBot,
   updateBot: updateBot,
+  getBot: getBot,
   addToSelectedContacts: addToSelectedContacts,
   removeSelectedContact: removeSelectedContact,
   updateSelectedContact: updateSelectedContact,
