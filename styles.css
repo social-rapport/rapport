@@ -116,9 +116,9 @@ video#bgvid {
 
 
 #container-header {
-  position: absolute;
-  top: 30%;
-  left: 10%;
+  position: relative;
+  top: 10em;
+  left: 15em;
   z-index: 1;
 }
 
@@ -127,7 +127,7 @@ video#bgvid {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
-  font: normal 25px/1 Arial, Helvetica, sans-serif;
+  font: normal 3em Arial, Helvetica, sans-serif;
   color: #5a5a5a;
   text-align: left;
   -o-text-overflow: ellipsis;
@@ -139,7 +139,7 @@ video#bgvid {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
-  font: normal 12px/1 Arial, Helvetica, sans-serif;
+  font: normal 1.2em Arial, Helvetica, sans-serif;
   color: #282828;
   text-align: left;
   -o-text-overflow: ellipsis;
@@ -249,4 +249,19 @@ video#bgvid {
   margin-right: auto;
   width:75%;
 }
-.c
+.container-botType {
+  position: relative;
+  top: 14em;
+/*  left: 25%;*/
+  /*width:;*/
+}
+
+
+
+
+
+
+
+
+
+
