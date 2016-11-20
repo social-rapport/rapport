@@ -10,7 +10,7 @@ const logError = function(err,b){
 }
 //<----------------------USERS---------------------->>
 
-const addUser = function({name: name, gmail: gmail, gmailAuthToken: gmailAuthToken, fbPassword: fbPassword, fbUsername: fbUsername}) {
+const addUser = function({name: name, gmail: gmail, gmailAuthToken: gmailAuthToken, fbPassword: fbPassword = null, fbUsername: fbUsername = null}) {
   const addUserQuery = `INSERT INTO users(name, gmail, gmailAuthToken, fbPassword, fbUsername)
   values(${sqp.escape(name)},${sqp.escape(gmail)},${sqp.escape(gmailAuthToken)},${sqp.escape(fbPassword)},${sqp.escape(fbUsername)})`;
   return sqp.query(addUserQuery).then((data)=> data.insertId);
