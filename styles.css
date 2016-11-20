@@ -118,7 +118,7 @@ video#bgvid {
 #container-header {
   position: relative;
   top: 10em;
-  left: 15em;
+  left: 15%;
   z-index: 1;
 }
 
