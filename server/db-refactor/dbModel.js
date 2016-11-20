@@ -1,3 +1,4 @@
+var dbq = require('./dbQueries');
 
 const getAllUserBots = function(userId) {
 
@@ -37,7 +38,37 @@ const getAllBotInfo = function(botId) {
   });
 };
 
+//<-----------------------COLLECTIONS----------------------->
+
+const addOrUpdateSelectedContacts = function (botId, contactArray) {
+  return Promise.all(contactArray.map(contactObj => addOrUpdateContact(botId,contactObj)));
+};
+
+const addOrUpdateContact = function(botId, contactObj) {
+  if(contactObj.contactId) {
+    return dbq.updateSelectedContact(contactObj);
+  } else {
+    return dbq.addToSelectedContacts(botId, contactObj);
+  }
+};
+
+const addOrUpdateRegisteredTasks = function(botId, taskArray) {
+  return Promise.all(taskArray.map(taskObj => addOrUpdateTask(botId, taskObj)));
+};
+
+//---tasks
+const addOrUpdateTask = function(botId, taskObj) {
+  if(taskObj.id) {
+    return dbq.updateSelectedTask(taskObj);
+  } else {
+    return dbq.addToTasks(botId, taskObj);
+  }
+};
+
 module.exports = {
     getAllBotInfo: getAllBotInfo,
     getAllUserBots: getAllUserBots,
+    addOrUpdateContact: addOrUpdateContact,
+    addOrUpdateSelectedContacts: addOrUpdateSelectedContacts,
+    addOrUpdateRegisteredTasks: addOrUpdateRegisteredTasks,
 }
