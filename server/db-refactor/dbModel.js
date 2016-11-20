@@ -1,4 +1,4 @@
-var dbq = require('./dbQueries');
+const dbq = require('./dbQueries.js');
 
 //<----------------------Per User---------------------->>
 
@@ -9,7 +9,7 @@ const updateOrCreateUserBots = function(botsArray) {
 const getAllUserBots = function(userId) {
 
   return new Promise((resolve, reject) => {
-    getUserBots(userId)
+    dbq.getUserBots(userId)
       .then(botIdArray => {
         Promise.all(botIdArray.map(botId => getAllBotInfo(botId)))
           .then(botsArray => {
@@ -19,7 +19,17 @@ const getAllUserBots = function(userId) {
       });
   });
 
+  // return new Promise((resolve, reject) => {
+  //   dbq.getUserBots(userId)
+  //     .then(botIdArray => Promise.all(botIdArray.map(botId => getAllBotInfo(botId))))
+  //     .then(botsArray => {
+  //       console.log("bots array", botsArray);
+  //       resolve(botsArray);
+  //     }).catch(reject);
+  // });
+
 };
+
 
 //<----------------------Per Bot---------------------->>
 
@@ -29,7 +39,7 @@ const updateOrCreateNewBot = function(botObj) {
   } else {
     return createAllBotInfo(botObj);
   }
-}
+};
 
 const createAllBotInfo = function(userId, botObj) {
 
@@ -79,6 +89,7 @@ const getAllBotInfo = function(botId) {
   });
 };
 
+
 //<-----------------------COLLECTIONS----------------------->
 
 const addOrUpdateSelectedContacts = function (botId, contactArray) {
@@ -93,11 +104,12 @@ const addOrUpdateContact = function(botId, contactObj) {
   }
 };
 
+
 const addOrUpdateRegisteredTasks = function(botId, taskArray) {
   return Promise.all(taskArray.map(taskObj => addOrUpdateTask(botId, taskObj)));
 };
 
-//---tasks
+
 const addOrUpdateTask = function(botId, taskObj) {
   if(taskObj.id) {
     return dbq.updateSelectedTask(taskObj);
@@ -105,6 +117,7 @@ const addOrUpdateTask = function(botId, taskObj) {
     return dbq.addToTasks(botId, taskObj);
   }
 };
+
 
 module.exports = {
     getAllBotInfo: getAllBotInfo,
