@@ -1,24 +1,32 @@
-var env = require('../env.js');
-require('./typey.js');
+// var env = require('../env.js');
+// require('./typey.js');
 
-var chai = require('chai');
-var expect = chai.expect;
+// var chai = require('chai');
+// var expect = chai.expect;
 
+// var mysql = require('promise-mysql');
+// var connection;
+// var dbModel = require('../server/db/dbModel.js');
+// //var _dbModel = require('../server/db/_dbModel.js');
+
+// var auth0 = require('../server/utils/auth0_utils.js');
+
+// mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: process.env.DBPASS || require('../env.js').DB_PASS,
+//     database: 'rapport'
+// }).then(function(conn,x){
+//     console.log('conn',conn);
+//     connection = conn;
+// });
+
+//var db = require('../db/db');
 var mysql = require('promise-mysql');
-var connection;
-var dbModel = require('../server/db/dbModel.js');
-var _dbModel = require('../server/db/_dbModel.js');
+//var db = require('../db/db.js');
+var connection = null;
 
-var auth0 = require('../server/utils/auth0_utils.js');
 
-mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DBPASS || require('../env.js').DB_PASS,
-    database: 'rapport'
-}).then(function(conn,x){
-    connection = conn;
-});
 
 
 //<-------------------QUERY DEFINITIONS------------------->
@@ -35,11 +43,11 @@ var deleteGmail = function(){ return connection.query('delete from gmail')};
 
 //<-------------------User Data------------------->
 
-var idToken = env.ADMIN_IDTOKEN;
-var emailInfo = {
-  contactsLength: 389,
-  email: 'jproche5@gmail.com',
-}
+// var idToken = env.ADMIN_IDTOKEN;
+// var emailInfo = {
+//   contactsLength: 389,
+//   email: 'jproche5@gmail.com',
+// }
 
 //<-------------------Bot Data------------------->
 
@@ -91,12 +99,12 @@ var bot2 = {
     };
         
 //<-------------------BEFORE-EACH------------------->
-beforeEach(function(done){
-    _dbModel.deleteBot(1,'basic',function(res){
-        console.log(res);
-        done();
-    })
-});
+// beforeEach(function(done){
+//     _dbModel.deleteBot(1,'basic',function(res){
+//         console.log(res);
+//         done();
+//     })
+// });
 
 //<-------------------USER DATA------------------->
 //todo: server responds with 200
