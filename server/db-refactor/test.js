@@ -13,25 +13,6 @@ var contacts = [
     }
 ];
 
-
-
-var bot1 = {
-            "bots":[{
-            "botType":'basic',
-            "botName": 'myBot',
-            "tasks":[
-                'sayHappyBirthdayGmail',
-                'sayHappyBirthdayFacebook',
-                'sayHiGmail',
-                'sayHiFacebook'
-            ],
-            "selectedContacts":contacts,
-            botActivity:{
-                "recent":[],
-                "scheduled":[]
-            }
-            }]
-        };
 var mysql = require('promise-mysql');
 
 var connection;
@@ -60,6 +41,13 @@ function runTests(){
 
 
 
+
+// for(var i= 0; i<20; i++){
+//   dbQ.deleteBot({botId: i});
+//   dbQ.removeSelectedContact({contactId: i});
+//   dbQ.removeSelectedTask({taskId: i});
+// }
+
 //<---------require userId
 
   // dbModel.deleteUser(4)
@@ -68,18 +56,69 @@ function runTests(){
   // dbModel.updateUser(5, 'Fakey McFakesalot', 'fake@fake.com', 'authToken')
   // .then(log);
 
-//  dbQ.addBotToUser(1, bot1.bots[0])
-//   .then(log);
+botTest();
+
+function botTest(){
+
+  // for(var i= 0; i<20; i++){
+  //   dbQ.deleteBot({botId: i});
+  //   dbQ.removeSelectedContact({contactId: i});
+  //   dbQ.removeSelectedTask({taskId: i});
+  // }
+
+  var botA1 = {
+    "botId": null,
+    "botType":'a',
+    "botName": 'myBot',
+    "tasks":[
+        'sayHappyBirthdayGmail',
+        'sayHappyBirthdayFacebook',
+        'sayHiGmail',
+        'sayHiFacebook'
+    ],
+    "selectedContacts":contacts,
+    botActivity:{
+        "recent":[],
+        "scheduled":[]
+    }
+  };
+
+  var botA2 = {
+    "botId": 11,
+    "botType":'aa',
+    "botName": 'myBot',
+    "tasks":[
+        'sayHappyBirthdayGmail',
+        'sayHappyBirthdayFacebook',
+        'sayHiGmail',
+        'sayHiFacebook'
+    ],
+    "selectedContacts":contacts,
+    botActivity:{
+        "recent":[],
+        "scheduled":[]
+    }
+  };
+
+//unit methods
+//dbQ.addBotToUser(1, botA1).then(log);
+
+//per user methods
+//dbQ.getBot(11).then(log);
+dbM.getAllBotInfo(11).then((data)=>{
+  1+1;
+});
+
+}
+
+
+
 
 
   //<---------require botId
 
 
-// for(var i= 2; i<20; i++){
-//   dbQ.deleteBot({botId: i});
-//   dbQ.removeSelectedContact({contactId: i});
-//   dbQ.removeSelectedTask({taskId: i});
-// }
+
 // .then(log);
 //botId, name, email, birthday
 
@@ -177,10 +216,10 @@ var taskB2 = {
   task: 'bb'
 };
 
-dbM.addOrUpdateRegisteredTasks(1,[taskA1, taskB1])
-.then((arr)=>{
-  console.log(arr);
-})
+// dbM.addOrUpdateRegisteredTasks(1,[taskA1, taskB1])
+// .then((arr)=>{
+//   console.log(arr);
+// })
 
 //dbQ.removeSelectedTask(task2).then(log);
 //dbQ.addToTasks(botId, task1).then(log);
