@@ -142,24 +142,3 @@ ALTER TABLE `users_bots` ADD FOREIGN KEY (id_user) REFERENCES `users` (`id`);
 ALTER TABLE `users_bots` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
 ALTER TABLE `bot_contacts` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
 ALTER TABLE `bot_contacts` ADD FOREIGN KEY (id_contact) REFERENCES `selectedGmailContacts` (`id`);
-
--- ---
--- Test Data
--- ---
-
--- INSERT INTO `bot` (`id`,`botName`,`botType`) VALUES
--- ('','','');
--- INSERT INTO `tasks` (`id`,`date`,`platform`,`message`,`task`) VALUES
--- ('','','','','');
--- INSERT INTO `log` (`id`,`date`,`platform`,`message`,`task`,`id_bot`,`id_user`) VALUES
--- ('','','','','','','');
--- INSERT INTO `tasks_bots` (`id`,`id_bot`,`id_task`) VALUES
--- ('','','');
--- INSERT INTO `users_bots` (`id`,`id_user`,`id_bot`) VALUES
--- ('','','');
--- INSERT INTO `users` (`id`,`name`,`gmail`,`gmailAuthToken`,`fbPassword`,`fbUsername`) VALUES
--- ('','','','','','');
--- INSERT INTO `selectedGmailContacts` (`id`,`name`,`email`,`birthday`) VALUES
--- ('','','','');
--- INSERT INTO `bot_contacts` (`id`,`id_bot`,`id_contact`) VALUES
--- ('','','');

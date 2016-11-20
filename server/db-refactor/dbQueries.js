@@ -35,7 +35,11 @@ const getUser = function(userId){
 
 //<----------------------BOTS---------------------->>
 
+<<<<<<< cec1919b2f7023cacbf943fc0a968566163edd7f
 const addBotToUser = function(userId, {botName: botName, botType: botType}){
+=======
+const addBotToUser = function(userId, {botName: botName, botType: botType = 'basic'}){
+>>>>>>> finish db refactor, add all persistance mutation functions
   //insert into bot
   const insertBotQuery = `INSERT INTO bot(botName, botType) values(${sqp.escape(botName)}, ${sqp.escape(botType)})`;
   return sqp.query(insertBotQuery)
