@@ -113,3 +113,4 @@ module.exports = {
     addOrUpdateSelectedContacts: addOrUpdateSelectedContacts,
     addOrUpdateRegisteredTasks: addOrUpdateRegisteredTasks,
 }
+
