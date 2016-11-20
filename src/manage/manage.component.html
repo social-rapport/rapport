@@ -1,13 +1,31 @@
-<div class="navbar-header">
+<!-- <div class="navbar-header">
     </div>
-    <h2>My Bots</h2>
+    <h2>My Bots</h2> -->
+
+<!-- nam -->
+  <div id="container-top-header">
+    <span id="title-anchor">Rapport</span>
+    <span id="signup-login">Logout</span>
+  </div>
+
+  <div id="container-header">
+    <div id="title-section" >
+      SELECT A BOT
+    </div>
+
+    <div id="title-section desc">
+    Each bot is pre-configured with basic tasks to suite each type of user
+    </div>
+
+  </div>
+<!--end Nam -->
 
     <div class = "list-container" style="background-color:#FFE; width: 100%">
     <ul class="heroes">
       <li *ngFor="let bot of bots" style="float:left"
         [class.selected]="bot === selectedBot"
         (click)="onSelectBot(bot)">
-        <span class="badge">{{bot.botType}}</span> 
+        <span class="badge">{{bot.botType}}</span>
       </li>
     </ul>
 
@@ -19,7 +37,7 @@
           <li *ngFor="let activity of activities"
             [class.selected]="activity === selectedActivity"
             (click)="onSelectActivity(activity)">
-            <span class="badge">{{activity}}</span> 
+            <span class="badge">{{activity}}</span>
           </li>
         </ul>
         </div>
@@ -45,7 +63,7 @@
           <li *ngFor="let task of tasks"
             [class.selected]="task === selectedTask"
             (click)="onSelectTask(task)">
-            <span class="badge">{{task}}</span> 
+            <span class="badge">{{task}}</span>
           </li>
         </ul>
       </div>
