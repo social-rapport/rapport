@@ -10,6 +10,7 @@ import { SearchComponent } from '../search/search.component';
   template: `
     <nav>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
+        <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Dashboard</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
         <a *ngIf="!authenticated()" class="right" (click)="login()">Login</a>
     </nav>
