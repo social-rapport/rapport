@@ -18,7 +18,7 @@ export class ManageComponent {
 
   private bots: Array<customBot>;
   private selectedBot: customBot;
-  
+
   private activities: Array<string>;
   private contacts: Array<gmailContact>;
   private tasks: Array<string>;
