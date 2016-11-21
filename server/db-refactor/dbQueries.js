@@ -35,11 +35,7 @@ const getUser = function(userId){
 
 //<----------------------BOTS---------------------->>
 
-<<<<<<< cec1919b2f7023cacbf943fc0a968566163edd7f
-const addBotToUser = function(userId, {botName: botName, botType: botType}){
-=======
 const addBotToUser = function(userId, {botName: botName, botType: botType = 'basic'}){
->>>>>>> finish db refactor, add all persistance mutation functions
   //insert into bot
   const insertBotQuery = `INSERT INTO bot(botName, botType) values(${sqp.escape(botName)}, ${sqp.escape(botType)})`;
   return sqp.query(insertBotQuery)
@@ -54,7 +50,7 @@ const addBotToUser = function(userId, {botName: botName, botType: botType = 'bas
 const updateBot = function({botId: botId, botName: botName = 'unnamed', botType: botType = 'basic'}){
     const q = `UPDATE bot SET botName=${sqp.escape(botName)},botType=${sqp.escape(botType)} WHERE id=${sqp.escape(botId)} `
     return sqp.query(q).then((data)=>data.affectedRows);
-}
+};
 
 const deleteBot = function({botId: botId}){
   const deleteBotQuery = `DELETE FROM bot WHERE id=${sqp.escape(botId)}`
@@ -62,11 +58,18 @@ const deleteBot = function({botId: botId}){
   return sqp.query(deleteInJoin)
   .then(()=>sqp.query(deleteBotQuery))
   .then((data)=>data.affectedRows);
-}
+};
 
 const getBot = function(botId){
     const q = `SELECT * FROM bot G WHERE id=${botId}`;
     return sqp.query(q);
+};
+
+const getUserBots = function(userId) {
+  const q = `SELECT id_bot FROM users_bots J INNER JOIN users U ON U.id=J.id_user WHERE U.id =${sqp.escape(userId)}`;
+
+  return sqp.query(q)
+    .then(data => data.map(x => x.id_bot));
 }
 
 //<----------------------CONTACTS---------------------->>
@@ -115,11 +118,11 @@ const addToTasks = function(botId, {date: date, platform: platform, message: mes
   //add to tasks table
   const q1 = `INSERT INTO tasks(date, platform, message, task) 
     values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)}, ${sqp.escape(task)})`;
-
+    1+1;
   return sqp.query(q1)
     .then(data => {
       const taskId = data.insertId;
-
+      1+1;
       //add entry in join table with bot
       const q2 = `INSERT INTO tasks_bots(id_bot, id_task) values(${sqp.escape(botId)}, ${sqp.escape(taskId)})`;
       return sqp.query(q2).then((data)=>taskId);
@@ -163,6 +166,7 @@ module.exports = {
   deleteBot: deleteBot,
   updateBot: updateBot,
   getBot: getBot,
+  getUserBots: getUserBots,
   addToSelectedContacts: addToSelectedContacts,
   removeSelectedContact: removeSelectedContact,
   updateSelectedContact: updateSelectedContact,
