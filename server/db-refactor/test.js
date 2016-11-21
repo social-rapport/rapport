@@ -12,7 +12,7 @@ var connection;
 mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'cichlid1022',
+    password: 'dev',
     database: 'rapport'
 }).then(function(conn,x){
     dbQ.importConnection(conn);
@@ -25,9 +25,15 @@ function log(data){
   console.log(data);
 }
 function runTests(){
-
-
-
+  testNewUser();
+  function testNewUser(){
+    var token = require('../../env').ADMIN_IDTOKEN;
+    var req = {body: {}, query: {token: token}};
+    var res = {};
+    auth0.authenticateFromToken(req, res, function(req, res, data){
+      appController.updateUserInfo(req, res, data);
+    });
+  }
 }
 
 

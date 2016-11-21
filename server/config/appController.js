@@ -13,32 +13,32 @@ module.exports.oauth = "";
 module.exports.updateUserInfo = function(req, res, authInfo){
 
   var userId = req.query.userId;
-  const gmailInfo = auth0Utils.getGmailInfo(authInfo.keys);
-  
-  if(!userId){
-    var newUserObj = types.initialUser;
+  var newUserData = auth0Utils.getGmailInfo(authInfo);
 
-    newUserObj.gmail = authObj.email;
-    newUserObj.name = authObj.name;
-    newUserObj.gmailAuthToken = gmailInfo.oauth;
-    
-    dbQ.addUser(newUserObj).then(function(userId){
-      dbQ.getUser(userId).then(function(data){
-        data.newUser = true;
-        res.status(200).send(data);
-      });
+  dbQ.getUserFromGmail(newUserData.email)
+  .then(function (oldUserData){
+    if(!oldUserData){
+      var currentUserData  = Object.assign(types.initialUser, newUserData);
+      dbQ.addUser(currentUserData).then(function(userId){
+        dbQ.getUser(userId).then(function(data){
+          data.newUser = true;
+          res.status(200).send(data);
+        });
     }); 
   } else {
-    dbQ.getUser(userId).then((data) => {
-      data.gmailAuthToken = gmailInfo.oauth; 
-      dbQ.updateUser(userId, data)
+      var currentUserData = Object.assign(oldUserData,newUserData)
+      dbQ.updateUser(currentUserData.id, currentUserData)
       .then(function(){
-        data.newUser = false;
-        res.status(200).send(data);
-      })
-    });
-  }
-}
+        dbQ.getUser(currentUserData.id)
+        .then(function(data){
+          currentUserData.newUser = false;
+          res.status(200).send(currentUserData);
+        });
+      });
+    };
+  });
+
+};
 
 //<-------------------return the bot type so FE can change it------------------->
 module.exports.getBotTypes = function(req, res){
