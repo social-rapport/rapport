@@ -37,10 +37,6 @@ export class ManageComponent {
     this.botService.updateBots(this.bots);
   }
 
-  private sendNow(){
-    this.botService.sendNow();
-  }
-
   private ngOnInit(): void {
     this.bots = this.botService.getUserBots();
     console.log("bots", this.bots);
