@@ -36,7 +36,7 @@ module.exports = {
   runAllTasks: function(callback){
 
     dbQ.getTasksJoinedWithUsers('today')
-      .then(tasks => Promise.all(tasks.map( task => botMethods[task.task](task))))
+      .then(tasks => Promise.all(tasks.map(task => botMethods[task.task](task))))
       .then(callback);
 
 
@@ -85,7 +85,8 @@ module.exports = {
     // });
 
   },
-  logTasks: function(tasks){
+  logTasks: function(tasksArray){
+    //return Promise.all(tasksArray.map(task => dbQ.addToLog(tasksArray)));
 
     var runGenerator = function(length, index){
       if(length === index){

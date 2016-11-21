@@ -14,7 +14,6 @@ const getAllUserBots = function(userId) {
       .then(resolve)
       .catch(reject);
   });
-
 };
 
 
@@ -37,7 +36,6 @@ const createAllBotInfo = function(userId, botObj) {
     .then(resolve)
     .catch(reject);
   });
-
 };
 
 const updateAllBotInfo = function(botObj) {
@@ -46,9 +44,8 @@ const updateAllBotInfo = function(botObj) {
       .then(affectedRows => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
         addOrUpdateRegisteredTasks(botObj.botId, botObj.tasks)]))
       .then(resolve)
-      .then(reject);
+      .catch(reject);
   });
-
 };
 
 const getAllBotInfo = function(botId) {
@@ -83,6 +80,7 @@ const getAllBotInfo = function(botId) {
 
 //<-----------------------COLLECTIONS----------------------->
 
+//contacts
 const addOrUpdateSelectedContacts = function (botId, contactArray) {
   return Promise.all(contactArray.map(contactObj => addOrUpdateContact(botId,contactObj)));
 };
@@ -95,11 +93,10 @@ const addOrUpdateContact = function(botId, contactObj) {
   }
 };
 
-
+//tasks
 const addOrUpdateRegisteredTasks = function(botId, taskArray) {
   return Promise.all(taskArray.map(taskObj => addOrUpdateTask(botId, taskObj)));
 };
-
 
 const addOrUpdateTask = function(botId, taskObj) {
   if(taskObj.id) {
@@ -109,8 +106,18 @@ const addOrUpdateTask = function(botId, taskObj) {
   }
 };
 
+//facebook friends
+const addOrUpdateSelectedFacebookFriends = function(botId, friendArray) {
+  return Promise.all(friendArray.map(friend => addOrUpdateSelectedFacebookFriends(friend)));
+}; 
 
-
+const addOrUpdateFacebookFriend = function(botId, friendObj) {
+  if(friendOb.id) {
+    return dbq.updateSelectedFacebookFriend(friendObj);
+  } else {
+    return dqb.addToSelectedFacebookFriends(botId, friendObj);
+  }
+};
 
 
 

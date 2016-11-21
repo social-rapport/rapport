@@ -51,7 +51,7 @@ module.exports.updateFacebookCredentials = function(req, res) {
     .catch((error) => req.status(500).send('error saving the credentials: ', error));
 };
 
-//<---------------------Updates Facebook Credentials--------------------->
+//<---------------------Gets Facebook Friends--------------------->
 module.exports.getFacebookFriends = function(req, res) {
   dbQ.getFacebookCredentials(req.query.userId)
     .then(fbCredentialObj => {

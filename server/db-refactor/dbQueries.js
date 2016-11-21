@@ -179,15 +179,72 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN selectedGmailContacts G ON G.id=JJJ.id_contact
     WHERE T.date=${sqp.escape(date)}`;
 
+    //INNER JOIN selectedFacebookFriends F ON B.id=F.id_bot
+
     return sqp.query(q);
 };
-// const deleteBotContacts = function({botId: botId}) {
-//   const deleteQuery = `DELETE FROM selectedGmailContacts G 
-//   INNER JOIN bot_contacts J ON G.id=J.id_contact WHERE G.id=${sqp.escape(botId)}`;
 
-//   return sqp.query(deleteQuery)
-//     .then(data => data.affectedRows);
-// }
+//<----------------------FACEBOOK FRIENDS---------------------->>
+
+const addToSelectedFacebookFriends = function(botId, {name: name, vanityName: vanityName, birthday: birthday = null}) {
+  const q = `INSERT INTO selectedFacebookFriends(name, vanityName, birthday, id_bot) 
+    values(${sqp.escape(name)}, ${sqp.escape(vanityName)}, ${sqp.escape(birthday)}, ${sqp.escape(botId)})`;
+
+  return sqp.query(q).then(data => data.insertId);
+};
+
+const removeSelectedFacebookFriend = function(friendId) {
+  const q = `DELETE FROM selectedFacebookFriends WHERE id=${sqp.escape(friendId)}`;
+  return sqp.query(q).then(data => data.affectedRows);
+};
+
+const updateSelectedFacebookFriend = function({id: id, name: name, vanityName: vanityName, birthday: birthday}) {
+  const q = `UPDATE selectedFacebookFriends SET name=${sqp.escape(name)}, vanityName=${sqp.escape(vanityName)}, 
+    birthday=${sqp.escape(birthday)}`;
+
+  return sqp.query(q).then(data => data.affectedRows);
+};
+
+const getSelectedFacebookFriends = function(botId) {
+  const q = `SELECT * FROM selectedFacebookFriends WHERE id_bot=${sqp.escape(botId)}`;
+  return sqp.query(q);
+}
+
+//<----------------------LOG---------------------->>
+
+const addToLog = function({date: date, platform: platform, message: message, task: task, id_bot: id_bot, id_user: id_user}){
+  const q = `INSERT INTO log(date, platform, message, task, id_bot, id_user)
+    values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)}, 
+    ${sqp.escape(task)}, ${sqp.escape(id_bot)}, ${sqp.escape(id_user)})`;
+  
+  return sqp.query(q)
+};
+
+const getUserLog = function(userId) {
+  const q = `SELECT * FROM log WHERE id_user=${sqp.escape(userId)}`;
+  return sqp.query(q);
+};
+
+const getBotLog = function(botId) {
+  const q = `SELECT * FROM log WHERE id_bot=${sqp.escape(botId)}`;
+  return sqp.query(q);
+};
+
+const deleteSingleLog = function(logId) {
+  const q = `DELETE FROM log WHERE id=${sqp.escape(logId)}`;
+  return sqp.query(q).then(data => data.affectedRows);
+};
+
+const deleteBotLogs = function(botId) {
+  const q = `DELETE FROM log WHERE id_bot=${sqp.escape(botId)}`;
+  return sqp.query(q).then(data => data.affectedRows);
+};
+
+const deleteUserLogs = function(userId) {
+  const q = `DELETE FROM log WHERE id_user=${sqp.escape(UserId)}`;
+  return sqp.query(q).then(data => data.affectedRows);
+};
+
 
 module.exports = {
   addBotToUser: addBotToUser,
@@ -212,4 +269,14 @@ module.exports = {
   getTasksJoinedWithUsers: getTasksJoinedWithUsers,
   getFacebookCredentials: getFacebookCredentials,
   updateFacebookCredentials: updateFacebookCredentials,
+  addToSelectedFacebookFriends: addToSelectedFacebookFriends,
+  removeSelectedFacebookFriend: removeSelectedFacebookFriend,
+  updateSelectedFacebookFriend: updateSelectedFacebookFriend,
+  getSelectedFacebookFriends: getSelectedFacebookFriends,
+  addToLog: addToLog,
+  getUserLog: getUserLog,
+  getBotLog: getBotLog,
+  deleteSingleLog: deleteSingleLog,
+  deleteBotLogs: deleteBotLogs,
+  deleteUserLogs: deleteUserLogs
 }
