@@ -1,3 +1,21 @@
+var sqp = require('./db-refactor/dbQueries')
+var mysql = require('promise-mysql');
+
+mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'cichlid1022',
+    database: 'rapport'
+}).then(function(conn,x){
+    exportConn(conn);
+}).catch(function(err){
+    console.log(err);
+});
+
+function exportConn(conn){
+    sqp.injectConnection(conn);
+}
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();

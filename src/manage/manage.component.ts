@@ -42,4 +42,9 @@ export class ManageComponent {
     console.log("bots", this.bots);
     this.onSelectBot(this.bots[0]);
   }
+
+  private sendNow(): void {
+    this.botService.sendNow()
+      .then(console.log);
+  }
 }

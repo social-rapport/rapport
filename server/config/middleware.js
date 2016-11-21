@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser');
+const authUtils = require('../utils/auth0_utils.js');
 
 module.exports = function(app, express){
   app.use(bodyParser.urlencoded({extended: true}));
@@ -9,6 +10,6 @@ module.exports = function(app, express){
     next();
   });
   app.set('port', (process.env.PORT || 5050));
-
+  
   
 }

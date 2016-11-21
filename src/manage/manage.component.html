@@ -63,12 +63,13 @@
           <li *ngFor="let task of tasks"
             [class.selected]="task === selectedTask"
             (click)="onSelectTask(task)">
-            <span class="badge">{{task}}</span>
+            <span class="badge">{{task.task}}</span>
           </li>
         </ul>
       </div>
 
       <button (click)="submitAllSettings()"> Save Bots! </button>
+      <button (click)="sendNow()"> Send Now! </button>
 
     </div>
     <!--<div *ngIf="selectedHero">
