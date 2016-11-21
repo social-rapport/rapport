@@ -21,7 +21,7 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
-  if(botObj.botId) {
+  if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
     return createAllBotInfo(userId, botObj);
@@ -43,8 +43,8 @@ const createAllBotInfo = function(userId, botObj) {
 const updateAllBotInfo = function(botObj) {
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
-      .then(botId => Promise.all([addOrUpdateSelectedContacts(botObj.botId, botObj.selectedContacts),
-        addOrUpdateRegisteredTasks(botObj.botId, botObj.tasks)]))
+      .then(botId => Promise.all([addOrUpdateSelectedContacts(botId, botObj.selectedContacts),
+        addOrUpdateRegisteredTasks(botId, botObj.tasks)]))
       .then(resolve)
       .then(reject);
   });
@@ -54,7 +54,7 @@ const updateAllBotInfo = function(botObj) {
 const getAllBotInfo = function(botId) {
 
   let botObj = {
-    botId: null,
+    id: null,
     botType: null,
     botName: null,
     tasks: [],
@@ -69,7 +69,7 @@ const getAllBotInfo = function(botId) {
     Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId)])
       .then(arrayOfBotInfo => {
         //massage data into botObj; 
-        botObj.botId = arrayOfBotInfo[0][0].id;
+        botObj.id = arrayOfBotInfo[0][0].id;
         botObj.botType = arrayOfBotInfo[0][0].botType;
         botObj.botName = arrayOfBotInfo[0][0].botName || arrayOfBotInfo[0][0].botType;
         botObj.selectedContacts = arrayOfBotInfo[1];
@@ -88,7 +88,7 @@ const addOrUpdateSelectedContacts = function (botId, contactArray) {
 };
 
 const addOrUpdateContact = function(botId, contactObj) {
-  if(contactObj.contactId) {
+  if(contactObj.id) {
     return dbq.updateSelectedContact(contactObj);
   } else {
     return dbq.addToSelectedContacts(botId, contactObj);
@@ -102,7 +102,7 @@ const addOrUpdateRegisteredTasks = function(botId, taskArray) {
 
 
 const addOrUpdateTask = function(botId, taskObj) {
-  if(taskObj.taskId) {
+  if(taskObj.id) {
     return dbq.updateSelectedTask(taskObj);
   } else {
     return dbq.addToTasks(botId, taskObj);
