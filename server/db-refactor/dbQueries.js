@@ -158,6 +158,18 @@ const getSelectedTasks = function(botId) {
   return sqp.query(selectContactsQuery);
 }
 
+const getTasksJoinedWithUsers = function(date) {
+  const q = `SELECT * FROM tasks T 
+    INNER JOIN tasks_bots J ON J.id_task=T.id
+    INNER JOIN bot B ON J.id_bot = B.id
+    INNER JOIN users_bots JJ ON JJ.id_bot=B.id
+    INNER JOIN users U ON U.id=JJ.id_user
+    INNER JOIN bot_contacts JJJ ON JJJ.id_bot=B.id
+    INNER JOIN selectedGmailContacts G ON G.id=JJJ.id_contact
+    WHERE T.date=${sqp.escape(date)}`;
+
+    return sqp.query(q);
+};
 // const deleteBotContacts = function({botId: botId}) {
 //   const deleteQuery = `DELETE FROM selectedGmailContacts G 
 //   INNER JOIN bot_contacts J ON G.id=J.id_contact WHERE G.id=${sqp.escape(botId)}`;
@@ -186,4 +198,5 @@ module.exports = {
   getUserFromGmail: getUserFromGmail,
   updateUser: updateUser,
   deleteUser: deleteUser,
+  getTasksJoinedWithUsers: getTasksJoinedWithUsers
 }

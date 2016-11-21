@@ -1,5 +1,5 @@
 var bodyParser = require('body-parser');
-var auth0Utils = require('../utils/auth0_utils');
+const authUtils = require('../utils/auth0_utils.js');
 
 module.exports = function(app, express){
   app.use(bodyParser.urlencoded({extended: true}));
@@ -9,6 +9,15 @@ module.exports = function(app, express){
     console.log(`${req.method} AT ${req.url}`);
     next();
   });
+  app.use((req, res, next) => {
+    if(req.query.token) {
+      //call the thing
+    } else {
+      next();
+    }
+
+    req.query.token ? : next()
+  })
   app.set('port', (process.env.PORT || 5050));
   
   
