@@ -1,6 +1,6 @@
 var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
-var dbM = require('../db/dbModel.js');
+var dbM = require('../db-refactor/dbModel.js');
 var dbQ = require('../db-refactor/dbQueries.js');
 var bot = require('../bot/botController.js');
 var types = require('../db-refactor/types');
@@ -10,9 +10,10 @@ module.exports.oauth = "";
 
 //<---------------------RESTRICTED METHODS (ACCESSED AFTER AUTH)--------------------->
 
-module.exports.updateUserInfo = function(req, res, authInfo){
+module.exports.updateUserInfo = function(req, res){
 
   var userId = req.query.userId;
+  var authInfo = req.authInfo; 
   var newUserData = auth0Utils.getGmailInfo(authInfo);
 
   dbQ.getUserFromGmail(newUserData.gmail)
@@ -48,9 +49,10 @@ module.exports.getBotTypes = function(req, res){
 
 //<-------------------get all the users bot information------------------->
   module.exports.getBotInfo = function(req, res) {
-    dbModel.getAllUserBots()
+    dbM.getAllUserBots(req.query.userId)
     .then((data)=>res.end(JSON.stringify(data)));
   };
+
 
 //<-------------------change the users bots on a post------------------->
 

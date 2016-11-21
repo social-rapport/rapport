@@ -13,7 +13,7 @@ console.log("routes loaded");
   // });
 
   //route for handling sign in and sign up
-  app.post('/signIn', appController.updateUserInfo);
+  app.post('/signIn', auth0Utils.authenticateFromToken, appController.updateUserInfo);
 
   app.get('/tasksForChron', appController.getTasksForChron);
 

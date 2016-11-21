@@ -40,6 +40,7 @@ export class Auth {
     //localStorage.setItem('id_token', authResult.idToken);
     this.signInUser(authResult)
       .then(userInfo => {
+        localStorage.setItem('user_id',userInfo.id);
         userObj = userInfo;
         this.botService.setInitialState()
           .then(() => this.redirectForUserType(userObj))

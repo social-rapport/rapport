@@ -4,7 +4,8 @@ var googleContacts = require('google-contacts-with-photos');
 var gmailKeys = require('./gmailKeys.js');
 var auth = require('../utils/auth0_utils.js');
 var appController = require('./appController.js');
-var dbModel = require('../db/dbModel.js');
+var dbM = require('../db-refactor/dbModel.js');
+var dbQ = require('../db-refactor/dbQueries.js');
 
 // BASIC OAUTH SETUP
 var OAuth2 = google.auth.OAuth2;
@@ -45,23 +46,19 @@ module.exports.getTokens = function(req, res) {
 };
 
 module.exports.getContacts = function(req, res) {
-  console.log('getContacts');
-  auth.getUserIdFromToken(req.query.token)  //getUserObjFromToken
-    .then(userObj => {
-      dbModel.users.getOauthFromEmail(userObj.email, result => {
-        var oauth = result[0].credentials;
-        console.log('oaugh from getContacts ', oauth);
+  var id = req.query.userId; 
+  dbQ.getUser(id).then((userData) => {
+    var oauth = userData.gmailAuthToken;
 
-        googleContacts({token: oauth})
-          .then( data => {
-            res.send(data);
-          })
-          .catch( err => {
-            console.log(err);
-            res.end();
-          });
+    googleContacts({token: oauth})
+      .then( data => {
+        res.send(data);
+      })
+      .catch( err => {
+        console.log(err);
+        res.end();
       });
-    });
+  });
 };
 
 // for the bot
