@@ -9,15 +9,6 @@ module.exports = function(app, express){
     console.log(`${req.method} AT ${req.url}`);
     next();
   });
-  app.use((req, res, next) => {
-    if(req.query.token) {
-      //call the thing
-    } else {
-      next();
-    }
-
-    req.query.token ? : next()
-  })
   app.set('port', (process.env.PORT || 5050));
   
   
