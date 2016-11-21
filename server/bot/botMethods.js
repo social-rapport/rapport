@@ -12,7 +12,7 @@ module.exports = {
     };
 
     gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-      console.log("send email results", result);
+      console.log("send email results", results);
     });
 
   },

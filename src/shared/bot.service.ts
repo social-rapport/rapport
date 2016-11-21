@@ -105,7 +105,7 @@ export class BotService {
   }
 
   public sendNow(){
-    this.http.get('/api/runalltasks');
+    return this.http.get('/api/runalltasks').toPromise();
   }
 
 }

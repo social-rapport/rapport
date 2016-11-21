@@ -34,6 +34,12 @@ module.exports = {
   },
   //tasks in a database -> preps to send to gmail(using oauth) -> send emails ->log to database all completed tasks 
   runAllTasks: function(callback){
+
+    dbQ.getTasksJoinedWithUsers('today')
+      .then(tasks => Promise.all(tasks.map( task => botMethods[task.task](task))))
+      .then(callback);
+
+
     // console.log('runAllTasks running');
     // dbModel.tasks.getTasksForChronJob(function(tasks){
     //   console.log('tasks', tasks);
@@ -70,9 +76,6 @@ module.exports = {
     //   }
     //   runGenerator(tasks.length, 0);
     // });
-    
-    dbQ.getTasksJoinedWithUsers('today')
-      .then(tasks => Promise.all(task.map(botMethods[task.task](task))));
 
   },
   logTasks: function(tasks){
