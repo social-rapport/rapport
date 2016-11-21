@@ -1,4 +1,7 @@
 /* Master Styles */
+/*font-family: 'PT Sans Narrow', sans-serif;
+font-family: 'Inconsolata', monospace;
+font-family: 'Roboto', sans-serif;*/
 html{
   margin: 0;
 }
@@ -75,7 +78,11 @@ video#bgvid {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
-  font: normal 75px/1 Arial, Helvetica, sans-serif;
+  font-family: 'PT Sans Narrow', sans-serif;
+  letter-spacing: 0.2em;
+  font-size: 6em;
+  line-height:0.8;
+  padding-left:0.2em;
   /*color: #5a5a5a;*/
   color: #292929;
   text-align: center;
@@ -83,20 +90,43 @@ video#bgvid {
   text-overflow: ellipsis;
 }
 
-#title-main #tagline {
+#tagline {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
-  font: normal 15px/1 Arial, Helvetica, sans-serif;
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.5em;
+  letter-spacing:0.335em;
+  text-transform: uppercase;
   color: #282828;
-  text-align: justify;
+  text-align: center;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
 
-#button-signup {
+/*this loads image*/
+/*#button-signup {
+  z-index:1;
+  background-image: url('./app/assets/button-signup.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  height:100px;
+  width:200px;
+  font-family: 'Inconsolata', monospace;
+}*/
 
+#button-signup {
+  margin: auto;
+  height:1.8em;
+  width:9em;
+  font-family: 'Inconsolata', monospace;
+  font-size:1.2em;
+  line-height:1.8em;
+  letter-spacing: 0.3em;
+  color:white;
+  text-align: center;
+  background-color: #93BA4C;
 }
 
 /* PAGES */
