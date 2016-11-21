@@ -99,8 +99,8 @@ function getGmailInfo(userObj) {
     let gmailInfo = {};
 
    gmailInfo.name = userObj.name;
-   gmailInfo.email = userObj.email;
-   gmailInfo.oauth = userObj.identities[0].access_token;
+   gmailInfo.gmail = userObj.email;
+   gmailInfo.gmailAuthToken = userObj.identities[0].access_token;
 
    return gmailInfo;
 }

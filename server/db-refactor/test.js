@@ -25,7 +25,11 @@ function log(data){
   console.log(data);
 }
 function runTests(){
+  for(var i = 0; i< 20; i++){
+    dbQ.deleteUser(i).then(log);
+  }
   testNewUser();
+  
   function testNewUser(){
     var token = require('../../env').ADMIN_IDTOKEN;
     var req = {body: {}, query: {token: token}};

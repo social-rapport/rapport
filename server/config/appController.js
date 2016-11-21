@@ -15,7 +15,7 @@ module.exports.updateUserInfo = function(req, res, authInfo){
   var userId = req.query.userId;
   var newUserData = auth0Utils.getGmailInfo(authInfo);
 
-  dbQ.getUserFromGmail(newUserData.email)
+  dbQ.getUserFromGmail(newUserData.gmail)
   .then(function (oldUserData){
     if(!oldUserData){
       var currentUserData  = Object.assign(types.initialUser, newUserData);
