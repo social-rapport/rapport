@@ -43,7 +43,7 @@ const createAllBotInfo = function(userId, botObj) {
 const updateAllBotInfo = function(botObj) {
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
-      .then(botId => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
+      .then(affectedRows => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
         addOrUpdateRegisteredTasks(botObj.botId, botObj.tasks)]))
       .then(resolve)
       .then(reject);
