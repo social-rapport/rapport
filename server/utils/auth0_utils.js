@@ -3,6 +3,23 @@ const authDomain = process.env.AUTH0_DOMAIN || require('../../env.js').AUTH0_DOM
 const authClientId = process.env.AUTH0_CLIENT_ID || require('../../env.js').AUTH0_CLIENT_ID;
 const authClientSecret = process.env.AUTH0_CLIENT_SECRET || require('../../env.js').AUTH0_CLIENT_SECRET;
 
+//<-------------------------------AUTHENTICATION MIDDLEWARE-------------------------------> 
+//takes a token and passes on the authUserObj after adding the access token
+function authenticateFromToken(req, res, next){
+   Promise.all([getUserIdFromToken(req.body.idToken || req.query.token),getAccesstoken()])
+    .then(arrayOfResolves => {
+      getUserAccessKeys(...arrayOfResolves)
+      .then(authUserObj => {
+          if(!authUserObj){
+              res.send(400);
+          } else {
+              next(req, res, {tokens: arrayOfResolves[0], keys: authUserObj});
+          }
+        })
+    });
+};
+
+//<-------------------------------AUTHENTICATION-------------------------------> 
 
 //takes the JWT token passed from the auth0 login and handshakes to get the user object and returns a promise of the user id
 function getUserIdFromToken (token) { //getUserObjFromToken
@@ -21,6 +38,7 @@ function getUserIdFromToken (token) { //getUserObjFromToken
                 console.log=('error getting user object from token id ====> ', error);
                 reject(error);
             }
+            console.log(body);
             resolve(jsonChecker(body));
         });
    });
@@ -75,6 +93,8 @@ function getUserAccessKeys(userObject, accessToken) {
     });
 }
 
+//<-------------------------------GMAIL-------------------------------> 
+
 function getGmailInfo(userObj) {
     let gmailInfo = {};
 
@@ -82,16 +102,13 @@ function getGmailInfo(userObj) {
    gmailInfo.email = userObj.email;
    gmailInfo.oauth = userObj.identities[0].access_token;
 
-   module.exports.gmailInfo = gmailInfo;
    return gmailInfo;
 }
 
-//filters the identities array and pulls out the FB access key
-function getFbAccessKey(identitiesArray) {
-    return identitiesArray.filter(IdPObj => IdPObj.provider === 'facebook')[0].access_token;
-}
 
-//checks for JSON and parses if it is json
+
+//<-------------------------------FACEBOOK-------------------------------> 
+
 function jsonChecker(itemToBeChecked) {
     return typeof itemToBeChecked === 'string' ? JSON.parse(itemToBeChecked) : itemToBeChecked;
 }
@@ -110,8 +127,14 @@ function userObjFromToken(token,cb){
 }
 
 
+//filters the identities array and pulls out the FB access key
+function getFbAccessKey(identitiesArray) {
+    return identitiesArray.filter(IdPObj => IdPObj.provider === 'facebook')[0].access_token;
+}
+
 
 module.exports = {
+    authenticateFromToken: authenticateFromToken,
     getFbAccessKey: getFbAccessKey,
     getUserAccessKeys: getUserAccessKeys,
     getAccesstoken: getAccesstoken,

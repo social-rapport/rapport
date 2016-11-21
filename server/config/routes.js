@@ -5,7 +5,7 @@ const auth0Utils = require('../utils/auth0_utils.js');
 var appController = require('./appController.js');
 module.exports = function (app, express) {
 
-  console.log("routes loaded");
+console.log("routes loaded");
 
   // app.get('/',function(request, response){
   //   console.log('Server Alive');
@@ -13,7 +13,7 @@ module.exports = function (app, express) {
   // });
 
   //route for handling sign in and sign up
-  app.post('/signIn', appController.checkIfNewUser);
+  app.post('/signIn', appController.updateUserInfo);
 
   app.get('/tasksForChron', appController.getTasksForChron);
 
