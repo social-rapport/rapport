@@ -104,5 +104,9 @@ export class BotService {
       )
   }
 
+  public sendNow(){
+    this.http.get('/api/runalltasks');
+  }
+
 }
 
