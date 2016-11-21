@@ -1,6 +1,6 @@
-var sqp;
+var sqp = null; 
 
-function importConnection(conn){
+function injectConnection(conn){
    sqp = conn;
 }
 
@@ -180,7 +180,7 @@ module.exports = {
   removeSelectedTask: removeSelectedTask,
   updateSelectedTask: updateSelectedTask,
   getSelectedTasks: getSelectedTasks,
-  importConnection: importConnection,
+  injectConnection: injectConnection,
   addUser: addUser,
   getUser: getUser,
   getUserFromGmail: getUserFromGmail,

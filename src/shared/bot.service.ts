@@ -22,7 +22,7 @@ export class BotService {
 
   public getBotTypes(){
     let token = localStorage.getItem('id_token');
-    let email = localStorage.getItem('user_email');
+    let id = localStorage.getItem('user_id');
 
     return this.http.get(`/api/botTypes`)
       .map(function(data: any) {
@@ -33,9 +33,9 @@ export class BotService {
   }
 
   public getContacts() {
-    let token = localStorage.getItem('id_token');
+    let userId = localStorage.getItem('user_id');
 
-    return this.http.get(`/api/gmail/contacts?token=${token}`)
+    return this.http.get(`/api/gmail/contacts?userId=${userId}`)
       .map((data: any) => {
         this.contacts = data.json();
         return this.contacts;
@@ -43,9 +43,9 @@ export class BotService {
   }
 
   public getTasks() {
-    let token = localStorage.getItem('id_token');
+    let userId = localStorage.getItem('user_id');
 
-    this.http.get(`/api/tasks?token=${token}`)
+    this.http.get(`/api/tasks?userId=${userId}`)
       .map((data: any) => {
         data = data.json();
         this.contacts = data;
@@ -55,10 +55,10 @@ export class BotService {
 
   public importUserBots(){
     let token = localStorage.getItem('id_token');
-    let email = localStorage.getItem('user_email');
+    let userId = localStorage.getItem('user_id');
     var self = this;
 
-    return this.http.get(`/api/bots?email=${email}`) 
+    return this.http.get(`/api/bots?userId=${userId}`) 
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
         if(bots.length !== 0) {
@@ -83,11 +83,11 @@ export class BotService {
   }
 
   public updateBots(userBotsArray){
-   const email = localStorage.getItem('user_email');
+   const userId = localStorage.getItem('user_id');
    const body = JSON.stringify({bots: userBotsArray});
    const headers = new Headers({'Content-Type': 'application/json'});
 
-   this.http.put(`/api/bots?email=${email}`, body, {headers: headers})
+   this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
       .subscribe(
         response => console.log("response", response),
         error => console.log("error", error),
