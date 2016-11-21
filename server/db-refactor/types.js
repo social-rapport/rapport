@@ -20,7 +20,19 @@ var initialBots =
                 platform: 'gmail', 
                 message: 'Happy Birthday!', 
                 task: 'sayHappyBirthdayGmail'
-            },
+            }
+        ],
+        selectedContacts: [],
+        botActivity:{
+            recent:[],
+            scheduled:[]
+        }
+    },
+    {
+        botId: null,
+        botName: 'unnamed',
+        botType: 'social',
+        tasks: [
             { 
                 id: null,
                 date: 'today', 
@@ -34,7 +46,7 @@ var initialBots =
                 platform: 'facebook', 
                 message: 'Happy Birthday!', 
                 task: 'sayHappyBirthdayFacebook'
-            },
+            }
         ],
         selectedContacts: [],
         botActivity:{

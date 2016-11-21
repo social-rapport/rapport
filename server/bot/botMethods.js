@@ -1,4 +1,5 @@
 const gmail = require('../config/gmailController.js');
+const facebook = require('../facebook/fbchatController.js');
 
 module.exports = {
 
@@ -25,8 +26,14 @@ module.exports = {
     return 'in production!!!';
   },
 
-  sayHiFacebook: function() {
-    return 'in production!!!';
+  sayHiFacebook: function(taskObj) {
+    let auth = {};
+    auth.email = taskObj.fbUsername;
+    auth.password = taskObj.fbPassword;
+
+    facebook.getFriendsList(auth, recipient, data => {
+      console.log(data);
+    });
   },
 
 };

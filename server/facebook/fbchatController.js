@@ -13,6 +13,7 @@ module.exports = {
       });
     });
   },
+
   sendMsg: function(auth, user, msg,callback){
     fbchat(auth, function callback (err, api) {
       if(err) return console.error(err);
@@ -28,15 +29,16 @@ module.exports = {
       });
     });
   },
-  getFriendsList: function(auth,callback){
-    fbchat(auth, function callback (err, api) {
-      if(err) return console.error(err);
-      console.log('Getting Friends List');
-      api.getFriendsList(function(err, data) {
-          if(err) return console.error(err);
-          console.log('data',data);
-          callback(data);
+
+  getFriendsList: function(auth){
+    return new Promise((resolve,reject) => {
+      fbchat(auth,(err, api) => {
+        if(err) reject(err);
+        api.getFriendsList((err, data) => {
+          resolve(data);
+        });
       });
     });
   }
+
 };

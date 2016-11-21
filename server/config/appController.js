@@ -1,5 +1,6 @@
 var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
+const facebook = require('../facebook/fbchatController.js');
 var dbM = require('../db-refactor/dbModel.js');
 var dbQ = require('../db-refactor/dbQueries.js');
 var bot = require('../bot/botController.js');
@@ -39,6 +40,28 @@ module.exports.updateUserInfo = function(req, res){
     };
   });
 
+};
+
+//<---------------------Updates Facebook Credentials--------------------->
+
+module.exports.updateFacebookCredentials = function(req, res) {
+  console.log("request body", req.body);
+  dbQ.updateFacebookCredentials(req.query.userId, req.body)
+    .then(() => res.status(200).send('updated user\'s facebook info'))
+    .catch((error) => req.status(500).send('error saving the credentials: ', error));
+};
+
+//<---------------------Updates Facebook Credentials--------------------->
+module.exports.getFacebookFriends = function(req, res) {
+  dbQ.getFacebookCredentials(req.query.userId)
+    .then(fbCredentialObj => {
+      let fbAuth = {};
+      fbAuth.email = fbCredentialObj.fbUsername;
+      fbAuth.password = fbCredentialObj.fbPassword;
+      return fbAuth;
+    })
+    .then(facebook.getFriendsList)
+    .then(friends => res.status(200).send(friends));
 };
 
 //<-------------------return the bot type so FE can change it------------------->
