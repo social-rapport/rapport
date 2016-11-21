@@ -5,20 +5,8 @@ var dbQ = require('../db-refactor/dbQueries.js');
 var dbM = require('./dbModel.js');
 var auth0 = require('../utils/auth0_utils');
 var appController = require('../config/appController');
-
-
 var db = require('./db');
-
-var contacts = [
-    {
-     email: 'a@b',
-     name: 'John',
-     photo: 'xyz',
-    }
-];
-
 var mysql = require('promise-mysql');
-
 var connection;
 
 mysql.createConnection({
@@ -43,28 +31,28 @@ function runTests(){
 
 var contacts = [
     {
-        contactId: null,
+        id: null,
         email: 'aa',
         name: 'aa',
         photo: 'aa',
         birthday: 'aa'
     },
     {
-        contactId: null,
+        id: null,
         email: 'bb',
         name: 'bb',
         photo: 'bb',
         birthday: 'bb'
     },
     {
-        contactId: null,
+        id: null,
         email: 'cc',
         name: 'cc',
         photo: 'cc',
         birthday: 'cc'
     },
     {
-        contactId: null,
+        id: null,
         email: 'dd',
         name: 'dd',
         photo: 'dd',
@@ -75,21 +63,21 @@ var contacts = [
 
 var tasks = [
     { 
-        taskId: null,
+        id: null,
         date: 'aa', 
         platform: 'aa', 
         message: 'aa', 
         task: 'aa'
     },
         { 
-        taskId: null,
+        id: null,
         date: 'bb', 
         platform: 'bb', 
         message: 'bb', 
         task: 'bb'
     },
     { 
-        taskId: null,
+        id: null,
         date: 'cc', 
         platform: 'cc', 
         message: 'cc', 
@@ -133,7 +121,7 @@ function botTest(){
   // }
 
   var botA1 = {
-    "botId": null,
+    "id": null,
     "botType":'a',
     "botName": 'myBot',
     "tasks":tasks,
@@ -145,7 +133,7 @@ function botTest(){
   };
 
   var botA2 = {
-    "botId": null,
+    "id": null,
     "botType":'aa',
     "botName": 'myBot',
     "tasks":tasks,
@@ -217,7 +205,7 @@ function botTest(){
   
 //new contacts
 contactA1 = {
-  contactId: null,
+  id: null,
   email: 'a',
   name: 'a',
   photo: 'a',
@@ -225,7 +213,7 @@ contactA1 = {
 };
 
 contactB1 = {
-  contactId: null,
+  id: null,
   email: 'b',
   name: 'b',
   photo: 'b',
@@ -234,7 +222,7 @@ contactB1 = {
 
 //already saved and updated
 contactA2 = {
-  contactId: 1,
+  id: 1,
   email: 'aa',
   name: 'aa',
   photo: 'aa',
@@ -242,7 +230,7 @@ contactA2 = {
 };
 
 contactB2 = {
-  contactId: 2,
+  id: 2,
   email: 'bb',
   name: 'bb',
   photo: 'bb',
@@ -265,7 +253,7 @@ contactB2 = {
 
 //<----- task type
 var taskA1 = { 
-  taskId: null,
+  id: null,
   date: 'a', 
   platform: 'a', 
   message: 'a', 
@@ -273,7 +261,7 @@ var taskA1 = {
 };
 
 var taskA2 = { 
-  taskId: 1,
+  id: 1,
   date: 'aa', 
   platform: 'aa', 
   message: 'aa', 
@@ -282,7 +270,7 @@ var taskA2 = {
 
 //saved versions
 var taskB1 = { 
-  taskId: null,
+  id: null,
   date: 'b', 
   platform: 'b', 
   message: 'b', 
@@ -290,7 +278,7 @@ var taskB1 = {
 };
 
 var taskB2 = { 
-  taskId: 2,
+  id: 2,
   date: 'bb', 
   platform: 'bb', 
   message: 'bb', 
