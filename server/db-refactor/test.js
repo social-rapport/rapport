@@ -26,9 +26,9 @@ function log(data){
 }
 function runTests(){
 
-  for(var i = 0; i< 20; i++){
-    dbQ.deleteUser(i).then(log);
-  }
+//   for(var i = 0; i< 20; i++){
+//     dbQ.deleteUser(i).then(log);
+//   }
   testNewUser();
 
 
