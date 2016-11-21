@@ -43,59 +43,60 @@ function runTests(){
 
 var contacts = [
     {
-        email: 'a@b',
-        name: 'John',
-        photo: 'xyz',
+        contactId: null,
+        email: 'aa',
+        name: 'aa',
+        photo: 'aa',
+        birthday: 'aa'
     },
     {
-        email: 'b@c',
-        name: 'Jack',
-        photo: 'xyz',
+        contactId: null,
+        email: 'bb',
+        name: 'bb',
+        photo: 'bb',
+        birthday: 'bb'
     },
     {
-        email: 'c@d',
-        name: 'Paul',
-        photo: 'xyz',
+        contactId: null,
+        email: 'cc',
+        name: 'cc',
+        photo: 'cc',
+        birthday: 'cc'
+    },
+    {
+        contactId: null,
+        email: 'dd',
+        name: 'dd',
+        photo: 'dd',
+        birthday: 'dd'
     }
+    
 ];
 
 var tasks = [
-    {
-        date: 'today',
-        platform: 'gmail',
-        message: 'happy birthday!',
-        task: 'sayHappyBirthdayGmail'
+    { 
+        taskId: null,
+        date: 'aa', 
+        platform: 'aa', 
+        message: 'aa', 
+        task: 'aa'
     },
-    {
-        date: 'today',
-        platform: 'gmail',
-        message: 'Howdy Partner!',
-        task: 'sayHiGmail'
+        { 
+        taskId: null,
+        date: 'bb', 
+        platform: 'bb', 
+        message: 'bb', 
+        task: 'bb'
     },
-    {
-        date: 'today',
-        platform: 'facebook',
-        message: 'happy birthday!',
-        task: 'sayHappyBirthdayFacebook'
-    },
-    {
-        date: 'today',
-        platform: 'facebook',
-        message: 'Howdy Partner!',
-        task: 'sayHiFacebook'
+    { 
+        taskId: null,
+        date: 'cc', 
+        platform: 'cc', 
+        message: 'cc', 
+        task: 'cc'
     }
 ];
 
-var bot1 = {
-            botType:'basic',
-            botName: 'myBot',
-            tasks:tasks,
-            selectedContacts :contacts,
-            botActivity:{
-                recent:[],
-                scheduled:[]
-            }
-        };
 
 var userObj = {name: 'Fakey McFake', gmail:'fake@fake.com' , gmailAuthToken:'authToken'};
 
@@ -135,12 +136,7 @@ function botTest(){
     "botId": null,
     "botType":'a',
     "botName": 'myBot',
-    "tasks":[
-        'sayHappyBirthdayGmail',
-        'sayHappyBirthdayFacebook',
-        'sayHiGmail',
-        'sayHiFacebook'
-    ],
+    "tasks":tasks,
     "selectedContacts":contacts,
     botActivity:{
         "recent":[],
@@ -149,15 +145,10 @@ function botTest(){
   };
 
   var botA2 = {
-    "botId": 11,
+    "botId": null,
     "botType":'aa',
     "botName": 'myBot',
-    "tasks":[
-        'sayHappyBirthdayGmail',
-        'sayHappyBirthdayFacebook',
-        'sayHiGmail',
-        'sayHiFacebook'
-    ],
+    "tasks":tasks,
     "selectedContacts":contacts,
     botActivity:{
         "recent":[],
@@ -170,9 +161,31 @@ function botTest(){
 
 //per user methods
 //dbQ.getBot(11).then(log);
-  dbM.getAllBotInfo(11).then((data)=>{
-    1+1;
-  });
+
+  // dbM.getAllBotInfo(11).then((data)=>{
+  //   1+1;
+  // });
+
+// dbM.getAllBotInfo(11).then((data)=>{
+//   1+1;
+// });
+
+    // dbQ.addUser(userObj)
+    //     .then((userId) => dbM.updateOrCreateNewBot(userId,botA2))
+    //     .then(() => dbM.getAllBotInfo(1).then(log));
+
+    dbQ.addUser(userObj)
+        .then(userId => dbM.updateOrCreateUserBots(userId, [botA1, botA2]))
+        .then(() => dbM.getAllUserBots(1)).then(log);
+
+
+    // dbQ.getSelectedContacts(1).then(log);
+    // dbQ.getSelectedTasks(1).then(log);
+    // dbM.getAllBotInfo(1).then(log);
+    // dbM.getAllBotInfo(2).then(log);
+    // dbM.getAllUserBots(1).then(log);
+
+
 
 }
 
@@ -180,8 +193,7 @@ function botTest(){
 
 //  dbQ.addBotToUser(1, bot1.bots[0])
 //   .then(log);
-    dbQ.addUser(userObj)
-        .then((userId) => dbModel.createAllBotInfo(userId, bot1).then(log));
+
     
 
   //<---------require botId

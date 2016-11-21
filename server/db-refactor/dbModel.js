@@ -2,30 +2,17 @@ const dbq = require('./dbQueries.js');
 
 //<----------------------Per User---------------------->>
 
-const updateOrCreateUserBots = function(botsArray) {
-   return Promise.all(botsArray.map(botObj => updateOrCreateNewBot(botObj)));
+const updateOrCreateUserBots = function(userId, botsArray) {
+   return Promise.all(botsArray.map(botObj => updateOrCreateNewBot(userId, botObj)));
 };
 
 const getAllUserBots = function(userId) {
 
-  // return new Promise((resolve, reject) => {
-  //   dbq.getUserBots(userId)
-  //     .then(botIdArray => {
-  //       Promise.all(botIdArray.map(botId => getAllBotInfo(botId)))
-  //         .then(botsArray => {
-  //           console.log("bots array", botsArray);
-  //           resolve(botsArray);
-  //         }).catch(reject);
-  //     });
-  // });
-
   return new Promise((resolve, reject) => {
     dbq.getUserBots(userId)
       .then(botIdArray => Promise.all(botIdArray.map(botId => getAllBotInfo(botId))))
-      .then(botsArray => {
-        console.log("bots array", botsArray);
-        resolve(botsArray);
-      }).catch(reject);
+      .then(resolve)
+      .catch(reject);
   });
 
 };
@@ -33,11 +20,11 @@ const getAllUserBots = function(userId) {
 
 //<----------------------Per Bot---------------------->>
 
-const updateOrCreateNewBot = function(botObj) {
-  if(botObj.id) {
+const updateOrCreateNewBot = function(userId, botObj) {
+  if(botObj.botId) {
     return updateAllBotInfo(botObj);
   } else {
-    return createAllBotInfo(botObj);
+    return createAllBotInfo(userId, botObj);
   }
 };
 
@@ -45,8 +32,8 @@ const createAllBotInfo = function(userId, botObj) {
 
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
-    .then(() => addOrUpdateSelectedContacts(botObj.selectedContacts))
-    .then(() => addOrUpdateTasks(botObj.tasks))
+    .then(botId => Promise.all([addOrUpdateSelectedContacts(botId, botObj.selectedContacts),
+      addOrUpdateRegisteredTasks(botId, botObj.tasks)]))
     .then(resolve)
     .catch(reject);
   });
@@ -54,11 +41,10 @@ const createAllBotInfo = function(userId, botObj) {
 };
 
 const updateAllBotInfo = function(botObj) {
-
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
-      .then(() => addOrUpdateSelectedContacts(botObj.selectedContacts))
-      .then(() => addOrUpdateTasks(botObj.tasks))
+      .then(botId => Promise.all([addOrUpdateSelectedContacts(botObj.botId, botObj.selectedContacts),
+        addOrUpdateRegisteredTasks(botObj.botId, botObj.tasks)]))
       .then(resolve)
       .then(reject);
   });
@@ -82,10 +68,15 @@ const getAllBotInfo = function(botId) {
   return new Promise ((resolve, reject) => {
     Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId)])
       .then(arrayOfBotInfo => {
-        console.log("array of db returns", arrayOfBotInfo);
         //massage data into botObj; 
+        botObj.botId = arrayOfBotInfo[0][0].id;
+        botObj.botType = arrayOfBotInfo[0][0].botType;
+        botObj.botName = arrayOfBotInfo[0][0].botName || arrayOfBotInfo[0][0].botType;
+        botObj.selectedContacts = arrayOfBotInfo[1];
+        botObj.tasks = arrayOfBotInfo[2];
+
         resolve(botObj)
-      }).catch(resolve);
+      }).catch(reject);
   });
 };
 
@@ -111,7 +102,7 @@ const addOrUpdateRegisteredTasks = function(botId, taskArray) {
 
 
 const addOrUpdateTask = function(botId, taskObj) {
-  if(taskObj.id) {
+  if(taskObj.taskId) {
     return dbq.updateSelectedTask(taskObj);
   } else {
     return dbq.addToTasks(botId, taskObj);
@@ -134,6 +125,7 @@ module.exports = {
     addOrUpdateSelectedContacts: addOrUpdateSelectedContacts,
     updateAllBotInfo: updateAllBotInfo,
     createAllBotInfo: createAllBotInfo,
-    updateOrCreateUserBots: updateOrCreateUserBots 
+    updateOrCreateUserBots: updateOrCreateUserBots,
+    updateOrCreateNewBot: updateOrCreateNewBot 
 };
 
