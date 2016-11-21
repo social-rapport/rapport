@@ -4,7 +4,7 @@ var mysql = require('promise-mysql');
 mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'dev',
+    password: 'cichlid1022',
     database: 'rapport'
 }).then(function(conn,x){
     exportConn(conn);
