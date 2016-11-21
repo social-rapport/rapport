@@ -47,12 +47,12 @@ const addBotToUser = function(userId, {botName: botName, botType: botType = 'bas
   });
 };
 
-const updateBot = function({botId: botId, botName: botName = 'unnamed', botType: botType = 'basic'}){
+const updateBot = function({id: botId, botName: botName = 'unnamed', botType: botType = 'basic'}){
     const q = `UPDATE bot SET botName=${sqp.escape(botName)},botType=${sqp.escape(botType)} WHERE id=${sqp.escape(botId)} `
     return sqp.query(q).then((data)=>data.affectedRows);
 };
 
-const deleteBot = function({botId: botId}){
+const deleteBot = function({id: botId}){
   const deleteBotQuery = `DELETE FROM bot WHERE id=${sqp.escape(botId)}`
   const deleteInJoin = `DELETE FROM users_bots where id_bot=${botId}`;
   return sqp.query(deleteInJoin)
@@ -129,7 +129,7 @@ const addToTasks = function(botId, {date: date, platform: platform, message: mes
       })
 };
 
-const removeSelectedTask = function({taskId: taskId}) {
+const removeSelectedTask = function({id: taskId}) {
   const q1 = `DELETE FROM tasks_bots WHERE id_task=${sqp.escape(taskId)}`;
   const q2 = `DELETE FROM tasks WHERE id=${taskId}`;
   //delete from join table is bots_contacts
@@ -140,7 +140,7 @@ const removeSelectedTask = function({taskId: taskId}) {
     });
 };
 
-const updateSelectedTask = function({taskId: taskId, date: date, platform: platform, message: message, task: task}) {
+const updateSelectedTask = function({id: taskId, date: date, platform: platform, message: message, task: task}) {
   const updateContactQuery = `UPDATE tasks SET date=${sqp.escape(date)}, 
     platform=${sqp.escape(platform)}, message=${sqp.escape(message)}, task=${sqp.escape(task)}
      WHERE id=${sqp.escape(taskId)}`;
