@@ -59,7 +59,7 @@ video#bgvid {
   background-size: cover;
   position: absolute;
   left: -20%;
-  z-index: -1;
+  z-index: -999;
 
 }
 
@@ -151,12 +151,98 @@ video#bgvid {
 
 }
 
-#carousel #box-choose-bot{
-
+.box-choose-bot{
+  width: 22em;
+  height: auto;
 }
 
-#carousel #img-choose-bot {
+.img-choose-bot {
+  position: absolute;
+  width: 22em;
+  height: auto;
+  z-index: -1;
+}
 
+.img-bot-icon-main {
+  position: absolute;
+  width: 8em;
+  top:6em;
+  height: auto;
+  z-index: -1;
+}
+
+.img-bot-icon-1 {
+  left:8.5em;
+}
+
+.img-bot-icon-2 {
+  left:27em;
+}
+
+.img-bot-icon-3 {
+  left:45.5em;
+}
+
+.name-bottype-main {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 20px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  position: absolute;
+  width: 8em;
+  top:12em;
+  height: auto;
+  z-index: -1;
+}
+
+.name-bottype-1 {
+  left:5.9em;
+}
+
+.name-bottype-2  {
+  left:20.8em;
+}
+
+.name-bottype-3 {
+  left:35.5em;
+}
+
+/*#carousel #img-choose-bot {
+
+}*/
+
+.bottype-desc-main {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 10px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: left;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  position: absolute;
+  width: 30em;
+  top:28em;
+  height: auto;
+  z-index: -1;
+}
+
+.bottype-desc-1 {
+  left:3.9em;
+}
+
+.bottype-desc-2  {
+  left:33.8em;
+}
+
+.bottype-desc-3 {
+  left:63em;
 }
 
 #carousel #name-bottype {
