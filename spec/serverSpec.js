@@ -72,6 +72,27 @@ beforeEach(function(done){
   done();
 })
 
+//<-------------------UNIT TESTS------------------->
+
+// function testNewUser(){
+//   var token = require('../../env').ADMIN_IDTOKEN;
+//   var req = {body: {}, query: {token: token}};
+//   var res = {};
+//   auth0.authenticateFromToken(req, res, function(req, res, data){
+//     appController.updateUserInfo(req, res, data);
+//   });
+// }
+
+// function testOldUser(){
+  
+//   var token = require('../../env').ADMIN_IDTOKEN;
+//   var req = {body: {}, query: {token: token, userId: 6}};
+//   var res = {};
+//   auth0.authenticateFromToken(req, res, function(req, res, data){
+//     appController.updateUserInfo(req, res, data);
+//   });
+// }
+
 //<-------------------SERVICE OF STATIC ASSETS------------------->
 //todo: server responds with 200
 describe ('static assets: index page',function(){
