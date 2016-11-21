@@ -62,7 +62,7 @@ export class BotService {
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
         if(bots.length !== 0) {
-          self.userBots = bots.bots;
+          self.userBots = bots;
           return self.userBots; 
         } else {
           self.userBots = [];
