@@ -51,6 +51,24 @@ module.exports.updateFacebookCredentials = function(req, res) {
     .catch((error) => req.status(500).send('error saving the credentials: ', error));
 };
 
+//<---------------------Removes Facebook Friends--------------------->
+module.exports.removeFacebookFriends = function(req, res) {
+  dbM.removeFromSelectedFacebookFriends(req.body)
+    .then(() => res.status(200).send('removed friend'));
+};
+
+//<---------------------Removes Gmail Contacts--------------------->
+module.exports.removeGmailContacts = function(req, res) {
+  dbM.removeFromSelectedContacts(req.body)
+    .then(() => res.status(200).send('removed friend'));
+};
+
+//<---------------------Removes Tasks--------------------->
+module.exports.removeRegisteredTasks = function(req, res) {
+  dbM.removeFromRegisteredTasks(req.body)
+    .then(() => res.status(200).send('removed friend'));
+};
+
 //<---------------------Gets Facebook Friends--------------------->
 module.exports.getFacebookFriends = function(req, res) {
   dbQ.getFacebookCredentials(req.query.userId)

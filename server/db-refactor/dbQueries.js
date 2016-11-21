@@ -145,7 +145,7 @@ const addToTasks = function(botId, {date: date, platform: platform, message: mes
       })
 };
 
-const removeSelectedTask = function({id: taskId}) {
+const removeSelectedTask = function(taskId) {
   const q1 = `DELETE FROM tasks_bots WHERE id_task=${sqp.escape(taskId)}`;
   const q2 = `DELETE FROM tasks WHERE id=${taskId}`;
   //delete from join table is bots_contacts

@@ -22,6 +22,7 @@ console.log("routes loaded");
   app.get('/api/botTypes', appController.getBotTypes);
   app.get('/api/bots', appController.getBotInfo);
   app.put('/api/bots', appController.updateBots);
+  app.delete('/api/tasks', appController.removeRegisteredTasks);
 
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH
@@ -29,21 +30,29 @@ console.log("routes loaded");
     res.sendFile(__dirname+'/static/gmailLogin.html');
   });
 
-   // <--------------- GMAIL ROUTES --------------->
+  //GETS GMAIL CONTACTS
+  app.get("/api/gmail/contacts", gmail.getContacts);
+
+  //FOR GMAIL OAUTH, don't access directly
+  app.get("/tokens", gmail.getTokens);
+
+  //for removing selected contacts
+  app.delete('/api/gmail/contacts', appController.removeGmailContacts);
+
+
+   // <--------------- Facebook Routes --------------->
    //for updating the user record with facebook credentials
   app.post('/updateFacebookCredentials', appController.updateFacebookCredentials);
 
   //for getting a user's facebook friends
   app.get('/api/facebook/friends', appController.getFacebookFriends);
 
+  //for removing selected facebook friends
+  app.delete('/api/facebook/friends', appController.removeFacebookFriends);
+
   // nam send botctrol test
   app.get('/api/runalltasks', appController.runalltasks);
 
-  //GETS GMAIL CONTACTS
-  app.get("/api/gmail/contacts", gmail.getContacts);
-
-  //FOR GMAIL OAUTH, don't access directly
-  app.get("/tokens", gmail.getTokens);
 
   app.get("/url", gmail.sendUrl);
 

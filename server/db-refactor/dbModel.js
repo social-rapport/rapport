@@ -93,6 +93,10 @@ const addOrUpdateContact = function(botId, contactObj) {
   }
 };
 
+const removeFromSelectedContacts = function (contactIdArray) {
+  return Promise.all(contactIdArray.map(contactId => dbq.removeSelectedContact(contactId)));
+}
+
 //tasks
 const addOrUpdateRegisteredTasks = function(botId, taskArray) {
   return Promise.all(taskArray.map(taskObj => addOrUpdateTask(botId, taskObj)));
@@ -106,9 +110,13 @@ const addOrUpdateTask = function(botId, taskObj) {
   }
 };
 
+const removeFromRegisteredTasks = function(taskIdArray) {
+  return Promise.all(taskIdArray.map(taskId => dbq.removeSelectedTask(taskId)));
+};
+
 //facebook friends
 const addOrUpdateSelectedFacebookFriends = function(botId, friendArray) {
-  return Promise.all(friendArray.map(friend => addOrUpdateSelectedFacebookFriends(friend)));
+  return Promise.all(friendArray.map(friend => addOrUpdateSelectedFacebookFriends(friendId)));
 }; 
 
 const addOrUpdateFacebookFriend = function(botId, friendObj) {
@@ -119,7 +127,9 @@ const addOrUpdateFacebookFriend = function(botId, friendObj) {
   }
 };
 
-
+const removeFromSelectedFacebookFriends = function(friendIdArray) {
+  return Promise.all(friendIdArray.map(friendId => dbq.removeFromSelectedFacebookFriends(friendId)));
+};
 
 
 //<----------------------Exports---------------------->>
