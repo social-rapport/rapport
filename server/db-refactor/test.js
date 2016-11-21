@@ -26,10 +26,42 @@ function log(data){
 }
 function runTests(){
 
-  //botTest();
-  testOldUser();
+  botTest();
+  //testOldUser();
 
-var contacts = [
+//<-------------------------------- QUERY TESTS 
+
+   
+  // .then(log);
+
+
+
+
+// for(var i= 0; i<20; i++){
+//   dbQ.deleteBot({botId: i});
+//   dbQ.removeSelectedContact({contactId: i});
+//   dbQ.removeSelectedTask({taskId: i});
+// }
+
+//<---------require userId
+
+  // dbModel.deleteUser(4)
+  // .then(log);
+
+  // dbModel.updateUser(5, 'Fakey McFakesalot', 'fake@fake.com', 'authToken')
+  // .then(log);
+
+
+
+function botTest(){
+
+  // for(var i= 0; i<20; i++){
+  //   dbQ.deleteBot({botId: i});
+  //   dbQ.removeSelectedContact({contactId: i});
+  //   dbQ.removeSelectedTask({taskId: i});
+  // }
+
+  var contacts = [
     {
         id: null,
         email: 'aa',
@@ -85,47 +117,12 @@ var tasks = [
     }
 ];
 
-
-var userObj = {name: 'Fakey McFake', gmail:'fake@fake.com' , gmailAuthToken:'authToken'};
-
-//<-------------------------------- QUERY TESTS 
-
-   
-  // .then(log);
-
-
-
-
-// for(var i= 0; i<20; i++){
-//   dbQ.deleteBot({botId: i});
-//   dbQ.removeSelectedContact({contactId: i});
-//   dbQ.removeSelectedTask({taskId: i});
-// }
-
-//<---------require userId
-
-  // dbModel.deleteUser(4)
-  // .then(log);
-
-  // dbModel.updateUser(5, 'Fakey McFakesalot', 'fake@fake.com', 'authToken')
-  // .then(log);
-
-
-
-function botTest(){
-
-  // for(var i= 0; i<20; i++){
-  //   dbQ.deleteBot({botId: i});
-  //   dbQ.removeSelectedContact({contactId: i});
-  //   dbQ.removeSelectedTask({taskId: i});
-  // }
-
   var botA1 = {
     "id": null,
     "botType":'a',
     "botName": 'myBot',
     "tasks":tasks,
-    "selectedContacts":contacts,
+    "selectedContacts": contacts,
     botActivity:{
         "recent":[],
         "scheduled":[]
@@ -137,7 +134,7 @@ function botTest(){
     "botType":'aa',
     "botName": 'myBot',
     "tasks":tasks,
-    "selectedContacts":contacts,
+    "selectedContacts": contacts,
     botActivity:{
         "recent":[],
         "scheduled":[]
@@ -157,6 +154,8 @@ function botTest(){
 // dbM.getAllBotInfo(11).then((data)=>{
 //   1+1;
 // });
+
+var userObj = {name: 'Fakey McFake', gmail:'fake@fake.com' , gmailAuthToken:'authToken'};
 
     // dbQ.addUser(userObj)
     //     .then((userId) => dbM.updateOrCreateNewBot(userId,botA2))
@@ -310,29 +309,29 @@ var taskB2 = {
 
 
 
-}
+// }
 
-function testNewUser(){
-  var token = require('../../env').ADMIN_IDTOKEN;
-  var req = {body: {}, query: {token: token}};
-  var res = {};
-  auth0.authenticateFromToken(req, res, function(req, res, data){
-    appController.updateUserInfo(req, res, data);
-  });
-}
+// function testNewUser(){
+//   var token = require('../../env').ADMIN_IDTOKEN;
+//   var req = {body: {}, query: {token: token}};
+//   var res = {};
+//   auth0.authenticateFromToken(req, res, function(req, res, data){
+//     appController.updateUserInfo(req, res, data);
+//   });
+// }
 
-function testOldUser(){
+// function testOldUser(){
   
-  var token = require('../../env').ADMIN_IDTOKEN;
-  var req = {body: {}, query: {token: token, userId: 6}};
-  var res = {};
-  auth0.authenticateFromToken(req, res, function(req, res, data){
-    appController.updateUserInfo(req, res, data);
-  });
+//   var token = require('../../env').ADMIN_IDTOKEN;
+//   var req = {body: {}, query: {token: token, userId: 6}};
+//   var res = {};
+//   auth0.authenticateFromToken(req, res, function(req, res, data){
+//     appController.updateUserInfo(req, res, data);
+//   });
+// }
+
+
 }
-
-
-
 
 
 //it should remove a single bot
