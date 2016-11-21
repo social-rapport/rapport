@@ -13,7 +13,7 @@ function authenticateFromToken(req, res, next){
           if(!authUserObj){
               res.send(400);
           } else {
-              next(req, res, {tokens: arrayOfResolves[0], keys: authUserObj});
+              next(req, res, authUserObj);
           }
         })
     });

@@ -33,6 +33,11 @@ const getUser = function(userId){
   return sqp.query(q).then((data)=>data[0]);
 };
 
+const getUserFromGmail = function(gmail) {
+  const q = `SELECT * FROM users WHERE gmail=${sqp.escape(gmail)}`;
+  return sqp.query(q).then((data)=>data[0]);
+};
+
 //<----------------------BOTS---------------------->>
 
 const addBotToUser = function(userId, {botName: botName, botType: botType = 'basic'}){
@@ -178,6 +183,7 @@ module.exports = {
   importConnection: importConnection,
   addUser: addUser,
   getUser: getUser,
+  getUserFromGmail: getUserFromGmail,
   updateUser: updateUser,
   deleteUser: deleteUser,
 }
