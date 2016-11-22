@@ -66,6 +66,15 @@ export class SearchComponent implements OnChanges {
     this.reload();
   }
 
+  ngOnChanges(changes) {
+		console.log('Change detected:');
+    this.reload();
+	}
+
+  ngOnInit(): void {
+    this.reload();
+  }
+
   @Input() bot;
 
 }
