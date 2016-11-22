@@ -32,7 +32,7 @@ module.exports = {
       runGenerator(tasks.length, 0);
     });
   },
-  //tasks in a database -> preps to send to gmail(using oauth) -> send emails ->log to database all completed tasks 
+  //tasks in a database -> preps to send to gmail(using oauth) -> send emails ->log to database all completed tasks
   runAllTasks: function(callback){
 
     dbQ.getTasksJoinedWithUsers('today')
@@ -71,7 +71,14 @@ module.exports = {
     //       });
     //     } else if(tasks[index].tasks.platform === 'facebook'){
     //       //Run FaceBook Tasks
-    //       completedTasks.push(tasks[index].tasks);
+    //       var msgData = {
+            //   body: 'Hello there! How have you been?<br/>'
+            // }
+            // fb.sendMsg(tasks[index].facebook.auth, tasks[index].facebook.userTo, msgData, function(results){
+            //   console.log('results',results);
+            //   completedTasks.push(tasks[index].tasks);
+            //   runGenerator(length, index+1);
+            // });
     //     }
     //   }
     //   runGenerator(tasks.length, 0);
