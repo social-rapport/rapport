@@ -24,7 +24,7 @@ nav a {
   float: right;
 }
 nav a:visited, a:link {
-  color: #607D8B;
+  color: #111;
 }
 nav a:hover {
   color: #039be5;

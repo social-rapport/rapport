@@ -8,9 +8,9 @@
     <span id="signup-login">Logout</span>
   </div>
 
-  <div id="container-header">
+  <div id="container-header" class="col-md-12">
     <div id="title-section" >
-      SELECT A BOT
+      MANAGE BOT
     </div>
 
     <div id="title-section desc">
@@ -20,53 +20,129 @@
   </div>
 <!--end Nam -->
 
-    <div class = "list-container" style="background-color:#FFE; width: 100%">
-    <ul class="heroes">
-      <li *ngFor="let bot of bots" style="float:left"
-        [class.selected]="bot === selectedBot"
-        (click)="onSelectBot(bot)">
-        <span class="badge">{{bot.botType}}</span>
-      </li>
-    </ul>
+    <!-- <div class = "list-container" style="background-color:#FFE; width: 100%"> -->
 
-    <div class="control-container">
+<div class="container">
+    <div class="submenu col-md-3">
+    </div>
 
-        <div class="list-container">
-        <ul class="heroes">
-          <p class="text">Activities</p>
-          <li *ngFor="let activity of activities"
-            [class.selected]="activity === selectedActivity"
-            (click)="onSelectActivity(activity)">
-            <span class="badge">{{activity}}</span>
-          </li>
-        </ul>
-        </div>
 
-        <div class="list-container">
-          <search-component [bot]="selectedBot"></search-component>
-        </div>
+  <table class="table mytable">
+    <thead class="thead-inverse">
+      <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Last Name</th>
+        <th>Username</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark what happens if this is really really long?</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">5</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+    </tbody>
+  </table>
 
-        <div class="list-container">
+<!--       <div class="col-md-12 table">
+
           <ul class="heroes">
-            <p class="text">Contacts</p>
-            <li class="contactli" *ngFor="let contact of contacts"
-              [class.selected]="contact === selectedContact"
-              (click)="onSelectContact(contact)">
-              <contact-component [contact]="contact"></contact-component>
+            <li *ngFor="let bot of bots" style="float:left"
+              [class.selected]="bot === selectedBot"
+              (click)="onSelectBot(bot)">
+              <span class="badge">{{bot.botType}}</span>
             </li>
           </ul>
-        </div>
 
-      <div class="list-container">
-        <ul class="heroes">
-          <p class="text">Tasks</p>
-          <li *ngFor="let task of tasks"
-            [class.selected]="task === selectedTask"
-            (click)="onSelectTask(task)">
-            <span class="badge">{{task.task}}</span>
-          </li>
-        </ul>
-      </div>
+          <div class="control-container">
+
+            <div class="list-container col-md-2">
+            <ul class="heroes">
+              <p class="text">Recent</p>
+              <li *ngFor="let activity of activities"
+                [class.selected]="activity === selectedActivity"
+                (click)="onSelectActivity(activity)">
+                <span class="badge">{{activity}}</span>
+              </li>
+            </ul>
+            </div>
+
+            <div class="list-container col-md-2">
+            <ul class="heroes">
+              <p class="text">Scheduled</p>
+              <li *ngFor="let activity of activities"
+                [class.selected]="activity === selectedActivity"
+                (click)="onSelectActivity(activity)">
+                <span class="badge">{{activity}}</span>
+              </li>
+            </ul>
+            </div>
+
+            <div class="list-container">
+              <search-component [bot]="selectedBot"></search-component>
+            </div>
+
+            <div class="list-container col-md-2">
+              <ul class="heroes">
+                <p class="text">Selected</p>
+                <li class="contactli" *ngFor="let contact of contacts"
+                  [class.selected]="contact === selectedContact"
+                  (click)="onSelectContact(contact)">
+                  <contact-component [contact]="contact"></contact-component>
+                </li>
+              </ul>
+            </div>
+
+          <div class="list-container col-md-2">
+            <ul class="heroes">
+              <p class="text">Tasks</p>
+              <li *ngFor="let task of tasks"
+                [class.selected]="task === selectedTask"
+                (click)="onSelectTask(task)">
+                <span class="badge">{{task.task}}</span>
+              </li>
+            </ul>
+          </div>
+
+    </div> -->
 
       <button (click)="submitAllSettings()"> Save Bots! </button>
       <button (click)="sendNow()"> Send Now! </button>
@@ -74,7 +150,7 @@
         <button (click)="retireBot()"> Retire Bot </button>
       </div>
 
-    </div>
+  </div>
     <!--<div *ngIf="selectedHero">
       <h2>
         {{selectedHero.name | uppercase}} is my hero
