@@ -151,12 +151,36 @@ video#bgvid {
 
 }
 
-.box-choose-bot{
+.box-choose-bot-basic{
   position: relative;
   width: 18em;
   height: 25em;
   background-color: grey;
   margin-right: 5em;
+  background-image: url("app/assets/card-basicbot.png");
+  background-position: 25% 18%;
+
+}
+
+.box-choose-bot-social{
+  position: relative;
+  width: 18em;
+  height: 25em;
+  background-color: grey;
+  margin-right: 5em;
+  background-image: url("app/assets/card-socialbot.png");
+  background-position: 25% 18%;
+
+}
+
+.box-choose-bot-power{
+  position: relative;
+  width: 18em;
+  height: 25em;
+  background-color: grey;
+  margin-right: 5em;
+  background-image: url("app/assets/card-powerbot.png");
+  background-position: 25% 18%;
 
 }
 
@@ -190,24 +214,25 @@ video#bgvid {
 }
 
 .name-bottype-main {
-  -webkit-box-sizing: content-box;
+/*  -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  border: none;
-  font: normal 20px/1 Arial, Helvetica, sans-serif;
+  border: none;*/
+  font: normal 25px/1 Arial, Helvetica, sans-serif;
   color: #ffffff;
   text-align: center;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  position: absolute
+/*  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;*/
+  position: absolute;
   width: 8em;
-  top:0em;
+  top:8em;
+  left:2em;
   height: auto;
   z-index: 2;
 }
 
 .name-bottype-1 {
-  left:5.9em;
+  left:3.5em;
 }
 
 .name-bottype-2  {
