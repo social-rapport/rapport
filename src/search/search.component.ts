@@ -10,8 +10,13 @@ import { FbService} from '../shared/fb.service';
   providers: [gmailContact, FilterContacts],
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
+<<<<<<< HEAD
               <ul>
                 <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.vanity || contact.name }} </li>
+=======
+              <ul class="contact-list">
+                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.name }} </li>
+>>>>>>> separate tables
               </ul>
             `,
 })
@@ -27,6 +32,7 @@ export class SearchComponent {
   onAddContact(selectedContact): void{
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
 
+<<<<<<< HEAD
     if(this.bot.botType === 'social'){
       this.bot.selectedFbFriends.push (selectedContact);
     } else {
@@ -37,8 +43,16 @@ export class SearchComponent {
       });
     }
     
+=======
+    this.bot.selectedContacts.push ({
+      name: selectedContact.name,
+      email: selectedContact.email,
+      birthday: null,
+    });
+
+>>>>>>> separate tables
     this.contacts.splice(selectedContactIndex,1);
-  
+
   }
 
   ngOnInit(): void {
@@ -53,9 +67,9 @@ export class SearchComponent {
       this.contacts = this.gmailService.contacts.filter(contact => {
         const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
         return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
-      }); 
+      });
     }
-    
+
   }
 
   @Input() bot;
