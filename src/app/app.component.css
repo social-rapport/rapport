@@ -13,18 +13,23 @@ nav a {
   text-decoration: none;
   margin-top: 10px;
   display: inline-block;
-  background-color: #eee;
+  background-color: transparent;
+  font-family: 'Inconsolata', monospace;
+  font-size:1.2em;
+  text-transform:uppercase;
+  letter-spacing: 0.3em;
   border-radius: 4px;
 }
 .right{
   float: right;
 }
 nav a:visited, a:link {
-  color: #607D8B;
+  color: #111;
 }
 nav a:hover {
   color: #039be5;
-  background-color: #CFD8DC;
+  cursor: hand;
+  /*background-color: #CFD8DC;*/
 }
 nav a.active {
   color: #039be5;

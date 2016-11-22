@@ -38,7 +38,7 @@
       <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
 <!--
         <div class="box-choose-bot"> -->
-          <div class="box-choose-bot-basic">
+          <div class="botCards">
         <!--   <div class="img-choose-bot">
             <img class="img-choose-bot" src="app/assets/card-basicbot.png"/>
           </div> -->
@@ -60,51 +60,6 @@
           </div>
         </div>
 
-      </a>
-      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-
-        <!-- <div class="module hero"> -->
-        <div class="box-choose-bot-social">
-         <!--  <img class="img-choose-bot" src="app/assets/card-socialbot.png"/> -->
-           <div class="img-bot-icon-main" >
-              <img src="app/assets/bot.png">
-           </div>
-
-           <div class="name-bottype-main">
-              Social Bot
-           </div>
-            <div class="bottype-desc-main">
-              <ul style="list-style-type:none">
-                <li>- sends a greeting email every 6 months
-                </li>
-                <li>- sends a birthday email on your contacts' birthdays
-                </li>
-              </ul>
-            </div>
-        </div>
-
-      </a>
-      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-
-        <!-- <div class="module hero"> -->
-        <div class="box-choose-bot-power">
-         <!--  <img class="img-choose-bot" src="app/assets/card-powerbot.png"/> -->
-          <div class="img-bot-icon-main">
-            <img src="app/assets/bot.png">
-          </div>
-
-          <div class="name-bottype-main">
-          Power Bot
-          </div>
-          <div class="bottype-desc-main">
-            <ul style="list-style-type:none">
-              <li>- sends a greeting email every 6 months
-              </li>
-              <li>- sends a birthday email on your contacts' birthdays
-              </li>
-            </ul>
-          </div>
-        </div>
       </a>
     </div>
 </div>

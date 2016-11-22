@@ -6,7 +6,7 @@ label {
   font-weight: bold;
 }
 input {
-  height: 2em;
+  height: 1em;
   font-size: 1em;
   padding-left: .4em;
 }
@@ -24,7 +24,7 @@ button:hover {
 }
 button:disabled {
   background-color: #eee;
-  color: #ccc; 
+  color: #ccc;
   cursor: auto;
 }
 html {
@@ -33,4 +33,12 @@ html {
 
 body {
   margin: 0;
+}
+
+.selectBday {
+  float:right;
+}
+
+.checkbox {
+  float:right;
 }
