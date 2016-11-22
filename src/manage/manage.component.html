@@ -1,16 +1,9 @@
- <div class="navbar-header">
- </div>
  <video class="vid" autoplay>
     <source src="app/assets/rapportDashboard.mp4" type="video/mp4">
   </video >
-<!--     <h2>My Bots</h2> -->
 
-<!-- nam -->
-  <div id="container-top-header">
-<!--     <span id="title-anchor">Rapport</span>
-    <span id="signup-login">Logout</span>
-  </div> -->
-
+<!-- TITLE -->
+<div id="container-top-header">
   <div id="container-header" class="col-md-12">
     <div id="title-section" >
       MANAGE BOTS
@@ -21,15 +14,15 @@
     </div>
 
   </div>
-<!--end Nam -->
 
+<!-- TABLE -->
 <div class="mycontainer">
 
 <div class="col-md-2">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-                <th>Bot Types</th>
+          <th>Bot Types</th>
         </tr>
       </thead>
         <tbody>
@@ -46,7 +39,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-                <th>TASKS</th>
+          <th>TASKS</th>
         </tr>
       </thead>
         <tbody>
@@ -63,7 +56,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-                <th>SELECTED CONTACTS</th>
+          <th>SELECTED CONTACTS</th>
         </tr>
       </thead>
         <tbody>
@@ -83,17 +76,28 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-                <th>ALL CONTACTS</th>
+          <th>ALL CONTACTS</th>
         </tr>
       </thead>
         <tbody>
         <tr class="list-container">
-              <td class="list-contents">
-                <search-component [bot]="selectedBot"></search-component>
-              </td>
+          <td class="list-contents">
+            <search-component [bot]="selectedBot"></search-component>
+          </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+<!-- BUTTONS -->
+    <div class="buttons">
+      <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
+      <button (click)="sendNow()"> Send Now! </button>
+      <span *ngIf="selectedBot.id">
+        <button class="retire" (click)="retireBot()"> Retire Bot </button>
+      </span>
+    </div>
+
   </div>
 
 <!--       <div class="col-md-12 table">
@@ -147,15 +151,6 @@
           </div>
 
     </div> -->
-    <div class="buttons">
-      <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
-      <button (click)="sendNow()"> Send Now! </button>
-      <span *ngIf="selectedBot.id">
-        <button class="retire" (click)="retireBot()"> Retire Bot </button>
-      </span>
-    </div>
-
-  </div>
 
 <!-- <div *ngIf="selectedHero">
       <h2>
