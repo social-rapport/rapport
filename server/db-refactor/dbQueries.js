@@ -279,4 +279,4 @@ module.exports = {
   deleteSingleLog: deleteSingleLog,
   deleteBotLogs: deleteBotLogs,
   deleteUserLogs: deleteUserLogs
-}
+};

@@ -15,6 +15,7 @@ module.exports = {
   },
 
   sendMsg: function(auth, user, msg,callback){
+    console.log("passed auth obj", auth);
     fbchat(auth, function callback (err, api) {
       if(err) return console.error(err);
       //Send Message to User - Note: Use vanity username for accuracy
