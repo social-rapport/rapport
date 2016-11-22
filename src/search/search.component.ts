@@ -1,4 +1,4 @@
-import { Component,OnInit, Input} from '@angular/core';
+import { Component,OnInit, Input, OnChanges} from '@angular/core';
 import { gmailContact } from '../shared/custom-type-classes';
 import { FilterContacts } from './contact.pipe';
 import { BotService } from '../shared/bot.service';
@@ -16,7 +16,7 @@ import { FbService} from '../shared/fb.service';
             `,
 })
 
-export class SearchComponent {
+export class SearchComponent implements OnChanges {
 
   private contacts: any;
 
@@ -42,8 +42,7 @@ export class SearchComponent {
 
   }
 
-  ngOnInit(): void {
-
+  reload(): void {
     if(this.bot.botType === 'social'){
       this.contacts = this.fbService.contacts;
       const addedFriends = this.bot.selectedFbFriends.map(contact => contact.vanity);
@@ -56,7 +55,19 @@ export class SearchComponent {
         return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
       });
     }
+<<<<<<< 69af7b529f742134b536f554cc331230afe7dfd9
 
+=======
+  }
+
+  ngOnChanges(changes) {
+		console.log('Change detected:');
+    this.reload();
+	}
+
+  ngOnInit(): void {
+    this.reload();
+>>>>>>> search component listens for changes and refreshes
   }
 
   @Input() bot;
