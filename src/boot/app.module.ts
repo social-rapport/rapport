@@ -10,7 +10,10 @@ import { AuthGuard } from '../shared/auth.guard';
 import { Auth0CallbackGuard } from '../shared/auth0.guard';
 import { BotService }         from '../shared/bot.service';
 import { Auth } from '../shared/auth.service';
+import { GmailService } from '../shared/gmail.service';
+import { FbService } from '../shared/fb.service';
 
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { AppRoutingModule }     from '../routing/app.routing.module';
 import { AppComponent }        from '../app/app.component';
 import { LandingPageComponent }   from '../landing-page/landing-page.component';
@@ -28,6 +31,7 @@ import { FilterContacts } from '../search/contact.pipe';
     FormsModule,
     AppRoutingModule,
     HttpModule,
+    Ng2Bs3ModalModule
   ],
   declarations: [
     HomePageComponent,
@@ -45,11 +49,14 @@ import { FilterContacts } from '../search/contact.pipe';
     //{provide: LocationStrategy, useClass: HashLocationStrategy},
     BotService,
     Auth,
+    GmailService,
+    FbService,
     AuthGuard,
     Auth0CallbackGuard,
     AUTH_PROVIDERS
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+  //entryComponents: [ CustomModal ]
 })
 export class AppModule {
 }

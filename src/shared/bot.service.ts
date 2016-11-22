@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { customBot, gmailContact } from '../shared/custom-type-classes';
-import { BOTS } from '../data/mock-bots';
+//import { BOTS } from '../data/mock-bots';
 
 @Injectable()
 export class BotService {
@@ -15,9 +15,9 @@ export class BotService {
    
   constructor(private http: Http) {}
 
-  public setInitialState(){
+  public getBots(){
     //add get tasks when api endpoint is implemented
-    return Promise.all([this.getBotTypes(), this.importUserBots(), this.getContacts()]);
+    return Promise.all([this.getBotTypes(), this.importUserBots()]);
   }
 
   public getBotTypes(){
@@ -27,18 +27,7 @@ export class BotService {
     return this.http.get(`/api/botTypes`)
       .map(function(data: any) {
           this.botTypes = JSON.parse(data._body).bots;
-          console.log("bot types", this.botTypes);
           return this.botTypes;
-      }).toPromise();
-  }
-
-  public getContacts() {
-    let userId = localStorage.getItem('user_id');
-
-    return this.http.get(`/api/gmail/contacts?userId=${userId}`)
-      .map((data: any) => {
-        this.contacts = data.json();
-        return this.contacts;
       }).toPromise();
   }
 
@@ -74,6 +63,11 @@ export class BotService {
     return this.userBots || [];
   }
 
+  public retireBot(selectedBot){
+    this.userBots = this.userBots.filter((bot)=> bot.id !== selectedBot.id);
+    return this.updateBots(this.userBots)
+  }
+
   public returnContacts(){
     return this.contacts || [];
   }
@@ -87,21 +81,9 @@ export class BotService {
    const body = JSON.stringify({bots: userBotsArray});
    const headers = new Headers({'Content-Type': 'application/json'});
 
-   this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
-      .subscribe(
-        response => console.log("response", response),
-        error => console.log("error", error),
-        () => { console.log("save finished")
-          //TODO: remove this run tasks when cron is working
-          this.http.get('/api/runalltasks')
-            .map(resp => resp.json())
-            .subscribe(
-              response => console.log("response", response),
-              error => console.log("error", error),
-              () => console.log("finished")
-            );
-        }
-      )
+   return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
+      .toPromise()
+      .then(this.importUserBots);
   }
 
   public sendNow(){

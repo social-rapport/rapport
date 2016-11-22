@@ -3,11 +3,13 @@
  * Adjust as necessary for your application needs.
  */
 (function (global) {
+
   System.config({
     paths: {
       // paths serve as alias
       'npm:': 'node_modules/'
     },
+    defaultJSExtensions: true,
     // map tells the System loader where to look for things
     map: {
       // our app is within the app folder
@@ -28,20 +30,14 @@
       'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
       'auth0-lock': 'npm:auth0-lock',
       'auth0-js': 'npm:auth0-js',
-      'async' : 'npm:async/parallel'
+      'async' : 'npm:async/parallel',
+      'ng2-bs3-modal' : 'npm:ng2-bs3-modal'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
-      app: {
-        main: './main.js',
-        defaultExtension: 'js'
-      },
-      rxjs: {
-        defaultExtension: 'js'
-      },
-      async: {
-        defaultExtension: 'js'
-      }
+      app: { main: './main.js', defaultExtension: 'js'},
+      rxjs: {defaultExtension: 'js'},
+      async: {defaultExtension: 'js'},
     }
   });
 })(this);

@@ -10,10 +10,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { BotService } from './bot.service';
 import { gmailContact } from '../shared/custom-type-classes';
-
-//import { Auth0Lock } from 'auth0-lock'
-// Avoid name not found warnings
-//declare var Auth0Lock: any;
+import { GmailService } from '../shared/gmail.service';
 
 declare var Auth0Lock: any;
 
@@ -21,7 +18,10 @@ declare var Auth0Lock: any;
 export class Auth {
   // Configure Auth0
   lock = new Auth0Lock('pA75v0B8UDfNOk0h2tDnz5in4Je3AZHL', 'rapport.auth0.com', {});
-  constructor(private http: Http, private router:Router,  private botService: BotService) {
+  constructor(private http: Http, 
+              private router:Router,  
+              private botService: BotService,
+              private gmailService: GmailService) {
 
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
@@ -42,7 +42,8 @@ export class Auth {
       .then(userInfo => {
         localStorage.setItem('user_id',userInfo.id);
         userObj = userInfo;
-        this.botService.setInitialState()
+        this.botService.getBots()
+          .then(() => this.gmailService.getContacts())
           .then(() => this.redirectForUserType(userObj))
           .then(() => console.log("on authentication completed", this.botService));
       });

@@ -10,8 +10,10 @@ class BotActivity {
 }
 
 export class customBot {
+  id: Number;
   botType: string;
   tasks: Array<string>;
   selectedContacts: Array<gmailContact>;
+  selectedFbFriends: Array<Object>;
   botActivity: BotActivity;
 }

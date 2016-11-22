@@ -4,7 +4,7 @@ var mysql = require('promise-mysql');
 mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'cichlid1022',
+    password: 'dev',
     database: 'rapport'
 }).then(function(conn,x){
     exportConn(conn);
@@ -23,6 +23,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 //app.use(express.static(__dirname+'/config/static'));
 app.use(express.static(__dirname+'/../'));
+console.log('static dirname, ', __dirname+'/../');
+
 //-------------- DATABASE -------------------------
 
 

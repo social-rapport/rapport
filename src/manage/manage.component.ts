@@ -4,6 +4,9 @@ import { customBot, gmailContact } from '../shared/custom-type-classes';
 import { BotService } from '../shared/bot.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {GmailService} from '../shared/gmail.service';
+import {FbService} from '../shared/fb.service';
+
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
 
@@ -23,13 +26,19 @@ export class ManageComponent {
   private contacts: Array<gmailContact>;
   private tasks: Array<string>;
 
-  constructor(private botService: BotService) {}
+  constructor(private botService: BotService, 
+              private gmailService: GmailService) {}
 
   private onSelectBot(bot: any): void {
     this.selectedBot = bot;
-    console.log("selected bot", this.selectedBot);
     this.activities = bot.botActivity.recent;
-    this.contacts = bot.selectedContacts;
+
+    //these contacts are the contacts for the bot, not the users contacts
+    if(this.selectedBot.botType === 'social'){
+      this.contacts = bot.selectedFbContacts;
+    } else {
+      this.contacts = bot.selectedContacts;
+    }
     this.tasks = bot.tasks;
   }
 
@@ -37,14 +46,24 @@ export class ManageComponent {
     this.botService.updateBots(this.bots);
   }
 
-  private ngOnInit(): void {
-    this.bots = this.botService.getUserBots();
-    console.log("bots", this.bots);
-    this.onSelectBot(this.bots[0]);
+  private retireBot(bot): void {
+    this.botService.retireBot(this.selectedBot).then(_=>{
+      this.reload();
+    })
   }
 
   private sendNow(): void {
     this.botService.sendNow()
       .then(console.log);
   }
+
+  private reload() : void {
+    this.bots = this.botService.getUserBots();
+    this.onSelectBot(this.bots[0]);
+  }
+
+  private ngOnInit(): void {
+    this.reload();
+  }
+
 }

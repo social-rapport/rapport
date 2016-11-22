@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 //import {BotService} from '../shared/bot.service';
 import { Router } from '@angular/router';
 import {BotService } from '../shared/bot.service';
+import {FbService} from '../shared/fb.service';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+
 @Component({
   moduleId: module.id,
   selector: 'setup-component',
@@ -10,17 +13,52 @@ import {BotService } from '../shared/bot.service';
 })
 
 export class SetupComponent {
+
+  private fbUsername: String;
+  private fbPassword: String;
   bots = []; 
-  constructor(private botService: BotService, private router: Router) {
+  selectedType;
+
+  @ViewChild('myModal')
+  modal: ModalComponent;
+
+  close() {
+      this.modal.close();
+  }
+
+  open() {
+      this.modal.open();
+  }
+
+  constructor(private botService: BotService, 
+              private router: Router, 
+              private fbService: FbService) 
+    {
       botService.getBotTypes().then(types => {
         console.log('botTypes', types);
         this.bots = types;
-      })
-      //this.bots = botService.botTypes;
-      // console.log("bot types", this.bots);
+    })
   }
-  
-  handleClick(selectedType){
+
+  private handleClick(selectedType){
+    this.selectedType = selectedType;
+
+    if(selectedType.botType === 'social'){
+      this.open();
+    } else {
+      this.routeToManage(selectedType);
+    }
+  }
+
+  private fbLogin(){
+    var self = this;
+    this.fbService.getContacts(this.fbUsername, this.fbPassword).then(function(){
+        self.close();
+        self.routeToManage(this.selectedType);
+    });
+  }
+
+  private routeToManage(selectedType){
     this.botService.addBotTypeToUser(selectedType);
     this.router.navigate(['manage']);
   }
