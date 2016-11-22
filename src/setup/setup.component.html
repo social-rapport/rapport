@@ -51,10 +51,13 @@
 
 <div class="container container-botType">
     <div class="row">
-      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-
-        <div class="botCards">
-
+      <a (click)="handleClick(bots[0])" class="col-4">
+<!--
+        <div class="box-choose-bot"> -->
+          <div class="botCards">
+        <!--   <div class="img-choose-bot">
+            <img class="img-choose-bot" src="app/assets/card-basicbot.png"/>
+          </div> -->
           <div class="img-bot-icon-main img-bot-icon-1">
             <img src="app/assets/bot.png">
           </div>
@@ -74,6 +77,51 @@
 
         </div>
 
+      </a>
+      <a (click)="handleClick(bots[1])" class="col-4">
+
+        <!-- <div class="module hero"> -->
+        <div class="box-choose-bot-social">
+         <!--  <img class="img-choose-bot" src="app/assets/card-socialbot.png"/> -->
+           <div class="img-bot-icon-main" >
+              <img src="app/assets/bot.png">
+           </div>
+
+           <div class="name-bottype-main">
+              Social Bot
+           </div>
+            <div class="bottype-desc-main">
+              <ul style="list-style-type:none">
+                <li>- sends a greeting message to you Facebook friends
+                </li>
+                <li>- sends a birthday message to your Facebook friends
+                </li>
+              </ul>
+            </div>
+        </div>
+
+      </a>
+      <a (click)="handleClick(bots[2])" class="col-4">
+
+        <!-- <div class="module hero"> -->
+        <div class="box-choose-bot-power">
+         <!--  <img class="img-choose-bot" src="app/assets/card-powerbot.png"/> -->
+          <div class="img-bot-icon-main">
+            <img src="app/assets/bot.png">
+          </div>
+
+          <div class="name-bottype-main">
+          Power Bot
+          </div>
+          <div class="bottype-desc-main">
+            <ul style="list-style-type:none">
+              <li>- customize your bot
+              </li>
+              <li>- grunular access to bot configuration
+              </li>
+            </ul>
+          </div>
+        </div>
       </a>
     </div>
 </div>
