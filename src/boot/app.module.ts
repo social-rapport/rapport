@@ -24,6 +24,8 @@ import { ContactComponent }    from '../contact/contact.component';
 import { HomePageComponent } from '../home-page/home.component';
 import { SearchComponent } from '../search/search.component';
 import { FilterContacts } from '../search/contact.pipe';
+import { LoadingComponent } from '../loading/loading.component';
+
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ import { FilterContacts } from '../search/contact.pipe';
     ManageComponent,
     ContactComponent,
     SearchComponent,
-    FilterContacts
+    FilterContacts,
+    LoadingComponent
   ],
   providers: [
     { provide: 'Window',  useValue: window },

@@ -27,6 +27,7 @@ export class Auth {
 
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
+      this.router.navigate(['loading']);
       this.onAuthentication(authResult);
     });
   }
@@ -68,7 +69,7 @@ export class Auth {
 
   public redirectForUserType(userObj) {
     1+1;
-    userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['home']);
+    userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['manage']);
   }
 
   public authenticated() {

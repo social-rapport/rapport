@@ -69,15 +69,16 @@ const updateBot = function({id: botId, botName: botName = 'unnamed', botType: bo
 };
 
 const deleteBot = function(botId){
-  // const oneQueryToDeleteThemAll = `DELETE * FROM bot B
+  // const oneQueryToDeleteThemAll = 
+  //  `DELETE B, UB, BC, GM, TB, T FROM bot B
   //   INNER JOIN users_bots UB ON B.id=UB.id_bot
-  //   INNER JOIN selectedFacebookFriends FB ON FB.id_bot=B.id
   //   INNER JOIN bot_contacts BC ON BC.id_bot=B.id
   //   INNER JOIN selectedGmailContacts GM ON GM.id=BC.id_contact
   //   INNER JOIN tasks_bots TB ON TB.id_bot=B.id
   //   INNER JOIN tasks T ON T.id=TB.id_task 
-  //   WHERE B.id=${sqp.escape(botId)}`;
-
+  //   WHERE B.id=1`;
+  //INNER JOIN selectedFacebookFriends FB ON FB.id_bot=B.id
+  
   const deleteBotQuery = `DELETE FROM bot WHERE id=${sqp.escape(botId)}`
   const deleteInUserJoin = `DELETE FROM users_bots where id_bot=${botId}`;
 
