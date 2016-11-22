@@ -55,9 +55,6 @@ export class SearchComponent implements OnChanges {
         return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
       });
     }
-<<<<<<< 69af7b529f742134b536f554cc331230afe7dfd9
-
-=======
   }
 
   ngOnChanges(changes) {
@@ -67,7 +64,6 @@ export class SearchComponent implements OnChanges {
 
   ngOnInit(): void {
     this.reload();
->>>>>>> search component listens for changes and refreshes
   }
 
   @Input() bot;
