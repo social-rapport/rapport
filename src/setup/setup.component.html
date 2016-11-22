@@ -6,7 +6,7 @@
   <button type="button" class="btn btn-default" (click)="modal.open()">Open me!</button>
   <modal #myModal>
     <div>
-      You have chosen a supercharged bot that uses extra abilities. 
+      You have chosen a supercharged bot that uses extra abilities.
       This will require extra verification.
     </div>
     <div>
@@ -27,24 +27,88 @@
     <div id="title-section" >
       SELECT A BOT
     </div>
-
     <div id="title-section desc">
     Each bot is pre-configured with basic tasks to suite each type of user
     </div>
-
   </div>
+
 
 <div class="container container-botType">
     <div class="row">
       <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-          <!-- vi section -->
-        <div class="module hero">
-          <h4>{{bot.botType}}</h4>
+<!--
+        <div class="box-choose-bot"> -->
+          <div class="box-choose-bot-basic">
+        <!--   <div class="img-choose-bot">
+            <img class="img-choose-bot" src="app/assets/card-basicbot.png"/>
+          </div> -->
+
+          <div class="img-bot-icon-main img-bot-icon-1">
+            <img src="app/assets/bot.png">
+          </div>
+
+          <div class="name-bottype-main">
+            Basic Bot
+          </div>
+          <div class="bottype-desc-main">
+            <ul style="list-style-type:none">
+              <li>- sends a greeting email every 6 months
+              </li>
+              <li>- sends a birthday email on your contacts' birthdays
+              </li>
+            </ul>
+          </div>
         </div>
 
       </a>
+      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
+
+        <!-- <div class="module hero"> -->
+        <div class="box-choose-bot-social">
+         <!--  <img class="img-choose-bot" src="app/assets/card-socialbot.png"/> -->
+           <div class="img-bot-icon-main" >
+              <img src="app/assets/bot.png">
+           </div>
+
+           <div class="name-bottype-main">
+              Social Bot
+           </div>
+            <div class="bottype-desc-main">
+              <ul style="list-style-type:none">
+                <li>- sends a greeting email every 6 months
+                </li>
+                <li>- sends a birthday email on your contacts' birthdays
+                </li>
+              </ul>
+            </div>
+        </div>
+
+      </a>
+      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
+
+        <!-- <div class="module hero"> -->
+        <div class="box-choose-bot-power">
+         <!--  <img class="img-choose-bot" src="app/assets/card-powerbot.png"/> -->
+          <div class="img-bot-icon-main">
+            <img src="app/assets/bot.png">
+          </div>
+
+          <div class="name-bottype-main">
+          Power Bot
+          </div>
+          <div class="bottype-desc-main">
+            <ul style="list-style-type:none">
+              <li>- sends a greeting email every 6 months
+              </li>
+              <li>- sends a birthday email on your contacts' birthdays
+              </li>
+            </ul>
+          </div>
+        </div>
+      </a>
     </div>
 </div>
+
 <!-- end nam -->
 
 <!-- old save for code reuse -->

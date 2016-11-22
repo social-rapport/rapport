@@ -59,7 +59,7 @@ video#bgvid {
   background-size: cover;
   position: absolute;
   left: -20%;
-  z-index: -1;
+  z-index: -999;
 
 }
 
@@ -151,12 +151,129 @@ video#bgvid {
 
 }
 
-#carousel #box-choose-bot{
+.box-choose-bot-basic{
+  position: relative;
+  width: 18em;
+  height: 25em;
+  background-color: grey;
+  margin-right: 5em;
+  background-image: url("app/assets/card-basicbot.png");
+  background-position: 25% 18%;
 
 }
 
-#carousel #img-choose-bot {
+.box-choose-bot-social{
+  position: relative;
+  width: 18em;
+  height: 25em;
+  background-color: grey;
+  margin-right: 5em;
+  background-image: url("app/assets/card-socialbot.png");
+  background-position: 25% 18%;
 
+}
+
+.box-choose-bot-power{
+  position: relative;
+  width: 18em;
+  height: 25em;
+  background-color: grey;
+  margin-right: 5em;
+  background-image: url("app/assets/card-powerbot.png");
+  background-position: 25% 18%;
+
+}
+
+.img-choose-bot {
+  /*position: absolute;*/
+  width: 22em;
+  height: auto;
+  z-index: 1;
+}
+
+.img-bot-icon-main img{
+  /*position: absolute;*/
+  position: absolute;
+  width: 8em;
+  top:3em;
+  height: auto;
+  left:5.5em;
+  z-index: 2;
+}
+
+.img-bot-icon-1 {
+  left:8.5em;
+}
+
+.img-bot-icon-2 {
+  left:27em;
+}
+
+.img-bot-icon-3 {
+  left:45.5em;
+}
+
+.name-bottype-main {
+/*  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;*/
+  font: normal 25px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: center;
+/*  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;*/
+  position: absolute;
+  width: 8em;
+  top:8em;
+  left:2em;
+  height: auto;
+  z-index: 2;
+}
+
+.name-bottype-1 {
+  left:3.5em;
+}
+
+.name-bottype-2  {
+  left:20.8em;
+}
+
+.name-bottype-3 {
+  left:35.5em;
+}
+
+/*#carousel #img-choose-bot {
+
+}*/
+
+.bottype-desc-main {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  font: normal 10px/1 Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  text-align: left;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  position: absolute;
+  width: 30em;
+  top:25em;
+  height: auto;
+  z-index: 2;
+}
+
+.bottype-desc-1 {
+  left:3.9em;
+}
+
+.bottype-desc-2  {
+  left:33.8em;
+}
+
+.bottype-desc-3 {
+  left:63em;
 }
 
 #carousel #name-bottype {
