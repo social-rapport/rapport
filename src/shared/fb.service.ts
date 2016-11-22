@@ -17,6 +17,13 @@ export class FbService {
 
     }
 
+    public login(fbUsername: String, fbPassword: String){
+        this.saveCredentials(fbUsername, fbPassword)
+        .then(()=>{
+
+        });
+    }
+
     public saveCredentials(fbUsername: String, fbPassword: String){
         let headers = new Headers({'Content-Type': 'application/json'});
         var body = {
@@ -24,10 +31,11 @@ export class FbService {
             fbPassword: fbPassword,
         };
         console.log('sending body:', body);
+
         return this.http.post('/updateFacebookCredentials', body, {headers: headers})
         .toPromise()
         .then((data)=>{
-            this.contacts = data.json(); 
+            //this.contacts = data.json(); 
         });
     }
 

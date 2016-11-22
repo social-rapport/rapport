@@ -100,7 +100,19 @@ module.exports.getBotTypes = function(req, res){
 //<-------------------change the users bots on a post------------------->
 
 module.exports.updateBots = function(req, res){
-  dbM.updateOrCreateUserBots(req.query.userId,req.body.bots);
+  dbM.updateOrCreateUserBots(req.query.userId,req.body.bots)
+  .then((data)=>{
+    res.send(data);
+    res.end();
+  });
+};
+
+module.exports.deleteBot = function(req, res){
+  dbQ.deleteBot(req.query.userId,req.body.id)
+  .then((data)=>{
+    res.send(data);
+    res.end();
+  });
 };
 
 module.exports.getTasksForChron = function(req, res){
