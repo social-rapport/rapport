@@ -33,7 +33,8 @@ export class ManageComponent {
     this.selectedBot = bot;
     this.activities = bot.botActivity.recent;
 
-    //these contacts are the contacts for the bot, not the users contacts
+    //these contacts are the selectedContacts for the bot, not the availableContacts
+    //should be componentized
     if(this.selectedBot.botType === 'social'){
       this.contacts = bot.selectedFbFriends;
     } else {
@@ -43,7 +44,9 @@ export class ManageComponent {
   }
 
   private submitAllSettings(): void{
-    this.botService.updateBots(this.bots);
+    this.botService.updateBots(this.bots).then(_=>{
+      this.reload();
+    })
   }
 
   private retireBot(bot): void {
@@ -59,11 +62,11 @@ export class ManageComponent {
 
   private reload() : void {
     this.bots = this.botService.getUserBots();
-    this.onSelectBot(this.bots[0]);
   }
 
   private ngOnInit(): void {
     this.reload();
+    this.onSelectBot(this.bots[0]);
   }
 
 }
