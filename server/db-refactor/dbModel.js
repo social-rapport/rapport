@@ -20,6 +20,7 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
+  console.log("passed bot obj", botObj);
   if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
