@@ -42,6 +42,7 @@ export class Auth {
     //localStorage.setItem('id_token', authResult.idToken);
     this.signInUser(authResult)
       .then(userInfo => {
+        console.log("user info", userInfo);
         localStorage.setItem('user_id',userInfo.id);
         userObj = userInfo;
         this.botService.getBots()
