@@ -11,6 +11,7 @@ import 'rxjs/add/operator/catch';
 import { BotService } from './bot.service';
 import { gmailContact } from '../shared/custom-type-classes';
 import { GmailService } from '../shared/gmail.service';
+import { FbService } from '../shared/fb.service';
 
 declare var Auth0Lock: any;
 
@@ -21,7 +22,8 @@ export class Auth {
   constructor(private http: Http, 
               private router:Router,  
               private botService: BotService,
-              private gmailService: GmailService) {
+              private gmailService: GmailService,
+              private fbService: FbService) {
 
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
@@ -44,6 +46,11 @@ export class Auth {
         userObj = userInfo;
         this.botService.getBots()
           .then(() => this.gmailService.getContacts())
+          .then(() => {
+            if(userObj.fbCredentials){
+              return this.fbService.getContacts(userObj.id);
+            }  
+          })
           .then(() => this.redirectForUserType(userObj))
           //show spinner
       });
