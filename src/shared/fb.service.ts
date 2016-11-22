@@ -11,16 +11,17 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class FbService {
 
-    public contacts;
+    public contacts: Array<any>;
 
     constructor(private http: Http){
 
     }
 
     public login(fbUsername: String, fbPassword: String){
-        this.saveCredentials(fbUsername, fbPassword)
+        return this.saveCredentials(fbUsername, fbPassword)
         .then(()=>{
-
+            var userId = localStorage.getItem('user_id');
+            return this.getContacts(userId);
         });
     }
 
@@ -30,19 +31,22 @@ export class FbService {
             fbEmail: fbUsername,
             fbPassword: fbPassword,
         };
-        console.log('sending body:', body);
 
         return this.http.post('/updateFacebookCredentials', body, {headers: headers})
         .toPromise()
         .then((data)=>{
+            console.log('save credentials resolved');
             //this.contacts = data.json(); 
         });
     }
 
     public getContacts(userId){
-        return this.http.get('/api/facebook/friends')
+        return this.http.get(`/api/facebook/friends?userId=${userId}`)
             .toPromise()
-            .then(data => this.contacts = data);
+            .then(data => {
+                console.log('get contacts resolved');
+                this.contacts = data.json();
+            });
     }
 
 };

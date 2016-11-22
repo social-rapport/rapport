@@ -52,10 +52,10 @@ export class SetupComponent {
 
   private fbLogin(){
     var self = this;
-    // this.fbService.getContacts(this.fbUsername, this.fbPassword).then(()=>{
-    //     this.close();
-    //     this.routeToManage(this.selectedType);
-    // });
+    this.fbService.login(this.fbUsername, this.fbPassword).then(()=>{
+        this.close();
+        this.routeToManage(this.selectedType);
+    });
   }
 
   private routeToManage(selectedType){
