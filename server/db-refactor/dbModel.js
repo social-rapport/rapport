@@ -20,6 +20,7 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
+  console.log("passed bot obj", botObj);
   if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
@@ -32,8 +33,11 @@ const createAllBotInfo = function(userId, botObj) {
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
     .then(botId => Promise.all([addOrUpdateSelectedContacts(botId, botObj.selectedContacts),
-      addOrUpdateRegisteredTasks(botId, botObj.tasks)]))
-    .then(resolve)
+      addOrUpdateRegisteredTasks(botId, botObj.tasks), addOrUpdateFacebookFriend(botObj.id, botObj.selectedFbFriends)]))
+    .then(arrayOfResolves => {
+      console.log("array of resolves", arrayOfResolves);
+      resolve(arrayOfResolves);
+    })
     .catch(reject);
   });
 };
@@ -42,8 +46,11 @@ const updateAllBotInfo = function(botObj) {
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
       .then(affectedRows => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
-        addOrUpdateRegisteredTasks(botObj.botId, botObj.tasks)]))
-      .then(resolve)
+        addOrUpdateRegisteredTasks(botObj.botId, botObj.tasks), addOrUpdateFacebookFriend(botObj.id, botObj.selectedFbFriends)]))
+      .then(arrayOfResolves => {
+        console.log("array of resolves", arrayOfResolves);
+        resolve(arrayOfResolves);
+      })
       .catch(reject);
   });
 };
@@ -56,6 +63,7 @@ const getAllBotInfo = function(botId) {
     botName: null,
     tasks: [],
     selectedContacts: [],
+    selectedFbFriends: [],
     botActivity: {
       recent: [],
       scheduled: []
@@ -63,7 +71,7 @@ const getAllBotInfo = function(botId) {
   };
 
   return new Promise ((resolve, reject) => {
-    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId)])
+    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId)])
       .then(arrayOfBotInfo => {
         //massage data into botObj; 
         botObj.id = arrayOfBotInfo[0][0].id;
@@ -71,6 +79,10 @@ const getAllBotInfo = function(botId) {
         botObj.botName = arrayOfBotInfo[0][0].botName || arrayOfBotInfo[0][0].botType;
         botObj.selectedContacts = arrayOfBotInfo[1];
         botObj.tasks = arrayOfBotInfo[2];
+        botObj.selectedFbFriends = arrayOfBotInfo[3];
+
+        console.log("botinfo array", arrayOfBotInfo);
+        console.log("bot obj", botObj);
 
         resolve(botObj)
       }).catch(reject);
@@ -120,10 +132,11 @@ const addOrUpdateSelectedFacebookFriends = function(botId, friendArray) {
 }; 
 
 const addOrUpdateFacebookFriend = function(botId, friendObj) {
-  if(friendOb.id) {
+  console.log("friend obj", friendObj);
+  if(friendObj.id) {
     return dbq.updateSelectedFacebookFriend(friendObj);
   } else {
-    return dqb.addToSelectedFacebookFriends(botId, friendObj);
+    return dbq.addToSelectedFacebookFriends(botId, friendObj);
   }
 };
 

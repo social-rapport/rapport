@@ -25,6 +25,7 @@ export class SearchComponent {
               private fbService: FbService) {}
 
   onAddContact(selectedContact): void{
+    console.log("add contact fired");
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
 
     if(this.bot.botType === 'social'){
