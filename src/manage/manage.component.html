@@ -14,6 +14,61 @@
     </div>
 
   </div>
+<!--end Nam -->
+
+    <div class = "list-container" style="background-color:#FFE; width: 100%">
+    <ul class="heroes">
+      <li *ngFor="let bot of bots" style="float:left"
+        [class.selected]="bot === selectedBot"
+        (click)="onSelectBot(bot)">
+        <span class="badge">{{bot.botType}}</span>
+      </li>
+    </ul>
+
+    <div class="control-container">
+
+        <div class="list-container">
+        <ul class="heroes">
+          <p class="text">Activities</p>
+          <li *ngFor="let activity of activities"
+            [class.selected]="activity === selectedActivity"
+            (click)="onSelectActivity(activity)">
+            <span class="badge">{{activity}}</span>
+          </li>
+        </ul>
+        </div>
+
+        <div class="list-container">
+          <search-component [bot]="selectedBot" [(ngModel)]="selectedBot"></search-component>
+        </div>
+
+        <div class="list-container">
+          <ul class="heroes">
+            <p class="text">Contacts</p>
+            <li class="contactli" *ngFor="let contact of contacts"
+              [class.selected]="contact === selectedContact"
+              (click)="onSelectContact(contact)">
+              <contact-component [contact]="contact"></contact-component>
+            </li>
+          </ul>
+        </div>
+
+      <div class="list-container">
+        <ul class="heroes">
+          <p class="text">Tasks</p>
+          <li *ngFor="let task of tasks"
+            [class.selected]="task === selectedTask"
+            (click)="onSelectTask(task)">
+            <span class="badge">{{task.task}}</span>
+          </li>
+        </ul>
+      </div>
+
+      <button (click)="submitAllSettings()"> Save Bots! </button>
+      <button (click)="sendNow()"> Send Now! </button>
+      <div *ngIf="selectedBot.id"> 
+        <button (click)="retireBot()"> Retire Bot </button>
+      </div>
 
 
 <!-- TABLE -->
