@@ -129,6 +129,12 @@ video#bgvid {
   background-color: #93BA4C;
 }
 
+#button-signup:hover {
+  background-color: #75b4d6;
+  cursor:hand;
+}
+
+
 /* PAGES */
 #title-anchor {
   -webkit-box-sizing: content-box;

@@ -16,6 +16,10 @@ export class LandingPageComponent {
   constructor(private router: Router, private auth: Auth
   ) {}
 
+  login(){
+    this.auth.login();
+  }
+
   ngOnInit(): void {
 
   }

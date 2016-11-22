@@ -16,7 +16,7 @@ import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
         <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Dashboard</a>
         <a (click)="test()">Test</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
-        <a *ngIf="!authenticated()" class="right" (click)="login()">Login</a>
+        <a class='login' *ngIf="!authenticated()" class="right" (click)="login()">Login</a>
     </nav>
     <router-outlet></router-outlet>
   `,
