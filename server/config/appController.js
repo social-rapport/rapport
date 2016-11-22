@@ -51,6 +51,20 @@ module.exports.updateFacebookCredentials = function(req, res) {
     .catch((error) => req.status(500).send('error saving the credentials: ', error));
 };
 
+//<---------------------Gets Facebook Friends--------------------->
+module.exports.getFacebookFriends = function(req, res) {
+  dbQ.getFacebookCredentials(req.query.userId)
+    .then(fbCredentialObj => {
+      let fbAuth = {};
+      fbAuth.email = fbCredentialObj.fbUsername;
+      fbAuth.password = fbCredentialObj.fbPassword;
+      return fbAuth;
+    })
+    .then(facebook.getFriendsList)
+    .then(friends => res.status(200).send(friends))
+    .catch(error => res.status(500).send(error));
+};
+
 //<---------------------Removes Facebook Friends--------------------->
 module.exports.removeFacebookFriends = function(req, res) {
   dbM.removeFromSelectedFacebookFriends(req.body)
@@ -69,18 +83,6 @@ module.exports.removeRegisteredTasks = function(req, res) {
     .then(() => res.status(200).send('removed friend'));
 };
 
-//<---------------------Gets Facebook Friends--------------------->
-module.exports.getFacebookFriends = function(req, res) {
-  dbQ.getFacebookCredentials(req.query.userId)
-    .then(fbCredentialObj => {
-      let fbAuth = {};
-      fbAuth.email = fbCredentialObj.fbUsername;
-      fbAuth.password = fbCredentialObj.fbPassword;
-      return fbAuth;
-    })
-    .then(facebook.getFriendsList)
-    .then(friends => res.status(200).send(friends));
-};
 
 //<-------------------return the bot type so FE can change it------------------->
 module.exports.getBotTypes = function(req, res){

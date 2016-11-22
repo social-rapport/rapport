@@ -17,7 +17,7 @@ export class FbService {
 
     }
 
-    public getContacts(fbUsername: String, fbPassword: String){
+    public saveCredentials(fbUsername: String, fbPassword: String){
         let headers = new Headers({'Content-Type': 'application/json'});
         var body = {
             fbEmail: fbUsername,
@@ -29,6 +29,12 @@ export class FbService {
         .then((data)=>{
             this.contacts = data.json(); 
         });
+    }
+
+    public getContacts(userId){
+        return this.http.get('/api/facebook/friends')
+            .toPromise()
+            .then(data => this.contacts = data);
     }
 
 };

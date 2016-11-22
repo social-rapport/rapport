@@ -51,11 +51,17 @@ export class SetupComponent {
   }
 
   private fbLogin(){
-    var self = this;
-    this.fbService.getContacts(this.fbUsername, this.fbPassword).then(function(){
-        self.close();
-        self.routeToManage(this.selectedType);
-    });
+    let userId = localStorage.getItem('user_id');
+    console.log("userId", userId);
+    this.fbService.saveCredentials(this.fbUsername, this.fbPassword)
+      .then(() =>{
+          this.fbService.getContacts(userId)
+            .then(friends => {
+              console.log("friends loaded", friends);
+              this.close();
+              this.routeToManage(this.selectedType);
+            });
+      });
   }
 
   private routeToManage(selectedType){
