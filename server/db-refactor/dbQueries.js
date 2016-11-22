@@ -38,6 +38,16 @@ const getUserFromGmail = function(gmail) {
   return sqp.query(q).then((data)=>data[0]);
 };
 
+const updateFacebookCredentials = function(userId, {fbEmail: fbEmail, fbPassword: fbPassword}) {
+  const q = `UPDATE users SET fbUsername=${sqp.escape(fbEmail)}, fbPassword=${sqp.escape(fbPassword)}`;
+  return sqp.query(q).then(data => data.affectedRows);
+};
+
+const getFacebookCredentials = function(userId) {
+  const q = `SELECT fbUsername, fbPassword FROM users WHERE id=${sqp.escape(userId)}`;
+  return sqp.query(q).then(data => data[0]);
+}
+
 //<----------------------BOTS---------------------->>
 
 const addBotToUser = function(userId, {botName: botName, botType: botType = 'basic'}){
@@ -198,5 +208,7 @@ module.exports = {
   getUserFromGmail: getUserFromGmail,
   updateUser: updateUser,
   deleteUser: deleteUser,
-  getTasksJoinedWithUsers: getTasksJoinedWithUsers
+  getTasksJoinedWithUsers: getTasksJoinedWithUsers,
+  getFacebookCredentials: getFacebookCredentials,
+  updateFacebookCredentials: updateFacebookCredentials,
 }

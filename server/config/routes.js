@@ -29,6 +29,13 @@ console.log("routes loaded");
     res.sendFile(__dirname+'/static/gmailLogin.html');
   });
 
+   // <--------------- GMAIL ROUTES --------------->
+   //for updating the user record with facebook credentials
+  app.post('/updateFacebookCredentials', appController.updateFacebookCredentials);
+
+  //for getting a user's facebook friends
+  app.get('/api/facebook/friends', appController.getFacebookFriends);
+
   // nam send botctrol test
   app.get('/api/runalltasks', appController.runalltasks);
 
