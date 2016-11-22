@@ -22,7 +22,7 @@ console.log("routes loaded");
   app.get('/api/botTypes', appController.getBotTypes);
   app.get('/api/bots', appController.getBotInfo);
   app.put('/api/bots', appController.updateBots);
-  app.delete('/api/bot', appController.deleteBot);
+  app.delete('/api/bots', appController.deleteBot);
 
   app.delete('/api/tasks', appController.removeRegisteredTasks);
 

@@ -60,10 +60,8 @@ export class BotService {
   }
 
   public retireBot(selectedBot){
-    const headers = new Headers({'Content-Type': 'application/json'});
     let userId = localStorage.getItem('user_id');
-    var body = {id: selectedBot.id};
-    return this.http.put(`/deleteBot?userId=${userId}`, body, headers)
+    return this.http.delete(`/api/bots?botId=${selectedBot.id}`)
     .toPromise()
     .then(()=>{
       console.log('bot deleted');

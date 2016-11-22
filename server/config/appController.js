@@ -108,7 +108,7 @@ module.exports.updateBots = function(req, res){
 };
 
 module.exports.deleteBot = function(req, res){
-  dbQ.deleteBot(req.query.userId,req.body.id)
+  dbQ.deleteBot(req.query.botId)
   .then((data)=>{
     res.send(data);
     res.end();

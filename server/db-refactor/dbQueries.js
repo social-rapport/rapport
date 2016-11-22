@@ -68,7 +68,7 @@ const updateBot = function({id: botId, botName: botName = 'unnamed', botType: bo
     return sqp.query(q).then((data)=>data.affectedRows);
 };
 
-const deleteBot = function({id: botId}){
+const deleteBot = function(botId){
   const deleteBotQuery = `DELETE FROM bot WHERE id=${sqp.escape(botId)}`
   const deleteInJoin = `DELETE FROM users_bots where id_bot=${botId}`;
   return sqp.query(deleteInJoin)
