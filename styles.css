@@ -34,6 +34,7 @@ body, input[text], button {
 /* Rapport Layout */
 
 /* GLOBAL */
+
 #container-top-header {
   z-index: 1;
 }
@@ -115,6 +116,12 @@ video#bgvid {
   width:200px;
   font-family: 'Inconsolata', monospace;
 }*/
+
+.button {
+-webkit-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.2);
+-moz-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.2);
+box-shadow: 4px 4px 4px -2px rgba(0,0,0,0.2);
+}
 
 #button-signup {
   margin: auto;
