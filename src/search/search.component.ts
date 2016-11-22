@@ -11,14 +11,14 @@ import { FbService} from '../shared/fb.service';
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
               <ul>
-                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.name }} </li>
+                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.vanity || contact.name }} </li>
               </ul>
             `,
 })
 
 export class SearchComponent {
 
-  private contacts: Array<gmailContact>;
+  private contacts: any;
 
   constructor(private botService: BotService,
               private gmailService: GmailService,
@@ -27,11 +27,15 @@ export class SearchComponent {
   onAddContact(selectedContact): void{
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
 
-    this.bot.selectedContacts.push ({
-      name: selectedContact.name,
-      email: selectedContact.email,
-      birthday: null,
-    });
+    if(this.bot.botType === 'social'){
+      this.bot.selectedFbFriends.push (selectedContact);
+    } else {
+      this.bot.selectedContacts.push ({
+        name: selectedContact.name,
+        email: selectedContact.email,
+        birthday: null,
+      });
+    }
     
     this.contacts.splice(selectedContactIndex,1);
   
@@ -40,9 +44,10 @@ export class SearchComponent {
   ngOnInit(): void {
 
     if(this.bot.botType === 'social'){
-      this.contacts = this.fbService.contacts.filter(contact => {
-        const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
-        return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
+      this.contacts = this.fbService.contacts; 
+      const addedFriends = this.bot.selectedFbFriends.map(contact => contact.vanity);
+      this.contacts = this.contacts.filter(contact => {
+        return addedFriends.indexOf(contact.vanity) === -1;
       });
     } else {
       this.contacts = this.gmailService.contacts.filter(contact => {

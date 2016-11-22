@@ -35,7 +35,7 @@ export class ManageComponent {
 
     //these contacts are the contacts for the bot, not the users contacts
     if(this.selectedBot.botType === 'social'){
-      this.contacts = bot.selectedFbContacts;
+      this.contacts = bot.selectedFbFriends;
     } else {
       this.contacts = bot.selectedContacts;
     }

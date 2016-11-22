@@ -51,7 +51,7 @@ module.exports.updateFacebookCredentials = function(req, res) {
     .catch((error) => req.status(500).send('error saving the credentials: ', error));
 };
 
-//<---------------------Updates Facebook Credentials--------------------->
+//<---------------------Gets Facebook Friends--------------------->
 module.exports.getFacebookFriends = function(req, res) {
   dbQ.getFacebookCredentials(req.query.userId)
     .then(fbCredentialObj => {
@@ -61,8 +61,28 @@ module.exports.getFacebookFriends = function(req, res) {
       return fbAuth;
     })
     .then(facebook.getFriendsList)
-    .then(friends => res.status(200).send(friends));
+    .then(friends => res.status(200).send(friends))
+    .catch(error => res.status(500).send(error));
 };
+
+//<---------------------Removes Facebook Friends--------------------->
+module.exports.removeFacebookFriends = function(req, res) {
+  dbM.removeFromSelectedFacebookFriends(req.body)
+    .then(() => res.status(200).send('removed friend'));
+};
+
+//<---------------------Removes Gmail Contacts--------------------->
+module.exports.removeGmailContacts = function(req, res) {
+  dbM.removeFromSelectedContacts(req.body)
+    .then(() => res.status(200).send('removed friend'));
+};
+
+//<---------------------Removes Tasks--------------------->
+module.exports.removeRegisteredTasks = function(req, res) {
+  dbM.removeFromRegisteredTasks(req.body)
+    .then(() => res.status(200).send('removed friend'));
+};
+
 
 //<-------------------return the bot type so FE can change it------------------->
 module.exports.getBotTypes = function(req, res){
@@ -80,7 +100,19 @@ module.exports.getBotTypes = function(req, res){
 //<-------------------change the users bots on a post------------------->
 
 module.exports.updateBots = function(req, res){
-  dbM.updateOrCreateUserBots(req.query.userId,req.body.bots);
+  dbM.updateOrCreateUserBots(req.query.userId,req.body.bots)
+  .then((data)=>{
+    res.send(data);
+    res.end();
+  });
+};
+
+module.exports.deleteBot = function(req, res){
+  dbQ.deleteBot(req.query.userId,req.body.id)
+  .then((data)=>{
+    res.send(data);
+    res.end();
+  });
 };
 
 module.exports.getTasksForChron = function(req, res){

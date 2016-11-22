@@ -11,24 +11,42 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class FbService {
 
-    public contacts;
+    public contacts: Array<any>;
 
     constructor(private http: Http){
 
     }
 
-    public getContacts(fbUsername: String, fbPassword: String){
+    public login(fbUsername: String, fbPassword: String){
+        return this.saveCredentials(fbUsername, fbPassword)
+        .then(()=>{
+            var userId = localStorage.getItem('user_id');
+            return this.getContacts(userId);
+        });
+    }
+
+    public saveCredentials(fbUsername: String, fbPassword: String){
         let headers = new Headers({'Content-Type': 'application/json'});
         var body = {
             fbEmail: fbUsername,
             fbPassword: fbPassword,
         };
-        console.log('sending body:', body);
+
         return this.http.post('/updateFacebookCredentials', body, {headers: headers})
         .toPromise()
         .then((data)=>{
-            this.contacts = data.json(); 
+            console.log('save credentials resolved');
+            //this.contacts = data.json(); 
         });
+    }
+
+    public getContacts(userId){
+        return this.http.get(`/api/facebook/friends?userId=${userId}`)
+            .toPromise()
+            .then(data => {
+                console.log('get contacts resolved');
+                this.contacts = data.json();
+            });
     }
 
 };

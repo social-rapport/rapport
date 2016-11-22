@@ -31,7 +31,7 @@ module.exports = {
     auth.email = taskObj.fbUsername;
     auth.password = taskObj.fbPassword;
 
-    facebook.getFriendsList(auth, recipient, data => {
+    facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
       console.log(data);
     });
   },

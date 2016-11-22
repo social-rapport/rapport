@@ -131,6 +131,21 @@ CREATE TABLE `bot_contacts` (
 );
 
 -- ---
+-- Table 'selectedFacebookFriends'
+-- 
+-- --
+
+DROP TABLE IF EXISTS `selectedFacebookFriends`;
+		
+CREATE TABLE `selectedFacebookFriends` (
+  `id` INTEGER NOt NULL AUTO_INCREMENT,
+  `name` VARCHAR(100),
+  `vanityName` VARCHAR(100),
+  `birthday` VARCHAR(100),
+  `id_bot` INTEGER,
+  PRIMARY KEY (`id`)
+);
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -142,3 +157,4 @@ ALTER TABLE `users_bots` ADD FOREIGN KEY (id_user) REFERENCES `users` (`id`);
 ALTER TABLE `users_bots` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
 ALTER TABLE `bot_contacts` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);
 ALTER TABLE `bot_contacts` ADD FOREIGN KEY (id_contact) REFERENCES `selectedGmailContacts` (`id`);
+ALTER TABLE `selectedFacebookFriends` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);

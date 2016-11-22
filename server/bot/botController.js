@@ -35,8 +35,17 @@ module.exports = {
   //tasks in a database -> preps to send to gmail(using oauth) -> send emails ->log to database all completed tasks
   runAllTasks: function(callback){
 
+    // let testObj = {
+    //   fbUsername : 'nickSpinosa1022@gmail.com',
+    //   fbPassword : 'cichlid1111',
+    //   vanityName : 'sharayah.hoffmann',
+    //   message : 'hey shaaaay I\'m just testing my app!'
+    // };
+
+    // botMethods.sayHiFacebook(testObj);
+
     dbQ.getTasksJoinedWithUsers('today')
-      .then(tasks => Promise.all(tasks.map( task => botMethods[task.task](task))))
+      .then(tasks => Promise.all(tasks.map(task => botMethods[task.task](task))))
       .then(callback);
 
 
@@ -85,7 +94,8 @@ module.exports = {
     // });
 
   },
-  logTasks: function(tasks){
+  logTasks: function(tasksArray){
+    //return Promise.all(tasksArray.map(task => dbQ.addToLog(tasksArray)));
 
     var runGenerator = function(length, index){
       if(length === index){

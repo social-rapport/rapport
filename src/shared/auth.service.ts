@@ -45,7 +45,7 @@ export class Auth {
         this.botService.getBots()
           .then(() => this.gmailService.getContacts())
           .then(() => this.redirectForUserType(userObj))
-          .then(() => console.log("on authentication completed", this.botService));
+          //show spinner
       });
   }
 
@@ -59,6 +59,7 @@ export class Auth {
   }
 
   public redirectForUserType(userObj) {
+    1+1;
     userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['home']);
   }
 

@@ -31,17 +31,6 @@ export class BotService {
       }).toPromise();
   }
 
-  public getTasks() {
-    let userId = localStorage.getItem('user_id');
-
-    this.http.get(`/api/tasks?userId=${userId}`)
-      .map((data: any) => {
-        data = data.json();
-        this.contacts = data;
-        return data;
-      }).toPromise();
-  }
-
   public importUserBots(){
     let token = localStorage.getItem('id_token');
     let userId = localStorage.getItem('user_id');
@@ -59,21 +48,29 @@ export class BotService {
       }).toPromise();
   }
 
-  public getUserBots(){
-    return this.userBots || [];
+  public getTasks() {
+    let userId = localStorage.getItem('user_id');
+
+    this.http.get(`/api/tasks?userId=${userId}`)
+      .map((data: any) => {
+        data = data.json();
+        this.contacts = data;
+        return data;
+      }).toPromise();
   }
 
   public retireBot(selectedBot){
-    this.userBots = this.userBots.filter((bot)=> bot.id !== selectedBot.id);
-    return this.updateBots(this.userBots)
-  }
-
-  public returnContacts(){
-    return this.contacts || [];
-  }
-
-  public addBotTypeToUser(bot: any){
-    this.userBots.push(bot);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    let userId = localStorage.getItem('user_id');
+    var body = {id: selectedBot.id};
+    return this.http.put(`/deleteBot?userId=${userId}`, body, headers)
+    .toPromise()
+    .then(()=>{
+      console.log('bot deleted');
+      this.userBots = this.userBots.filter((bot)=>{
+        return bot.id !== selectedBot.id;
+      })
+    })
   }
 
   public updateBots(userBotsArray){
@@ -83,11 +80,30 @@ export class BotService {
 
    return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
       .toPromise()
-      .then(this.importUserBots);
+      .then(()=>{
+        return this.importUserBots();
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
   }
+
+  //<-----------------GETTERS AND SETTERS----------------->
 
   public sendNow(){
     return this.http.get('/api/runalltasks').toPromise();
+  }
+
+  public getUserBots(){
+    return this.userBots || [];
+  }
+
+  public returnContacts(){
+    return this.contacts || [];
+  }
+
+  public addBotTypeToUser(bot: any){
+    this.userBots.push(bot);
   }
 
 }
