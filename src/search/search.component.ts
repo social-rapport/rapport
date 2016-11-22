@@ -10,13 +10,8 @@ import { FbService} from '../shared/fb.service';
   providers: [gmailContact, FilterContacts],
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
-<<<<<<< HEAD
-              <ul>
-                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.vanity || contact.name }} </li>
-=======
               <ul class="contact-list">
-                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.name }} </li>
->>>>>>> separate tables
+                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.vanity || contact.name }} </li>
               </ul>
             `,
 })
@@ -32,7 +27,6 @@ export class SearchComponent {
   onAddContact(selectedContact): void{
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
 
-<<<<<<< HEAD
     if(this.bot.botType === 'social'){
       this.bot.selectedFbFriends.push (selectedContact);
     } else {
@@ -42,15 +36,7 @@ export class SearchComponent {
         birthday: null,
       });
     }
-    
-=======
-    this.bot.selectedContacts.push ({
-      name: selectedContact.name,
-      email: selectedContact.email,
-      birthday: null,
-    });
 
->>>>>>> separate tables
     this.contacts.splice(selectedContactIndex,1);
 
   }
@@ -58,7 +44,7 @@ export class SearchComponent {
   ngOnInit(): void {
 
     if(this.bot.botType === 'social'){
-      this.contacts = this.fbService.contacts; 
+      this.contacts = this.fbService.contacts;
       const addedFriends = this.bot.selectedFbFriends.map(contact => contact.vanity);
       this.contacts = this.contacts.filter(contact => {
         return addedFriends.indexOf(contact.vanity) === -1;

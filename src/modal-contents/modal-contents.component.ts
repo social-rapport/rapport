@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+// import { Component } from '@angular/core';
+// import { OnInit } from '@angular/core';
+// import { Router } from '@angular/router';
 
-@Component({
-  selector: 'modal',
-  template: 
-})
+// @Component({
+//   selector: 'modal',
+//   template:
+// })
 
-export class CustomModal {
-  
-  fbUsername: String;
-  fbPassword: String;
+// export class CustomModal {
 
-}
+//   fbUsername: String;
+//   fbPassword: String;
+
+// }
