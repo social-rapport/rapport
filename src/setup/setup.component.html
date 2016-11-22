@@ -2,6 +2,22 @@
 <!-- <h3>Top Bots</h3> -->
 
 <!-- nam -->
+
+  <button type="button" class="btn btn-default" (click)="modal.open()">Open me!</button>
+  <modal #myModal>
+    <div>
+      You have chosen a supercharged bot that uses extra abilities. 
+      This will require extra verification.
+    </div>
+    <div>
+    username <input type="text" [(ngModel)]="fbUsername">
+    </div>
+    <div>
+    password <input type="text" [(ngModel)]="fbPassword">
+    </div>
+    <button (click)="fbLogin()">submit</button>
+    <button (click)="close()">close</button>
+  </modal>
   <div id="container-top-header">
     <span id="title-anchor">Rapport</span>
     <span id="signup-login">Logout</span>
@@ -22,20 +38,6 @@
     <div class="row">
       <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
           <!-- vi section -->
-        <div class="module hero">
-          <h4>{{bot.botType}}</h4>
-        </div>
-
-      </a>
-      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-
-        <div class="module hero">
-          <h4>{{bot.botType}}</h4>
-        </div>
-
-      </a>
-      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-
         <div class="module hero">
           <h4>{{bot.botType}}</h4>
         </div>

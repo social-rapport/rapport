@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, AfterViewInit } from '@angular/core';
 import { Auth } from '../shared/auth.service';
 import { Router } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
+//import { ModalComponent } from 'ng2-bs3-modal/src/ng2-bs3-modal/ng2-bs3-modal';
+//import { ModalResult } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
   selector: 'my-app',
@@ -11,6 +14,7 @@ import { SearchComponent } from '../search/search.component';
     <nav>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a *ngIf="authenticated()" routerLink="/manage" routerLinkActive="active">Dashboard</a>
+        <a (click)="test()">Test</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
         <a *ngIf="!authenticated()" class="right" (click)="login()">Login</a>
     </nav>
@@ -18,8 +22,13 @@ import { SearchComponent } from '../search/search.component';
   `,
 
 })
+
+
 export class AppComponent {
-  constructor(private auth: Auth,private router: Router) {
+
+  constructor(private auth: Auth,
+              private router: Router,
+              ) {
 
     this.router.events.subscribe(path => {
       console.log('path = ', path);
@@ -33,6 +42,7 @@ export class AppComponent {
       }
     });
   }
+
   authenticated(){
     return this.auth.authenticated();
   }
@@ -40,6 +50,7 @@ export class AppComponent {
   login(){
     this.auth.login();
   }
+
 
   authAction = "Login";
   title = 'Rapport';

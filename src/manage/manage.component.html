@@ -70,6 +70,9 @@
 
       <button (click)="submitAllSettings()"> Save Bots! </button>
       <button (click)="sendNow()"> Send Now! </button>
+      <div *ngIf="selectedBot.id"> 
+        <button (click)="retireBot()"> Retire Bot </button>
+      </div>
 
     </div>
     <!--<div *ngIf="selectedHero">

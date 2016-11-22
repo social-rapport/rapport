@@ -2,6 +2,8 @@ import { Component,OnInit, Input} from '@angular/core';
 import { gmailContact } from '../shared/custom-type-classes';
 import { FilterContacts } from './contact.pipe';
 import { BotService } from '../shared/bot.service';
+import { GmailService} from '../shared/gmail.service';
+import { FbService} from '../shared/fb.service';
 
 @Component({
   selector: 'search-component',
@@ -11,32 +13,44 @@ import { BotService } from '../shared/bot.service';
               <ul>
                 <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.name }} </li>
               </ul>
-  `,
+            `,
 })
+
 export class SearchComponent {
 
   private contacts: Array<gmailContact>;
 
-  constructor(private botService: BotService) {}
+  constructor(private botService: BotService,
+              private gmailService: GmailService,
+              private fbService: FbService) {}
 
   onAddContact(selectedContact): void{
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
+
     this.bot.selectedContacts.push ({
       name: selectedContact.name,
       email: selectedContact.email,
       birthday: null,
     });
+    
     this.contacts.splice(selectedContactIndex,1);
+  
   }
 
   ngOnInit(): void {
-    console.log("bot service from search", this.botService);
-    console.log("bot service contacts from search", this.botService.contacts);
-    console.log("bot contacs from getter", this.botService.returnContacts());
-    this.contacts = this.botService.contacts.filter(contact => {
-     const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
-     return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
-    }); 
+
+    if(this.bot.botType === 'social'){
+      this.contacts = this.fbService.contacts.filter(contact => {
+        const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
+        return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
+      });
+    } else {
+      this.contacts = this.gmailService.contacts.filter(contact => {
+        const selectedContactNames = this.bot.selectedContacts.map(contact => contact.name);
+        return contact.name && contact.email && selectedContactNames.indexOf(contact.name) === -1;
+      }); 
+    }
+    
   }
 
   @Input() bot;

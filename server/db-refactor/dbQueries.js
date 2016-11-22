@@ -2,6 +2,7 @@ var sqp = null;
 
 function injectConnection(conn){
    sqp = conn;
+   console.log('db connection injected');
 }
 
 const logError = function(err,b){
