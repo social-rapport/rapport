@@ -33,6 +33,10 @@ body, input[text], button {
 
 /* Rapport Layout */
 
+li {
+  color: #ffffff;
+}
+
 /* GLOBAL */
 
 p {
