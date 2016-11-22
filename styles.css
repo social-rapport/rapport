@@ -73,8 +73,21 @@ video#bgvid {
   position: absolute;
   left: -20%;
   z-index: -999;
-
 }
+
+video#bgvid-pages {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background: repeat;
+  background-size: cover;
+  position: absolute;
+  top: -85%;
+  right: -20%;
+  z-index: -999;
+}
+
 
 #container-landing-page {
   position: absolute;
