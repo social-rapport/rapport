@@ -152,28 +152,29 @@ video#bgvid {
 }
 
 .box-choose-bot{
-  width: 22em;
-  height: auto;
-  color:blue;
+  position: relative;
+  width: 18em;
+  height: 25em;
+  background-color: grey;
+  margin-right: 5em;
+
 }
 
 .img-choose-bot {
   /*position: absolute;*/
   width: 22em;
   height: auto;
-  background-color: blue;
   z-index: 1;
 }
 
 .img-bot-icon-main img{
   /*position: absolute;*/
-  position: relative;
+  position: absolute;
   width: 8em;
-  top:-3em;
+  top:3em;
   height: auto;
   left:5.5em;
   z-index: 2;
-
 }
 
 .img-bot-icon-1 {
@@ -194,13 +195,13 @@ video#bgvid {
   box-sizing: content-box;
   border: none;
   font: normal 20px/1 Arial, Helvetica, sans-serif;
-  /*color: #ffffff;*/
+  color: #ffffff;
   text-align: center;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
- /* position: absolute;*/
+  position: absolute
   width: 8em;
-  top:12em;
+  top:0em;
   height: auto;
   z-index: 2;
 }
@@ -231,9 +232,9 @@ video#bgvid {
   text-align: left;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
- /* position: absolute;*/
+  position: absolute;
   width: 30em;
-  top:28em;
+  top:25em;
   height: auto;
   z-index: 2;
 }
