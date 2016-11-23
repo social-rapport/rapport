@@ -14,9 +14,9 @@ module.exports.oauth = "";
 module.exports.updateUserInfo = function(req, res){
 
   var userId = req.query.userId;
-  var authInfo = req.authInfo; 
+  var authInfo = req.authInfo;
   var newUserData = auth0Utils.getGmailInfo(authInfo);
-  
+
   dbQ.getUserFromGmail(newUserData.gmail)
   .then(function (oldUserData){
     if(!oldUserData){
@@ -25,9 +25,9 @@ module.exports.updateUserInfo = function(req, res){
         dbQ.getUser(userId).then(function(newUserData){
           newUserData.newUser = true;
           newUserData.fbCredentials = !!(newUserData.fbPassword && newUserData.fbUsername);
-          res.status(200).send(data);
+          res.status(200).send(newUserData);
         });
-    }); 
+    });
   } else {
       var currentUserData = Object.assign(oldUserData,newUserData)
       dbQ.updateUser(currentUserData.id, currentUserData)

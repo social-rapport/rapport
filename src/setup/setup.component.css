@@ -1,4 +1,10 @@
-
+#modal-style {
+  top:50%;
+  padding:6em;
+  padding-bottom:5em;
+  background-image: url(http://i63.tinypic.com/2w4mjxe.png);
+  background-repeat: no-repeat;
+}
 
 html {
   margin: 0;
@@ -8,6 +14,28 @@ body {
   margin: 0;
 }
 
+.fb-buttons {
+  margin-top:2em;
+}
+
+.facebookInputs {
+  padding-top:1em;
+}
+
+.form-group {
+  padding-top:1em;
+  padding-bottom:1em;
+}
+
+.fb-input {
+  float:right;
+}
+
+.semi-header {
+  font-size:1.3em;
+  padding-bottom:1.2em;
+  padding-top:1.4em;
+}
 
 [class*='col-'] {
   float: left;

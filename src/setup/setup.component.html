@@ -1,48 +1,59 @@
-
-<!-- <h3>Top Bots</h3> -->
-
-<!-- nam -->
-
   <button type="button" class="btn btn-default" (click)="modal.open()">Open me!</button>
-  <modal #myModal>
-    <div>
-      You have chosen a supercharged bot that uses extra abilities.
-      This will require extra verification.
-    </div>
-    <div>
-    username <input type="text" [(ngModel)]="fbUsername">
-    </div>
-    <div>
-    password <input type="text" [(ngModel)]="fbPassword">
-    </div>
-    <button (click)="fbLogin()">submit</button>
-    <button (click)="close()">close</button>
-  </modal>
-  
+
+    <modal #myModal>
+      <div id="modal-style">
+
+        <div class="semi-header">
+          Connect Rapport to your Facebook.
+        </div>
+
+        <div>
+          You have chosen a supercharged bot that uses extra abilities.
+          This will require extra verification.
+        </div>
+
+        <div class="form-group">
+          <span>Email:  </span>
+          <input class="fb-input" type="text" [(ngModel)]="fbUsername">
+        </div>
+
+        <div>
+          <span>Password:
+          </span>
+          <input class="fb-input" type="password" [(ngModel)]="fbPassword">
+        </div>
+
+        <div class="fb-buttons">
+          <button class="btn btn-primary" (click)="fbLogin()">Submit</button>
+          <button class="btn btn-secondary" (click)="close()">Cancel</button>
+        </div>
+
+      </div>
+    </modal>
+
   <div id="container-top-header">
     <span id="title-anchor">Rapport</span>
     <span id="signup-login">Logout</span>
   </div>
 
   <div id="container-header">
+
     <div id="title-section" >
       SELECT A BOT
     </div>
+
     <div id="title-section desc">
-    Each bot is pre-configured with basic tasks to suite each type of user
+      Each bot is pre-configured with basic tasks to suite each type of user
     </div>
+
   </div>
 
 
 <div class="container container-botType">
     <div class="row">
       <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-<!--
-        <div class="box-choose-bot"> -->
-          <div class="botCards">
-        <!--   <div class="img-choose-bot">
-            <img class="img-choose-bot" src="app/assets/card-basicbot.png"/>
-          </div> -->
+
+        <div class="botCards">
 
           <div class="img-bot-icon-main img-bot-icon-1">
             <img src="app/assets/bot.png">
@@ -51,6 +62,7 @@
           <div class="name-bottype-main">
             {{bot.botType}}
           </div>
+
           <div class="bottype-desc-main">
             <ul style="list-style-type:none">
               <li>- sends a greeting email every 6 months
@@ -59,13 +71,13 @@
               </li>
             </ul>
           </div>
+
         </div>
 
       </a>
     </div>
 </div>
 
-<!-- end nam -->
 
 <!-- old save for code reuse -->
 <!-- <div class="grid grid-pad">
