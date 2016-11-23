@@ -67,7 +67,7 @@
                   (click)="onSelectContact(contact)">
               <td>
                 <div *ngIf="contact">
-                  <p>{{contact.vanityName || contact.vanity || contact.name}}
+                  <p>{{contact.fullName || contact.name}}
                     <span>
                       <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday" placeholder="10/3/2016" />
                       <button (click)="removeSelectedContact(contact)"></button>
