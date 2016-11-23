@@ -33,7 +33,8 @@ export class ManageComponent {
     this.selectedBot = bot;
     this.activities = bot.botActivity.recent;
 
-    //these contacts are the contacts for the bot, not the users contacts
+    //these contacts are the selectedContacts for the bot, not the availableContacts
+    //should be componentized
     if(this.selectedBot.botType === 'social'){
       this.contacts = bot.selectedFbFriends;
     } else {
@@ -42,8 +43,20 @@ export class ManageComponent {
     this.tasks = bot.tasks;
   }
 
+  //<-----------------SELECTED CONTACTS MANAGEMENT (FACTOR INTO COMPONENT)----------------->
+
+  private removeSelectedContact(contact): void{
+    var i = this.contacts.indexOf(contact);
+    this.botService.removeSelectedContact(contact).then(_=>{
+      this.reload();
+    })
+    
+  }
+
   private submitAllSettings(): void{
-    this.botService.updateBots(this.bots);
+    this.botService.updateBots(this.bots).then(_=>{
+      this.reload();
+    })
   }
 
   private retireBot(bot): void {
@@ -59,11 +72,11 @@ export class ManageComponent {
 
   private reload() : void {
     this.bots = this.botService.getUserBots();
-    this.onSelectBot(this.bots[0]);
   }
 
   private ngOnInit(): void {
     this.reload();
+    this.onSelectBot(this.bots[0]);
   }
 
 }

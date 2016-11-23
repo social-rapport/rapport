@@ -22,8 +22,9 @@ module.exports.updateUserInfo = function(req, res){
     if(!oldUserData){
       var currentUserData  = Object.assign(types.initialUser, newUserData);
       dbQ.addUser(currentUserData).then(function(userId){
-        dbQ.getUser(userId).then(function(data){
-          data.newUser = true;
+        dbQ.getUser(userId).then(function(newUserData){
+          newUserData.newUser = true;
+          newUserData.fbCredentials = !!(newUserData.fbPassword && newUserData.fbUsername);
           res.status(200).send(data);
         });
     }); 
@@ -34,6 +35,7 @@ module.exports.updateUserInfo = function(req, res){
         dbQ.getUser(currentUserData.id)
         .then(function(data){
           currentUserData.newUser = false;
+          currentUserData.fbCredentials = !!(currentUserData.fbPassword && currentUserData.fbUsername);
           res.status(200).send(currentUserData);
         });
       });
@@ -73,7 +75,7 @@ module.exports.removeFacebookFriends = function(req, res) {
 
 //<---------------------Removes Gmail Contacts--------------------->
 module.exports.removeGmailContacts = function(req, res) {
-  dbM.removeFromSelectedContacts(req.body)
+  dbM.removeFromSelectedContacts([req.query.contactId])
     .then(() => res.status(200).send('removed friend'));
 };
 
@@ -108,7 +110,7 @@ module.exports.updateBots = function(req, res){
 };
 
 module.exports.deleteBot = function(req, res){
-  dbQ.deleteBot(req.query.userId,req.body.id)
+  dbQ.deleteBot(req.query.botId)
   .then((data)=>{
     res.send(data);
     res.end();

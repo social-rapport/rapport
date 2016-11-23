@@ -64,7 +64,14 @@
                   [class.selected]="contact === selectedContact"
                   (click)="onSelectContact(contact)">
               <td>
-                <contact-component [contact]="contact"></contact-component>
+                <div *ngIf="contact">
+                  <p>{{contact.vanityName || contact.vanity || contact.name}}
+                    <span>
+                      <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday" placeholder="10/3/2016" />
+                      <button (click)="removeSelectedContact(contact)"></button>
+                    </span>
+                  </p>
+                </div>
               </td>
         </tr>
       </tbody>
@@ -76,7 +83,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>ALL CONTACTS</th>
+          <th>AVAILABLE CONTACTS</th>
         </tr>
       </thead>
         <tbody>

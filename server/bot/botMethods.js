@@ -30,6 +30,7 @@ module.exports = {
     let auth = {};
     auth.email = taskObj.fbUsername;
     auth.password = taskObj.fbPassword;
+    console.log("taskObj", taskObj);
 
     facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
       console.log(data);
