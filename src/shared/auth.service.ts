@@ -70,7 +70,7 @@ export class Auth {
   }
 
   public redirectForUserType(userObj, userBots) {
-    if(userObj.newUser || userBots.length === 0){
+    if(userObj.newUser || !userBots){
       this.router.navigate(['setup']);
     } else {
       this.router.navigate(['manage']);
@@ -78,8 +78,6 @@ export class Auth {
   }
 
   public authenticated() {
-    // Check if there's an unexpired JWT
-    // This searches for an item in localStorage with key == 'id_token'
     return tokenNotExpired();
   };
 
