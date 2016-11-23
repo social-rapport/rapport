@@ -1,19 +1,33 @@
-div {
+/*div {
   width: 100px;
   height: 100px;
-}
+}*/
 
 img {
     margin: auto;
     display: block;
     /* position: relative; */
-    margin: auto;
 }
 
-.myModal {
-    background: transparent;
-    position: fixed;
-    left: 50%;
-    top: 50%;
+.spinner {
+  margin:auto;
+  z-index: 1;
+  padding:14em;
 }
 
+div .modal-dialog {
+  width: 100% !important;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+div .modal-content  {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}
+
+.spin {
+  color:#999;
+}
