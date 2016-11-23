@@ -200,7 +200,8 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN selectedFacebookFriends F ON F.id_bot=B.id
     WHERE T.date='today'`;
 
-    return Promise.all([sqp.query(q), sqp.query(q2)]).then(resolveArray => [].concat.apply([],resolveArray));
+    return Promise.all([sqp.query(q), sqp.query(q2)])
+      .then(resolveArray => [].concat.apply([],resolveArray));
 };
 
 //<----------------------FACEBOOK FRIENDS---------------------->>
