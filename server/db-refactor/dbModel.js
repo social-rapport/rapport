@@ -120,10 +120,12 @@ const removeFromRegisteredTasks = function(taskIdArray) {
 
 //facebook friends
 const addOrUpdateSelectedFacebookFriends = function(botId, friendArray) {
+  console.log("friend arrray", friendArray);
   return Promise.all(friendArray.map(friend => addOrUpdateFacebookFriend(botId, friend)));
 }; 
 
 const addOrUpdateFacebookFriend = function(botId, friendObj) {
+  console.log("friend obj", friendObj);
   if(friendObj.id) {
     return dbq.updateSelectedFacebookFriend(friendObj);
   } else {
