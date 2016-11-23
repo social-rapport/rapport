@@ -69,7 +69,6 @@ video#bgvid {
   position: absolute;
   left: -20%;
   z-index: -999;
-
 }
 
 #container-landing-page {
@@ -201,10 +200,11 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 
 .box-choose-bot-basic{
   position: relative;
-  width: 18em;
+  width: 16em;
   height: 25em;
   background-color: grey;
-  margin-right: 5em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
   background-image: url("app/assets/card-basicbot.png");
   background-position: 25% 18%;
 
@@ -212,10 +212,11 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 
 .box-choose-bot-social{
   position: relative;
-  width: 18em;
+  width: 16em;
   height: 25em;
   background-color: grey;
-  margin-right: 5em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
   background-image: url("app/assets/card-socialbot.png");
   background-position: 25% 18%;
 
@@ -223,10 +224,11 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 
 .box-choose-bot-power{
   position: relative;
-  width: 18em;
+  width: 16em;
   height: 25em;
   background-color: grey;
-  margin-right: 5em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
   background-image: url("app/assets/card-powerbot.png");
   background-position: 25% 18%;
 
@@ -245,7 +247,7 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
   width: 8em;
   top:3em;
   height: auto;
-  left:5.5em;
+  left:4.25em;
   z-index: 2;
 }
 
@@ -266,15 +268,17 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;*/
-  font: normal 25px/1 Arial, Helvetica, sans-serif;
+  /*font: normal 25px/1 Arial, Helvetica, sans-serif;*/
+  font-size: 25px;
+  font-family: 'PT Sans Narrow', sans-serif;
   color: #ffffff;
   text-align: center;
 /*  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;*/
   position: absolute;
   width: 8em;
-  top:8em;
-  left:2em;
+  top:7.5em;
+  left:1.2em;
   height: auto;
   z-index: 2;
 }
@@ -296,20 +300,29 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 }*/
 
 .bottype-desc-main {
-  -webkit-box-sizing: content-box;
+/*  -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  border: none;
-  font: normal 10px/1 Arial, Helvetica, sans-serif;
-  color: #ffffff;
+  border: none;*/
+  /*font: normal 1em/1 Arial, Helvetica, sans-serif;*/
+  font-size: 1em/1;
+  font-family: 'PT Sans Narrow', sans-serif;
+  color: #ffffff !important;
   text-align: left;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   position: absolute;
-  width: 30em;
-  top:25em;
+  width: 16em;
+  top:16em;
   height: auto;
   z-index: 2;
+}
+
+.bottype-desc-main li {
+  color: #ffffff;
+  font-size: 1em/1;
+  font-family: 'PT Sans Narrow', sans-serif;
+  padding-right: 1em;
 }
 
 .bottype-desc-1 {
@@ -416,7 +429,7 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 }
 .container-botType {
   position: relative;
-  top: 14em;
+  top: 8em;
 /*  left: 25%;*/
   /*width:;*/
 }

@@ -1,4 +1,6 @@
-  <button type="button" class="btn btn-default" (click)="modal.open()">Open me!</button>
+ <video class="vid" autoplay>
+    <source src="app/assets/rapportDashboard.mp4" type="video/mp4">
+  </video >
 
     <modal #myModal>
       <div id="modal-style">
@@ -31,10 +33,6 @@
       </div>
     </modal>
 
-  <div id="container-top-header">
-    <span id="title-anchor">Rapport</span>
-    <span id="signup-login">Logout</span>
-  </div>
 
   <div id="container-header">
 
@@ -51,16 +49,14 @@
 
 <div class="container container-botType">
     <div class="row">
-      <a *ngFor="let bot of bots" (click)="handleClick(bot)" class="col-4">
-
-        <div class="botCards">
-
-          <div class="img-bot-icon-main img-bot-icon-1">
+      <a (click)="handleClick(bots[0])" class="col-4">
+        <div class="box-choose-bot-basic">
+          <div class="img-bot-icon-main">
             <img src="app/assets/bot.png">
           </div>
 
           <div class="name-bottype-main">
-            {{bot.botType}}
+            Basic Bot
           </div>
 
           <div class="bottype-desc-main">
@@ -74,6 +70,48 @@
 
         </div>
 
+      </a>
+      <a (click)="handleClick(bots[1])" class="col-4">
+
+        <div class="box-choose-bot-social">
+           <div class="img-bot-icon-main" >
+              <img src="app/assets/bot.png">
+           </div>
+
+           <div class="name-bottype-main">
+              Social Bot
+           </div>
+            <div class="bottype-desc-main">
+              <ul style="list-style-type:none">
+                <li>- sends a greeting message to you Facebook friends
+                </li>
+                <li>- sends a birthday message to your Facebook friends
+                </li>
+              </ul>
+            </div>
+        </div>
+
+      </a>
+      <a (click)="handleClick(bots[2])" class="col-4">
+
+        <div class="box-choose-bot-power">
+
+          <div class="img-bot-icon-main">
+            <img src="app/assets/bot.png">
+          </div>
+
+          <div class="name-bottype-main">
+          Power Bot
+          </div>
+          <div class="bottype-desc-main">
+            <ul style="list-style-type:none">
+              <li>- customize your bot
+              </li>
+              <li>- grunular access to bot config
+              </li>
+            </ul>
+          </div>
+        </div>
       </a>
     </div>
 </div>
