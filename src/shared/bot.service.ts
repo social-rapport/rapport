@@ -104,6 +104,14 @@ export class BotService {
 
   //<-----------------GETTERS AND SETTERS----------------->
 
+  public getDisplayName(bot){
+    if(bot.botName !== 'unnamed'){
+      return bot.botName;
+    } else {
+      return bot.botType;
+    }
+  }
+  
   public sendNow(){
     return this.http.get('/api/runalltasks').toPromise();
   }
