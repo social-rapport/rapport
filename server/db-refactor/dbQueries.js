@@ -192,9 +192,15 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN selectedGmailContacts G ON G.id=JJJ.id_contact
     WHERE T.date=${sqp.escape(date)}`;
 
-    //INNER JOIN selectedFacebookFriends F ON B.id=F.id_bot
+  const q2 = `SELECT * FROM tasks T
+    INNER JOIN tasks_bots TB ON T.id=TB.id_task
+    INNER JOIN bot B ON TB.id_bot=B.id
+    INNER JOIN users_bots UB ON UB.id=B.id
+    INNER JOIN users U ON U.id=UB.id_user 
+    INNER JOIN selectedFacebookFriends F ON F.id_bot=B.id
+    WHERE T.date='today'`;
 
-    return sqp.query(q);
+    return Promise.all([sqp.query(q), sqp.query(q2)]).then(resolveArray => [].concat.apply([],resolveArray));
 };
 
 //<----------------------FACEBOOK FRIENDS---------------------->>

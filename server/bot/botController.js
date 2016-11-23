@@ -45,7 +45,7 @@ module.exports = {
     // botMethods.sayHiFacebook(testObj);
 
     dbQ.getTasksJoinedWithUsers('today')
-      .then(tasks => Promise.all(tasks.map(task => botMethods[task.task](task))))
+      .then(tasks => Promise.all(tasks.map(taskObj => botMethods[taskObj.task](taskObj))))
       .then(callback);
 
 

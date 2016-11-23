@@ -75,6 +75,7 @@ const getAllBotInfo = function(botId) {
         botObj.tasks = arrayOfBotInfo[2];
         botObj.selectedFbFriends = arrayOfBotInfo[3];
 
+
         resolve(botObj)
       }).catch(reject);
   });
