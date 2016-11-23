@@ -13,7 +13,7 @@ export class ContactComponent {
   constructor() {
   }
 
-  activateContact(){
+  removeSelectedContact(){
     this.contact.active = true;
   }
 

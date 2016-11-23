@@ -43,7 +43,8 @@ export class SetupComponent {
   private handleClick(selectedType){
     this.selectedType = selectedType;
 
-    if(selectedType.botType === 'social'){
+    //if the fbService has no contacts, get the users fb auth info
+    if(selectedType.botType === 'social' && !this.fbService.contacts){
       this.open();
     } else {
       this.routeToManage(selectedType);

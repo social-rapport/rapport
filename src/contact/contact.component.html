@@ -1,8 +1,8 @@
 <div *ngIf="contact">
-  <p>{{contact.vanity || contact.name}}
+  <p>{{contact.vanityName || contact.vanity || contact.name}}
     <span>
       <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday" placeholder="10/3/2016" />
-      <input class="checkbox" type="checkbox" (change)="activateContact()">
+      <button (click)="removeSelectedContact()"></button>
     </span>
   </p>
 </div>

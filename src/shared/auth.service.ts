@@ -11,6 +11,7 @@ import 'rxjs/add/operator/catch';
 import { BotService } from './bot.service';
 import { gmailContact } from '../shared/custom-type-classes';
 import { GmailService } from '../shared/gmail.service';
+import { FbService } from '../shared/fb.service';
 
 declare var Auth0Lock: any;
 
@@ -21,10 +22,12 @@ export class Auth {
   constructor(private http: Http, 
               private router:Router,  
               private botService: BotService,
-              private gmailService: GmailService) {
+              private gmailService: GmailService,
+              private fbService: FbService) {
 
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
+      this.router.navigate(['loading']);
       this.onAuthentication(authResult);
     });
   }
@@ -40,10 +43,16 @@ export class Auth {
     //localStorage.setItem('id_token', authResult.idToken);
     this.signInUser(authResult)
       .then(userInfo => {
+        console.log("user info", userInfo);
         localStorage.setItem('user_id',userInfo.id);
         userObj = userInfo;
         this.botService.getBots()
           .then(() => this.gmailService.getContacts())
+          .then(() => {
+            if(userObj.fbCredentials){
+              return this.fbService.getContacts(userObj.id);
+            }  
+          })
           .then(() => this.redirectForUserType(userObj))
           //show spinner
       });
@@ -60,7 +69,7 @@ export class Auth {
 
   public redirectForUserType(userObj) {
     1+1;
-    userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['home']);
+    userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['manage']);
   }
 
   public authenticated() {

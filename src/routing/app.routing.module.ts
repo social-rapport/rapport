@@ -7,9 +7,11 @@ import {Auth0CallbackGuard} from '../shared/auth0.guard';
 import {AuthGuard} from '../shared/auth.guard';
 import { HomePageComponent } from '../home-page/home.component';
 import { SearchComponent } from '../search/search.component';
+import { LoadingComponent } from '../loading/loading.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent},
+  { path: 'loading', component: LoadingComponent},
   { path: 'home', component: HomePageComponent},
   { path: 'search', component: SearchComponent },
   { path: 'setup', canActivate:[AuthGuard], component: SetupComponent,},

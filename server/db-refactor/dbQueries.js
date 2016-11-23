@@ -68,12 +68,25 @@ const updateBot = function({id: botId, botName: botName = 'unnamed', botType: bo
     return sqp.query(q).then((data)=>data.affectedRows);
 };
 
-const deleteBot = function({id: botId}){
+const deleteBot = function(botId){
+  // const oneQueryToDeleteThemAll = 
+  //  `DELETE B, UB, BC, GM, TB, T FROM bot B
+  //   INNER JOIN users_bots UB ON B.id=UB.id_bot
+  //   INNER JOIN bot_contacts BC ON BC.id_bot=B.id
+  //   INNER JOIN selectedGmailContacts GM ON GM.id=BC.id_contact
+  //   INNER JOIN tasks_bots TB ON TB.id_bot=B.id
+  //   INNER JOIN tasks T ON T.id=TB.id_task 
+  //   WHERE B.id=1`;
+  //INNER JOIN selectedFacebookFriends FB ON FB.id_bot=B.id
+  
   const deleteBotQuery = `DELETE FROM bot WHERE id=${sqp.escape(botId)}`
-  const deleteInJoin = `DELETE FROM users_bots where id_bot=${botId}`;
-  return sqp.query(deleteInJoin)
+  const deleteInUserJoin = `DELETE FROM users_bots where id_bot=${botId}`;
+
+  return sqp.query(deleteInUserJoin)
   .then(()=>sqp.query(deleteBotQuery))
   .then((data)=>data.affectedRows);
+
+  //return sqp.query(oneQueryToDeleteThemAll).then(data => data.affectedRows);
 };
 
 const getBot = function(botId){
@@ -111,7 +124,7 @@ const updateSelectedContact = function({contactId: contactId, name: name, email:
     return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
 
-const removeSelectedContact = function({contactId: contactId}) {
+const removeSelectedContact = function(contactId) {
   const deleteJoinQuery = `DELETE FROM bot_contacts WHERE id_contact=${sqp.escape(contactId)}`;
   const deleteContactQuery = `DELETE FROM selectedGmailContacts WHERE id=${contactId}`;
   //delete from join table is bots_contacts
@@ -179,17 +192,25 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN selectedGmailContacts G ON G.id=JJJ.id_contact
     WHERE T.date=${sqp.escape(date)}`;
 
-    //INNER JOIN selectedFacebookFriends F ON B.id=F.id_bot
+  const q2 = `SELECT * FROM tasks T
+    INNER JOIN tasks_bots TB ON T.id=TB.id_task
+    INNER JOIN bot B ON TB.id_bot=B.id
+    INNER JOIN users_bots UB ON UB.id=B.id
+    INNER JOIN users U ON U.id=UB.id_user 
+    INNER JOIN selectedFacebookFriends F ON F.id_bot=B.id
+    WHERE T.date='today'`;
 
-    return sqp.query(q);
+    return Promise.all([sqp.query(q), sqp.query(q2)])
+      .then(resolveArray => [].concat.apply([],resolveArray));
 };
 
 //<----------------------FACEBOOK FRIENDS---------------------->>
 
-const addToSelectedFacebookFriends = function(botId, {name: name, vanityName: vanityName, birthday: birthday = null}) {
+const addToSelectedFacebookFriends = function(botId, {fullName: fullName, vanity: vanity, birthday: birthday = null}) {
   const q = `INSERT INTO selectedFacebookFriends(name, vanityName, birthday, id_bot) 
-    values(${sqp.escape(name)}, ${sqp.escape(vanityName)}, ${sqp.escape(birthday)}, ${sqp.escape(botId)})`;
+    values(${sqp.escape(fullName)}, ${sqp.escape(vanity)}, ${sqp.escape(birthday)}, ${sqp.escape(botId)})`;
 
+    console.log("db query string", q);
   return sqp.query(q).then(data => data.insertId);
 };
 
@@ -198,10 +219,12 @@ const removeSelectedFacebookFriend = function(friendId) {
   return sqp.query(q).then(data => data.affectedRows);
 };
 
-const updateSelectedFacebookFriend = function({id: id, name: name, vanityName: vanityName, birthday: birthday}) {
-  const q = `UPDATE selectedFacebookFriends SET name=${sqp.escape(name)}, vanityName=${sqp.escape(vanityName)}, 
+const updateSelectedFacebookFriend = function({id: id, fullName: fullName, vanityName: vanityName, birthday: birthday}) {
+  const q = `UPDATE selectedFacebookFriends SET name=${sqp.escape(fullName)}, vanityName=${sqp.escape(vanityName)}, 
     birthday=${sqp.escape(birthday)}`;
 
+
+    console.log("db query string", q);
   return sqp.query(q).then(data => data.affectedRows);
 };
 
