@@ -86,6 +86,14 @@ export class BotService {
       })
   }
 
+  public removeSelectedContact(contact){
+    const userId = localStorage.getItem('user_id');
+    return this.http.delete(`/api/gmail/contacts?contactId=${contact.id}`).toPromise()
+    .then(_=>{
+      return this.importUserBots();
+    });
+  }
+
   //<-----------------GETTERS AND SETTERS----------------->
 
   public sendNow(){

@@ -145,6 +145,8 @@ module.exports = {
     updateAllBotInfo: updateAllBotInfo,
     createAllBotInfo: createAllBotInfo,
     updateOrCreateUserBots: updateOrCreateUserBots,
-    updateOrCreateNewBot: updateOrCreateNewBot 
+    updateOrCreateNewBot: updateOrCreateNewBot,
+    removeFromSelectedFacebookFriends: removeFromSelectedFacebookFriends,
+    removeFromSelectedContacts: removeFromSelectedContacts, 
 };
 

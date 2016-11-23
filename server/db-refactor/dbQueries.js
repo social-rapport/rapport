@@ -111,7 +111,7 @@ const updateSelectedContact = function({contactId: contactId, name: name, email:
     return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
 
-const removeSelectedContact = function({contactId: contactId}) {
+const removeSelectedContact = function(contactId) {
   const deleteJoinQuery = `DELETE FROM bot_contacts WHERE id_contact=${sqp.escape(contactId)}`;
   const deleteContactQuery = `DELETE FROM selectedGmailContacts WHERE id=${contactId}`;
   //delete from join table is bots_contacts

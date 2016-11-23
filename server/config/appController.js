@@ -75,7 +75,7 @@ module.exports.removeFacebookFriends = function(req, res) {
 
 //<---------------------Removes Gmail Contacts--------------------->
 module.exports.removeGmailContacts = function(req, res) {
-  dbM.removeFromSelectedContacts(req.body)
+  dbM.removeFromSelectedContacts([req.query.contactId])
     .then(() => res.status(200).send('removed friend'));
 };
 

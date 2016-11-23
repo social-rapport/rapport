@@ -43,6 +43,16 @@ export class ManageComponent {
     this.tasks = bot.tasks;
   }
 
+  //<-----------------SELECTED CONTACTS MANAGEMENT (FACTOR INTO COMPONENT)----------------->
+
+  private removeSelectedContact(contact): void{
+    var i = this.contacts.indexOf(contact);
+    this.botService.removeSelectedContact(contact).then(_=>{
+      this.reload();
+    })
+    
+  }
+
   private submitAllSettings(): void{
     this.botService.updateBots(this.bots).then(_=>{
       this.reload();
