@@ -94,8 +94,24 @@ export class BotService {
     });
   }
 
+  public removeSelectedFbContact(contact){
+    const userId = localStorage.getItem('user_id');
+    return this.http.delete(`/api/facebook/friends?contactId=${contact.id}`).toPromise()
+    .then(_=>{
+      return this.importUserBots();
+    });
+  }
+
   //<-----------------GETTERS AND SETTERS----------------->
 
+  public getDisplayName(bot){
+    if(bot.botName !== 'unnamed'){
+      return bot.botName;
+    } else {
+      return bot.botType;
+    }
+  }
+  
   public sendNow(){
     return this.http.get('/api/runalltasks').toPromise();
   }

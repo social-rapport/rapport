@@ -51,6 +51,10 @@ export class AppComponent {
     this.auth.login();
   }
 
+  test(){
+    this.router.navigate(['loading']);
+  }
+
 
   authAction = "Login";
   title = 'Rapport';
