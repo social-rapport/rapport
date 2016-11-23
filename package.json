@@ -45,6 +45,7 @@
     "grunt-shell": "^2.1.0",
     "jquery": "^3.1.1",
     "mysql": "^2.12.0",
+    "ng2-bootstrap": "^1.1.16",
     "ng2-bs3-modal": "^0.10.4",
     "promise-mysql": "^2.0.0",
     "reflect-metadata": "^0.1.8",
