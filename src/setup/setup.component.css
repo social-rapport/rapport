@@ -98,3 +98,16 @@ h4 {
     min-width: 60px;
   }
 }
+
+video.vid {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background: repeat;
+  background-size: cover;
+  position: absolute;
+  right: -20%;
+  top:-80%;
+  z-index: -999;
+}
