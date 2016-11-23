@@ -40,6 +40,7 @@ export class Auth {
   public onAuthentication(authResult) {
     console.log("on Auth called");
     let userObj;
+    let userBots;
     //localStorage.setItem('id_token', authResult.idToken);
     this.signInUser(authResult)
       .then(userInfo => {
@@ -47,13 +48,14 @@ export class Auth {
         localStorage.setItem('user_id',userInfo.id);
         userObj = userInfo;
         this.botService.getBots()
+          .then(arrayOfResolves => userBots = arrayOfResolves[1])
           .then(() => this.gmailService.getContacts())
           .then(() => {
             if(userObj.fbCredentials){
               return this.fbService.getContacts(userObj.id);
             }  
           })
-          .then(() => this.redirectForUserType(userObj))
+          .then(() => this.redirectForUserType(userObj, userBots))
           //show spinner
       });
   }
@@ -67,9 +69,12 @@ export class Auth {
         .map(res => res.json()).toPromise();
   }
 
-  public redirectForUserType(userObj) {
-    1+1;
-    userObj.newUser ? this.router.navigate(['setup']) : this.router.navigate(['manage']);
+  public redirectForUserType(userObj, userBots) {
+    if(userObj.newUser || userBots.length === 0){
+      this.router.navigate(['setup']);
+    } else {
+      this.router.navigate(['manage']);
+    }
   }
 
   public authenticated() {
