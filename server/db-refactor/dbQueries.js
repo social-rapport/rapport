@@ -69,6 +69,8 @@ const updateBot = function({id: botId, botName: botName = 'unnamed', botType: bo
 };
 
 const deleteBot = function(botId){
+  //task
+  //contacts
   // const oneQueryToDeleteThemAll = 
   //  `DELETE B, UB, BC, GM, TB, T FROM bot B
   //   INNER JOIN users_bots UB ON B.id=UB.id_bot

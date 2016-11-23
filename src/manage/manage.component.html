@@ -29,7 +29,7 @@
         <tr *ngFor="let bot of bots"
               [class.selected]="bot === selectedBot"
               (click)="onSelectBot(bot)">
-              <td class="">{{bot.botType}}</td>
+              <td class="">{{botService.getDisplayName(bot)}}</td>
         </tr>
       </tbody>
     </table>

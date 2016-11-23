@@ -2,3 +2,18 @@ div {
   width: 100px;
   height: 100px;
 }
+
+img {
+    margin: auto;
+    display: block;
+    /* position: relative; */
+    margin: auto;
+}
+
+.myModal {
+    background: transparent;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
+
