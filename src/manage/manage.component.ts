@@ -47,10 +47,16 @@ export class ManageComponent {
 
   private removeSelectedContact(contact): void{
     var i = this.contacts.indexOf(contact);
-    this.botService.removeSelectedContact(contact).then(_=>{
-      this.reload();
-    })
-    
+    this.contacts.splice(i,1);
+    if(this.selectedBot.botType === 'social'){
+      this.botService.removeSelectedFbContact(contact).then(_=>{
+        this.reload();
+      })
+    } else {
+      this.botService.removeSelectedContact(contact).then(_=>{
+        this.reload();
+      })
+    }
   }
 
   private submitAllSettings(): void{

@@ -94,6 +94,14 @@ export class BotService {
     });
   }
 
+  public removeSelectedFbContact(contact){
+    const userId = localStorage.getItem('user_id');
+    return this.http.delete(`/api/facebook/friends?contactId=${contact.id}`).toPromise()
+    .then(_=>{
+      return this.importUserBots();
+    });
+  }
+
   //<-----------------GETTERS AND SETTERS----------------->
 
   public sendNow(){
