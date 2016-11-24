@@ -3,16 +3,19 @@
   height: 100px;
 }*/
 
-img {
-    margin: auto;
+.spinner img {
     display: block;
+    top:30px;
+    left:75px;
+    position:absolute;
+
     /* position: relative; */
 }
 
 .spinner {
   margin:auto;
   z-index: 1;
-  padding:14em;
+  padding:15em;
 }
 
 div .modal-dialog {
@@ -30,4 +33,7 @@ div .modal-content  {
 
 .spin {
   color:#999;
+  position:absolute;
+  top:16em;
+  left:13em;
 }
