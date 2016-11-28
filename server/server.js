@@ -2,10 +2,10 @@ var sqp = require('./db-refactor/dbQueries')
 var mysql = require('promise-mysql');
 
 mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DBPASS || require('../env.js').DB_PASS,
-    database: 'rapport'
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASS || require('../env.js').DB_PASS,
+    database: process.env.DB || 'rapport'
 }).then(function(conn,x){
     exportConn(conn);
 }).catch(function(err){
