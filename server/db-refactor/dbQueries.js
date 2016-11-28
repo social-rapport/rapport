@@ -241,7 +241,8 @@ const addToLog = function({date: date, platform: platform, message: message, tas
   const q = `INSERT INTO log(date, platform, message, task, id_bot, id_user)
     values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)}, 
     ${sqp.escape(task)}, ${sqp.escape(id_bot)}, ${sqp.escape(id_user)})`;
-  
+
+
   return sqp.query(q)
 };
 
