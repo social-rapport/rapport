@@ -9,7 +9,7 @@
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "postinstall" : "grunt"
+    "postinstall" : "grunt production"
   },
   "author": "HHR19-Rapport: Nam Huynh, Vi Vo, Nicholas Spinosa, Justin Roche",
   "license": "ISC",

@@ -101,5 +101,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test',['shell:test']);
     grunt.registerTask('testDB',['shell:testDB']);
     grunt.registerTask('default',['copy','shell:tsc','watch']);
+    grunt.registerTask('production',['copy', 'shell:tsc']);
 
 };
