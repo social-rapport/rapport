@@ -9,7 +9,6 @@ import {FbService} from '../shared/fb.service';
 
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
-
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
@@ -36,6 +35,8 @@ export class ManageComponent {
 
   open(task) {
     this.selectedTask = task; 
+    this.customMessage = this.selectedTask.message;
+    this.customInterval = this.selectedTask.interval;
     this.modal.open();
   }
 
@@ -44,6 +45,7 @@ export class ManageComponent {
   private bots: Array<customBot>;
   private selectedBot: customBot;
   private selectedTask; 
+  private displayMessage;
   private customMessage; 
   private customInterval; 
   private customDate; 
@@ -52,7 +54,8 @@ export class ManageComponent {
   private tasks: Array<string>;
 
   constructor(private botService: BotService, 
-              private gmailService: GmailService) {}
+              private gmailService: GmailService,
+              private router: Router) {}
 
   private onSelectBot(bot: any): void {
     this.selectedBot = bot;
@@ -87,12 +90,19 @@ export class ManageComponent {
   private submitAllSettings(): void{
     this.botService.updateBots(this.bots).then(_=>{
       this.reload();
+      if(!this.selectedBot.id){
+        this.selectedBot = this.bots[this.bots.length-1];
+      }
     })
   }
 
   private retireBot(bot): void {
+    var self =this;
     this.botService.retireBot(this.selectedBot).then(_=>{
       this.reload();
+      if(this.bots.length === 0){
+        self.router.navigate(['setup']);
+      }
     })
   }
 

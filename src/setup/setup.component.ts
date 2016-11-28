@@ -18,15 +18,18 @@ export class SetupComponent {
   private fbPassword: String;
   bots = []; 
   selectedType;
+  selectedTask; 
 
   @ViewChild('myModal')
   modal: ModalComponent;
 
   close() {
       this.modal.close();
+      this.selectedTask = null; 
   }
 
-  open() {
+  open(task) {
+      this.selectedTask = task;
       this.modal.open();
   }
 
