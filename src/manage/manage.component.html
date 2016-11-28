@@ -15,9 +15,9 @@
           Set the interval and custom message
         </div>
 
-        <div class="form-group">
+        <div *ngIf="canSetDate()" class="form-group">
           <span>Start Date</span>
-          <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate" placeholder="selectedTask.date" />
+          <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate"/>
         </div>
 
 
@@ -107,8 +107,8 @@
                 <div *ngIf="contact">
                   <p>{{contact.fullName || contact.name}}
                     <span>
-                      <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday" placeholder="10/3/2016" />
-                      <button (click)="removeSelectedContact(contact)"></button>
+                      <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday"/>
+                      <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
                     </span>
                   </p>
                 </div>

@@ -37,6 +37,7 @@ export class ManageComponent {
     this.selectedTask = task; 
     this.customMessage = this.selectedTask.message;
     this.customInterval = this.selectedTask.interval;
+    this.customDate = this.selectedTask.date;
     this.modal.open();
   }
 
@@ -69,6 +70,10 @@ export class ManageComponent {
       this.contacts = bot.selectedContacts;
     }
     this.tasks = bot.tasks;
+  }
+
+  private canSetDate(){
+    return this.selectedTask && this.selectedTask.task !== 'sayHappyBirthdayGmail';
   }
 
   //<-----------------SELECTED CONTACTS MANAGEMENT (FACTOR INTO COMPONENT)----------------->
