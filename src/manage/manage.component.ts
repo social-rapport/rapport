@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { customBot, gmailContact } from '../shared/custom-type-classes';
 //change
 import { BotService } from '../shared/bot.service';
@@ -10,6 +10,8 @@ import {FbService} from '../shared/fb.service';
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
 
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+
 @Component({
   selector: 'manage-component',
   templateUrl: 'app/manage/manage.component.html',
@@ -17,11 +19,34 @@ import { SearchComponent } from '../search/search.component';
 })
 
 export class ManageComponent {
+
+  @ViewChild('myModal')
+  modal: ModalComponent;
+
+  close() { 
+    this.modal.close();
+    this.selectedTask = null; 
+  }
+
+  saveTask(){
+    this.customMessage? this.selectedTask.message = this.customMessage: 1; 
+    this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
+    this.customDate? this.selectedTask.date = this.customDate: 1; 
+  }
+
+  open(task) {
+    this.selectedTask = task; 
+    this.modal.open();
+  }
+
   title = 'My Bots';
 
   private bots: Array<customBot>;
   private selectedBot: customBot;
-
+  private selectedTask; 
+  private customMessage; 
+  private customInterval; 
+  private customDate; 
   private activities: Array<string>;
   private contacts: Array<gmailContact>;
   private tasks: Array<string>;

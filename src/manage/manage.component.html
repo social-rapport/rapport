@@ -4,6 +4,44 @@
   </video >
 
 
+<modal #myModal>
+      <div id="modal-style" style="height:280px">
+
+        <div class="semi-header">
+          Edit Task
+        </div>
+
+        <div>
+          Set the interval and custom message
+        </div>
+
+        <div class="form-group">
+          <span>Start Date</span>
+          <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate" placeholder="10/3/2016" />
+          <span>months</span>
+        </div>
+
+
+        <div class="form-group">
+          <span>Send message every</span>
+          <input class="fb-input" type="text" [(ngModel)]="customInterval">
+          <span>months</span>
+        </div>
+
+        <div>
+          <span>Custom message:
+          </span>
+          <textarea class="text" [(ngModel)]="customMessage"></textarea>
+        </div>
+
+        <div class="buttons" style="float: right">
+          <button class="retire" (click)="close()">Cancel</button>
+          <button class="save-bots" (click)="saveTask(); close();">OK</button>
+        </div>
+
+      </div>
+    </modal>
+
 <!-- TITLE -->
 <div id="container-top-header">
   <div id="container-header" class="col-md-12">
@@ -49,6 +87,7 @@
                 [class.selected]="task === selectedTask"
                 (click)="onSelectTask(task)">
                 <td class="">{{task.task}}</td>
+                <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
         </tr>
       </tbody>
     </table>
