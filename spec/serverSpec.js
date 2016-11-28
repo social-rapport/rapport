@@ -1,4 +1,4 @@
-var env = require('../env.js');
+var env = process.env || require('../env.js');
 require('./typey.js');
 var mysql = require('mysql');
 
