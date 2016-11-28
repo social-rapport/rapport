@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 //app.use(express.static(__dirname+'/config/static'));
 app.use(express.static(__dirname+'/../'));
 console.log('static dirname, ', __dirname+'/../');
+console.log("enviroment variables", process.env);
 
 //-------------- DATABASE -------------------------
 
