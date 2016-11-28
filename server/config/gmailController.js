@@ -1,7 +1,9 @@
 //VARS NEEDED
 var google = require("googleapis");
 var googleContacts = require('google-contacts-with-photos');
-var gmailKeys = require('./gmailKeys.js');
+//var gmailKeys = require('./gmailKeys.js');
+var clientId = process.env.clientId || require('./gmailKeys.js').clientId;
+var clientSecret = process.env.clientSecret || require('./gmailKeys').clientSecret;
 var auth = require('../utils/auth0_utils.js');
 var appController = require('./appController.js');
 var dbM = require('../db-refactor/dbModel.js');
@@ -14,7 +16,7 @@ var scopes = [
   'https://www.googleapis.com/auth/contacts.readonly'
 ];
 
-module.exports.oauth2Client = new OAuth2(gmailKeys.clientId, gmailKeys.clientSecret, "http://localhost:5050/oauthcallback");
+module.exports.oauth2Client = new OAuth2(clientId, clientSecret, "http://localhost:5050/oauthcallback");
 
 module.exports.url = module.exports.oauth2Client.generateAuthUrl({
   access_type: 'offline',
