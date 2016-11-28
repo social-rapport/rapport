@@ -54,9 +54,7 @@
     "requirejs": "^2.3.2",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.39",
-    "zone.js": "^0.6.25"
-  },
-  "devDependencies": {
+    "zone.js": "^0.6.25",
     "@types/core-js": "^0.9.34",
     "@types/node": "^6.0.45",
     "concurrently": "^3.0.0",
@@ -65,5 +63,15 @@
     "grunt-tsc": "^1.0.12",
     "lite-server": "^2.2.2",
     "typescript": "^2.0.3"
-  }
+  }//,
+  // "devDependencies": {
+  //   "@types/core-js": "^0.9.34",
+  //   "@types/node": "^6.0.45",
+  //   "concurrently": "^3.0.0",
+  //   "grunt-contrib-watch": "^1.0.0",
+  //   "grunt-copy": "^0.1.0",
+  //   "grunt-tsc": "^1.0.12",
+  //   "lite-server": "^2.2.2",
+  //   "typescript": "^2.0.3"
+  // }
 }
