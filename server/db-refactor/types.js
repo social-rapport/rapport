@@ -12,14 +12,16 @@ var initialBots =
                 date: 'today', 
                 platform: 'gmail', 
                 message: 'Howdy! how are ya!', 
-                task: 'sayHiGmail'
+                task: 'sayHiGmail',
+                interval: 6
             },
             { 
                 id: null,
                 date: 'today', 
                 platform: 'gmail', 
                 message: 'Happy Birthday!', 
-                task: 'sayHappyBirthdayGmail'
+                task: 'sayHappyBirthdayGmail',
+                interval: 12
             }
         ],
         selectedContacts: [],
@@ -39,14 +41,16 @@ var initialBots =
                 date: 'today', 
                 platform: 'facebook', 
                 message: 'Howdy! how are ya!', 
-                task: 'sayHiFacebook'
+                task: 'sayHiFacebook',
+                interval: 6
             },
             { 
                 id: null,
                 date: 'today', 
                 platform: 'facebook', 
                 message: 'Happy Birthday!', 
-                task: 'sayHappyBirthdayFacebook'
+                task: 'sayHappyBirthdayFacebook',
+                interval: 12
             }
         ],
         selectedContacts: [],

@@ -60,7 +60,7 @@ export class BotService {
   }
 
   public retireBot(selectedBot){
-    let userId = localStorage.getItem('user_id');
+    const userId = localStorage.getItem('user_id');
     return this.http.delete(`/api/bots?botId=${selectedBot.id}`)
     .toPromise()
     .then(()=>{

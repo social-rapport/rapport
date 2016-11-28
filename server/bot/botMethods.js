@@ -14,6 +14,7 @@ module.exports = {
 
     return new Promise((resolve, reject) => {
       gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+        //update date
         resolve(taskObj);
       });
     });

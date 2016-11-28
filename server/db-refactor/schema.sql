@@ -35,6 +35,7 @@ CREATE TABLE `tasks` (
   `platform` VARCHAR(100),
   `message` VARCHAR(500),
   `task` VARCHAR(100),
+  `interval` INTEGER,
   PRIMARY KEY (`id`)
 );
 
