@@ -101,7 +101,7 @@
 <!-- BUTTONS -->
     <div class="buttons">
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
-      <button (click)="sendNow()"> Send Now! </button>
+      <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
         <button class="retire" (click)="retireBot()"> Retire Bot </button>
       </span>

@@ -1,1 +1,5 @@
+BUGS:
+
+- wrong password requires dumping database. Saves wrong password to the database.
+
 - remove css folder if not needed
