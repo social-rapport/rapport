@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "start": "node server/server.js",
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
