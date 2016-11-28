@@ -21,12 +21,9 @@ module.exports = {
       //Send Message to User - Note: Use vanity username for accuracy
       api.getUserID(user, function(err, data) {
           if(err) return callback(err);
-          console.log('data', data);
           // send the message to the best match (best by Facebook's criteria)
           var threadID = data[0].userID;
-          console.log('threadID', threadID);
-          console.log('Sending Message');
-          api.sendMessage(msg, threadID);
+          api.sendMessage(msg, threadID, callback);
       });
     });
   },

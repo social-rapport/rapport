@@ -12,29 +12,35 @@ module.exports = {
       body: `${taskObj.message}<br/>`
     };
 
-    gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-      console.log("send email results", results);
+    return new Promise((resolve, reject) => {
+      gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+        //update date
+        resolve(taskObj);
+      });
     });
+    
 
   },
 
-  sayHappyBirthdayGmail: function () {
-    return 'in production!!!';
+  sayHappyBirthdayGmail: function (taskObj) {
+    return taskObj;
   },
 
-  sayHappyBirthdayFacebook: function() {
-    return 'in production!!!';
+  sayHappyBirthdayFacebook: function(taskObj) {
+    return taskObj;
   },
 
   sayHiFacebook: function(taskObj) {
     let auth = {};
     auth.email = taskObj.fbUsername;
     auth.password = taskObj.fbPassword;
-    console.log("taskObj", taskObj);
 
-    facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
-      console.log(data);
+    return new Promise((resolve, reject) => {
+      facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
+        resolve(taskObj);
+      });
     });
+    
   },
 
 };

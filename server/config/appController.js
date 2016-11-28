@@ -110,11 +110,11 @@ module.exports.updateBots = function(req, res){
 };
 
 module.exports.deleteBot = function(req, res){
-  dbQ.deleteBot(req.query.botId)
-  .then((data)=>{
-    res.send(data);
-    res.end();
-  });
+  dbM.getAllBotInfo(req.query.botId)
+    .then(dbM.retireBot)
+    .then((data)=>{
+      res.sendStatus(200);
+    });
 };
 
 module.exports.getTasksForChron = function(req, res){

@@ -49,6 +49,21 @@ const updateAllBotInfo = function(botObj) {
   });
 };
 
+const retireBots = function(arrayOfBotIds) {
+  return Promise.all(arrayOfBotIds.map(botId => retireBot(botId)));
+}
+
+const retireBot = function(botObj) {
+  arrayOfDeletePromises = [
+    removeFromSelectedContacts(botObj.selectedContacts.map(contact => contact.id)),
+    removeFromRegisteredTasks(botObj.tasks.map(task => task.id)),
+    removeFromSelectedFacebookFriends(botObj.selectedFbFriends.map(friend => friend.id))
+  ];
+
+  return Promise.all(arrayOfDeletePromises)
+    .then(() => dbq.deleteBot(botObj.id));
+};
+
 const getAllBotInfo = function(botId) {
 
   let botObj = {
@@ -134,7 +149,7 @@ const addOrUpdateFacebookFriend = function(botId, friendObj) {
 };
 
 const removeFromSelectedFacebookFriends = function(friendIdArray) {
-  return Promise.all(friendIdArray.map(friendId => dbq.removeFromSelectedFacebookFriends(friendId)));
+  return Promise.all(friendIdArray.map(friendId => dbq.removeSelectedFacebookFriend(friendId)));
 };
 
 
@@ -152,5 +167,6 @@ module.exports = {
     updateOrCreateNewBot: updateOrCreateNewBot,
     removeFromSelectedFacebookFriends: removeFromSelectedFacebookFriends,
     removeFromSelectedContacts: removeFromSelectedContacts, 
+    retireBot: retireBot
 };
 

@@ -69,26 +69,13 @@ const updateBot = function({id: botId, botName: botName = 'unnamed', botType: bo
 };
 
 const deleteBot = function(botId){
-  //task
-  //contacts
-  // const oneQueryToDeleteThemAll = 
-  //  `DELETE B, UB, BC, GM, TB, T FROM bot B
-  //   INNER JOIN users_bots UB ON B.id=UB.id_bot
-  //   INNER JOIN bot_contacts BC ON BC.id_bot=B.id
-  //   INNER JOIN selectedGmailContacts GM ON GM.id=BC.id_contact
-  //   INNER JOIN tasks_bots TB ON TB.id_bot=B.id
-  //   INNER JOIN tasks T ON T.id=TB.id_task 
-  //   WHERE B.id=1`;
-  //INNER JOIN selectedFacebookFriends FB ON FB.id_bot=B.id
   
   const deleteBotQuery = `DELETE FROM bot WHERE id=${sqp.escape(botId)}`
   const deleteInUserJoin = `DELETE FROM users_bots where id_bot=${botId}`;
 
   return sqp.query(deleteInUserJoin)
-  .then(()=>sqp.query(deleteBotQuery))
-  .then((data)=>data.affectedRows);
-
-  //return sqp.query(oneQueryToDeleteThemAll).then(data => data.affectedRows);
+    .then(()=>sqp.query(deleteBotQuery))
+    .then((data)=>data.affectedRows);
 };
 
 const getBot = function(botId){
@@ -141,19 +128,19 @@ const getSelectedContacts = function(botId) {
   const selectContactsQuery = `SELECT * FROM selectedGmailContacts G 
   INNER JOIN bot_contacts J ON J.id_contact=G.id WHERE J.id_bot=${botId}`;
   return sqp.query(selectContactsQuery);
-}
+};
+
 
 //<----------------------TASKS---------------------->>
 
-const addToTasks = function(botId, {date: date, platform: platform, message: message, task: task}) {
+const addToTasks = function(botId, {date: date, platform: platform, message: message, task: task, interval: interval=null}) {
   //add to tasks table
-  const q1 = `INSERT INTO tasks(date, platform, message, task) 
-    values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)}, ${sqp.escape(task)})`;
-    1+1;
+  const q1 = `INSERT INTO tasks(date, platform, message, task, \`interval\`) 
+    values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)}, ${sqp.escape(task)}, ${sqp.escape(interval)})`;
+
   return sqp.query(q1)
     .then(data => {
       const taskId = data.insertId;
-      1+1;
       //add entry in join table with bot
       const q2 = `INSERT INTO tasks_bots(id_bot, id_task) values(${sqp.escape(botId)}, ${sqp.escape(taskId)})`;
       return sqp.query(q2).then((data)=>taskId);
@@ -171,9 +158,9 @@ const removeSelectedTask = function(taskId) {
     });
 };
 
-const updateSelectedTask = function({id: taskId, date: date, platform: platform, message: message, task: task}) {
+const updateSelectedTask = function({id: taskId, date: date, platform: platform, message: message, task: task, interval: interval}) {
   const updateContactQuery = `UPDATE tasks SET date=${sqp.escape(date)}, 
-    platform=${sqp.escape(platform)}, message=${sqp.escape(message)}, task=${sqp.escape(task)}
+    platform=${sqp.escape(platform)}, message=${sqp.escape(message)}, task=${sqp.escape(task)}, interval=${sqp.escape(interval)}
      WHERE id=${sqp.escape(taskId)}`;
     return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
@@ -182,7 +169,8 @@ const getSelectedTasks = function(botId) {
   const selectContactsQuery = `SELECT * FROM tasks G 
   INNER JOIN tasks_bots J ON J.id_task=G.id WHERE J.id_bot=${botId}`;
   return sqp.query(selectContactsQuery);
-}
+};
+
 
 const getTasksJoinedWithUsers = function(date) {
   const q = `SELECT * FROM tasks T 
@@ -192,7 +180,7 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN users U ON U.id=JJ.id_user
     INNER JOIN bot_contacts JJJ ON JJJ.id_bot=B.id
     INNER JOIN selectedGmailContacts G ON G.id=JJJ.id_contact
-    WHERE T.date=${sqp.escape(date)}`;
+    WHERE T.date=${sqp.escape(date)} OR G.birthday=${sqp.escape(date)}`;
 
   const q2 = `SELECT * FROM tasks T
     INNER JOIN tasks_bots TB ON T.id=TB.id_task
@@ -200,7 +188,7 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN users_bots UB ON UB.id=B.id
     INNER JOIN users U ON U.id=UB.id_user 
     INNER JOIN selectedFacebookFriends F ON F.id_bot=B.id
-    WHERE T.date='today'`;
+    WHERE T.date=${sqp.escape(date)} OR F.birthday=${sqp.escape(date)}`;
 
     return Promise.all([sqp.query(q), sqp.query(q2)])
       .then(resolveArray => [].concat.apply([],resolveArray));
@@ -241,7 +229,8 @@ const addToLog = function({date: date, platform: platform, message: message, tas
   const q = `INSERT INTO log(date, platform, message, task, id_bot, id_user)
     values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)}, 
     ${sqp.escape(task)}, ${sqp.escape(id_bot)}, ${sqp.escape(id_user)})`;
-  
+
+
   return sqp.query(q)
 };
 
