@@ -18,18 +18,44 @@ module.exports = {
         resolve(taskObj);
       });
     });
-    
-
   },
-
   sayHappyBirthdayGmail: function (taskObj) {
-    return taskObj;
+    const msgData = {
+      username: taskObj.name,
+      useremail: taskObj.gmail,
+      emailTo: taskObj.email,
+      subject: "Happy Birthday " + taskObj.name + "!!!",
+      body: `${taskObj.message}<br/>`
+    };
+    gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+      console.log("send email results", results);
+    });
+    //return 'Happy Birthday Sent';
   },
-
-  sayHappyBirthdayFacebook: function(taskObj) {
-    return taskObj;
+  sayHappyHolidayGmail: function (taskObj) {
+    const msgData = {
+      username: taskObj.name,
+      useremail: taskObj.gmail,
+      emailTo: taskObj.email,
+      subject: "Happy [holiday name]!!!",
+      body: `${taskObj.message}<br/>`
+    };
+    gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+      console.log("send email results", results);
+    });
+    //return 'Happy Holiday Sent';
   },
+  sayHappyBirthdayFacebook: function() {
+    let auth = {};
+    auth.email = taskObj.fbUsername;
+    auth.password = taskObj.fbPassword;
+    console.log("taskObj", taskObj);
 
+    facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
+      console.log(data);
+    });
+    //return 'in production!!!';
+  },
   sayHiFacebook: function(taskObj) {
     let auth = {};
     auth.email = taskObj.fbUsername;
@@ -40,7 +66,6 @@ module.exports = {
         resolve(taskObj);
       });
     });
-    
-  },
 
+  },
 };
