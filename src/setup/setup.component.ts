@@ -52,11 +52,16 @@ export class SetupComponent {
   }
 
   private fbLogin(){
+    this.router.navigate(['loading']);
     var self = this;
     this.fbService.login(this.fbUsername, this.fbPassword).then(()=>{
         this.close();
         this.routeToManage(this.selectedType);
-    });
+    })
+    .catch(()=>{
+      this.router.navigate(['setup']);
+      alert('there was an error');
+    })
   }
 
   private routeToManage(selectedType){
