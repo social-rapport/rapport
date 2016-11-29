@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { customBot, gmailContact } from '../shared/custom-type-classes';
 //change
 import { BotService } from '../shared/bot.service';
@@ -9,6 +9,7 @@ import {FbService} from '../shared/fb.service';
 
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
   selector: 'manage-component',
@@ -17,17 +18,45 @@ import { SearchComponent } from '../search/search.component';
 })
 
 export class ManageComponent {
+
+  @ViewChild('myModal')
+  modal: ModalComponent;
+
+  close() { 
+    this.modal.close();
+    this.selectedTask = null; 
+  }
+
+  saveTask(){
+    this.customMessage? this.selectedTask.message = this.customMessage: 1; 
+    this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
+    this.customDate? this.selectedTask.date = this.customDate: 1; 
+  }
+
+  open(task) {
+    this.selectedTask = task; 
+    this.customMessage = this.selectedTask.message;
+    this.customInterval = this.selectedTask.interval;
+    this.customDate = this.selectedTask.date;
+    this.modal.open();
+  }
+
   title = 'My Bots';
 
   private bots: Array<customBot>;
   private selectedBot: customBot;
-
+  private selectedTask; 
+  private displayMessage;
+  private customMessage; 
+  private customInterval; 
+  private customDate; 
   private activities: Array<string>;
   private contacts: Array<gmailContact>;
   private tasks: Array<string>;
 
   constructor(private botService: BotService, 
-              private gmailService: GmailService) {}
+              private gmailService: GmailService,
+              private router: Router) {}
 
   private onSelectBot(bot: any): void {
     this.selectedBot = bot;
@@ -41,6 +70,10 @@ export class ManageComponent {
       this.contacts = bot.selectedContacts;
     }
     this.tasks = bot.tasks;
+  }
+
+  private canSetDate(){
+    return this.selectedTask && this.selectedTask.task !== 'sayHappyBirthdayGmail';
   }
 
   //<-----------------SELECTED CONTACTS MANAGEMENT (FACTOR INTO COMPONENT)----------------->
@@ -62,12 +95,19 @@ export class ManageComponent {
   private submitAllSettings(): void{
     this.botService.updateBots(this.bots).then(_=>{
       this.reload();
+      if(!this.selectedBot.id){
+        this.selectedBot = this.bots[this.bots.length-1];
+      }
     })
   }
 
   private retireBot(bot): void {
+    var self =this;
     this.botService.retireBot(this.selectedBot).then(_=>{
       this.reload();
+      if(this.bots.length === 0){
+        self.router.navigate(['setup']);
+      }
     })
   }
 

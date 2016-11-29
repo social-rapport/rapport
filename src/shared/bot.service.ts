@@ -12,6 +12,8 @@ export class BotService {
 
   public contacts: Array<gmailContact>;
   public tasks: Array<string>;
+
+  public currentBot = null;
    
   constructor(private http: Http) {}
 
