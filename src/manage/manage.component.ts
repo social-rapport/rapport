@@ -11,6 +11,7 @@ import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
+import {CurrentBotService} from '../shared/currentBot.service';
 @Component({
   selector: 'manage-component',
   templateUrl: 'app/manage/manage.component.html',
