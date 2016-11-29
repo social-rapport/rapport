@@ -133,16 +133,9 @@ module.exports.runalltasks = function(req, res){
 };
 
 //<------------------- return holiday dates ------------------->
-// module.exports.getHolidayDates = function(req, res){
-//   holidayUtils.holidayDates(req.query.year)
-//   .then((data)=>{
-//     res.send(data);
-//     res.end();
-//   });
-// };
-
 module.exports.getHolidayDates = function(req, res){
-  holidayUtils.holidayDates(req.query.year, function(data){
+  holidayUtils.holidayDates(req.query.year)
+  .then((data)=>{
     res.status(200).send(data);
   });
 };
