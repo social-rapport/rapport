@@ -57,7 +57,8 @@ const retireBot = function(botObj) {
   arrayOfDeletePromises = [
     removeFromSelectedContacts(botObj.selectedContacts.map(contact => contact.id)),
     removeFromRegisteredTasks(botObj.tasks.map(task => task.id)),
-    removeFromSelectedFacebookFriends(botObj.selectedFbFriends.map(friend => friend.id))
+    removeFromSelectedFacebookFriends(botObj.selectedFbFriends.map(friend => friend.id)),
+    dbq.deleteBotLogs(botObj.id)
   ];
 
   return Promise.all(arrayOfDeletePromises)
@@ -80,7 +81,7 @@ const getAllBotInfo = function(botId) {
   };
 
   return new Promise ((resolve, reject) => {
-    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId)])
+    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId), dbq.getBotLog(botId)])
       .then(arrayOfBotInfo => {
         //massage data into botObj; 
         botObj.id = arrayOfBotInfo[0][0].id;
@@ -89,7 +90,9 @@ const getAllBotInfo = function(botId) {
         botObj.selectedContacts = arrayOfBotInfo[1];
         botObj.tasks = arrayOfBotInfo[2];
         botObj.selectedFbFriends = arrayOfBotInfo[3];
+        botObj.botActivity.recent = arrayOfBotInfo[4];
 
+        console.log("botObject", botObj);
 
         resolve(botObj)
       }).catch(reject);
