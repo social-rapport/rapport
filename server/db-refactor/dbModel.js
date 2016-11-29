@@ -81,7 +81,9 @@ const getAllBotInfo = function(botId) {
   };
 
   return new Promise ((resolve, reject) => {
-    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId), dbq.getBotLog(botId)])
+    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), 
+      dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId), 
+      dbq.getBotLog(botId), dbq.getTasksByBotId(botId)])
       .then(arrayOfBotInfo => {
         //massage data into botObj; 
         botObj.id = arrayOfBotInfo[0][0].id;
@@ -91,6 +93,7 @@ const getAllBotInfo = function(botId) {
         botObj.tasks = arrayOfBotInfo[2];
         botObj.selectedFbFriends = arrayOfBotInfo[3];
         botObj.botActivity.recent = arrayOfBotInfo[4];
+        botObj.botActivity.scheduled = arrayOfBotInfo[5]
 
         console.log("botObject", botObj);
 
