@@ -2,9 +2,10 @@ var Holidays = require('date-holidays');
 var hday = new Holidays('US');
 
 // Return filtered list of holidays with dates
-var holidayDates = function(year){
+var holidayDates = function(year,callback){
   var allHolidays = hday.getHolidays(year);
-  var filterHolidays = ['New Year\'s Day', 'Independence Day', 'Labour Day', 'Veterans Day', 'Thanksgiving Day'];
+  console.log('allHolidays', allHolidays);
+  var filterHolidays = ['New Year\'s Day', 'Independence Day', 'Labour Day', 'Veterans Day', 'Thanksgiving Day', 'Christmas Day'];
 
   var matchHolidays = allHolidays.filter(function(holiday){
      var match = false;
@@ -15,7 +16,7 @@ var holidayDates = function(year){
      });
      return match;
   });
-  return matchHolidays;
+  callback(matchHolidays);
 };
 
 // daily check for holiday

@@ -3,6 +3,7 @@
 var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
 var appController = require('./appController.js');
+
 module.exports = function (app, express) {
 
 console.log("routes loaded");
@@ -25,6 +26,9 @@ console.log("routes loaded");
   app.delete('/api/bots', appController.deleteBot);
 
   app.delete('/api/tasks', appController.removeRegisteredTasks);
+
+  app.get('/api/holidays', appController.getHolidayDates);
+
 
   // <--------------- GMAIL ROUTES --------------->
   //FOR SIGNING INTO GOOGLE WITH OAUTH

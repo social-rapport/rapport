@@ -5,6 +5,7 @@ var dbM = require('../db-refactor/dbModel.js');
 var dbQ = require('../db-refactor/dbQueries.js');
 var bot = require('../bot/botController.js');
 var types = require('../db-refactor/types');
+var holidayUtils = require('../utils/holiday_utils.js');
 
 module.exports.oauth = "";
 
@@ -128,5 +129,20 @@ module.exports.runalltasks = function(req, res){
   bot.runAllTasks( result => {
     res.send(result);
     res.end();
+  });
+};
+
+//<------------------- return holiday dates ------------------->
+// module.exports.getHolidayDates = function(req, res){
+//   holidayUtils.holidayDates(req.query.year)
+//   .then((data)=>{
+//     res.send(data);
+//     res.end();
+//   });
+// };
+
+module.exports.getHolidayDates = function(req, res){
+  holidayUtils.holidayDates(req.query.year, function(data){
+    res.status(200).send(data);
   });
 };
