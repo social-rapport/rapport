@@ -16,26 +16,25 @@ export class SetupComponent {
 
   private fbUsername: String;
   private fbPassword: String;
-  bots = []; 
+  bots = [];
   selectedType;
-  selectedTask; 
+  selectedTask;
 
   @ViewChild('myModal')
   modal: ModalComponent;
 
   close() {
       this.modal.close();
-      this.selectedTask = null; 
+      this.selectedTask = null;
   }
 
-  open(task) {
-      this.selectedTask = task;
+  open() {
       this.modal.open();
   }
 
-  constructor(private botService: BotService, 
-              private router: Router, 
-              private fbService: FbService) 
+  constructor(private botService: BotService,
+              private router: Router,
+              private fbService: FbService)
     {
       botService.getBotTypes().then(types => {
         console.log('botTypes', types);
@@ -71,5 +70,5 @@ export class SetupComponent {
     this.botService.addBotTypeToUser(selectedType);
     this.router.navigate(['manage']);
   }
-  
+
 }
