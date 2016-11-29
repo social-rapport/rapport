@@ -73,7 +73,6 @@ export class SetupComponent {
       this.router.navigate(['loading']);
       this.botService.getHolidays().then(()=>{
         this.botService.addBotTypeToUser(selectedType);
-        
         this.router.navigate(['manage']);
       })
     } else {

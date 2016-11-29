@@ -12,6 +12,12 @@ export class BotService {
   public holidays;
   public contacts: Array<gmailContact>;
   public tasks: Array<string>;
+  public formattedNames = {
+    'sayHappyHolidayGmail': 'holiday: gmail',
+    'sayHappyBirthdayGmail': 'birthday: gmail',
+    'sayHiGmail': 'message: gmail',
+    'sayHiFacebook': 'message: facebook',
+  };
 
   public currentBot = null;
    
@@ -29,6 +35,7 @@ export class BotService {
     return this.http.get(`/api/botTypes`)
       .map(function(data: any) {
           self.botTypes = JSON.parse(data._body).bots;
+          self.decorateAll(self.botTypes);
           return self.botTypes;
       }).toPromise();
   }
@@ -43,6 +50,7 @@ export class BotService {
         var bots = JSON.parse(data._body);
         if(bots.length !== 0) {
           self.userBots = bots;
+          self.decorateAll(self.userBots);
           return self.userBots; 
         } else {
           self.userBots = [];
@@ -116,6 +124,43 @@ export class BotService {
       return this.importUserBots();
     });
   }
+
+  public decorateAll(bots){
+    var self = this;
+    bots.forEach(function(bot){
+      bot.tasks.forEach(function(task){
+        task.decorated = {};
+        task.decorated.formattedName = self.formattedNames[task.task];
+      })
+    })
+
+  }
+
+  public addNewHolidayTask(taskOptions,bot){
+    var date = this.holidays.filter(function(holiday){
+      return holiday.name === taskOptions.name; 
+    })[0].date;
+    
+    var task = {id: null,
+                id_bot: null,
+                interval: 12,
+                date: date,
+                message: taskOptions.message,
+                task: 'sayHappyHolidayGmail',
+                platform: 'gmail',
+                decorated: {type: "subTask", formattedName: taskOptions.name},};
+
+    bot.tasks.push(task);
+  }
+
+//   date:"today"
+// id:1
+// id_bot:1
+// id_task:1
+// interval:6
+// message:"Howdy! how are ya!"
+// platform:"gmail"
+// task:"sayHiGmail"
 
   //<-----------------GETTERS AND SETTERS----------------->
 

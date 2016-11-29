@@ -23,30 +23,14 @@ export class ManageComponent {
   @ViewChild('myModal')
   modal: ModalComponent;
 
-  close() { 
-    this.modal.close();
-    this.selectedTask = null; 
-  }
-
-  saveTask(){
-    this.customMessage? this.selectedTask.message = this.customMessage: 1; 
-    this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
-    this.customDate? this.selectedTask.date = this.customDate: 1; 
-  }
-
-  open(task) {
-    this.selectedTask = task; 
-    this.customMessage = this.selectedTask.message;
-    this.customInterval = this.selectedTask.interval;
-    this.customDate = this.selectedTask.date;
-    this.modal.open();
-  }
+  
 
   title = 'My Bots';
 
   private bots: Array<customBot>;
   private selectedBot: customBot;
   private selectedTask; 
+  private subTask;
   private displayMessage;
   private customMessage; 
   private customInterval; 
@@ -60,6 +44,37 @@ export class ManageComponent {
               private router: Router,
               private store: Store) {}
 
+  //<-------------------TASK METHODS------------------->
+  close() { 
+    this.modal.close();
+    this.selectedTask = null; 
+  }
+
+  saveTask(){
+    if(this.selectedTask.task === 'sayHappyHolidayGmail'){
+      var opts = {name: this.subTask, message: this.customMessage};
+      this.botService.addNewHolidayTask(opts, this.selectedBot);
+    } else {
+      this.customMessage? this.selectedTask.message = this.customMessage: 1; 
+      this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
+      this.customDate? this.selectedTask.date = this.customDate: 1; 
+    }
+  }
+
+  open(task) {
+    this.selectedTask = task; 
+    this.customMessage = this.selectedTask.message;
+    this.customInterval = this.selectedTask.interval;
+    this.customDate = this.selectedTask.date;
+    this.modal.open();
+  }
+
+   private canSetDate(){
+    return this.selectedTask && this.selectedTask.task !== 'sayHappyBirthdayGmail';
+  }
+
+  //<-------------------BOT METHODS------------------->
+
   private onSelectBot(bot: any): void {
     this.selectedBot = bot;
     this.activities = bot.botActivity.recent;
@@ -72,26 +87,6 @@ export class ManageComponent {
       this.contacts = bot.selectedContacts;
     }
     this.tasks = bot.tasks;
-  }
-
-  private canSetDate(){
-    return this.selectedTask && this.selectedTask.task !== 'sayHappyBirthdayGmail';
-  }
-
-  //<-----------------SELECTED CONTACTS MANAGEMENT (FACTOR INTO COMPONENT)----------------->
-
-  private removeSelectedContact(contact): void{
-    var i = this.contacts.indexOf(contact);
-    this.contacts.splice(i,1);
-    if(this.selectedBot.botType === 'social'){
-      this.botService.removeSelectedFbContact(contact).then(_=>{
-        this.reload();
-      })
-    } else {
-      this.botService.removeSelectedContact(contact).then(_=>{
-        this.reload();
-      })
-    }
   }
 
   private submitAllSettings(): void{
@@ -112,6 +107,24 @@ export class ManageComponent {
       }
     })
   }
+
+  //<-----------------SELECTED CONTACTS METHODS----------------->
+
+  private removeSelectedContact(contact): void{
+    var i = this.contacts.indexOf(contact);
+    this.contacts.splice(i,1);
+    if(this.selectedBot.botType === 'social'){
+      this.botService.removeSelectedFbContact(contact).then(_=>{
+        this.reload();
+      })
+    } else {
+      this.botService.removeSelectedContact(contact).then(_=>{
+        this.reload();
+      })
+    }
+  }
+
+  
 
   private sendNow(): void {
     this.botService.sendNow()

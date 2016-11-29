@@ -11,13 +11,17 @@
           Edit Task
         </div>
 
-        <div>
-          Set the interval and custom message
-        </div>
-
         <div *ngIf="canSetDate()" class="form-group">
           <span>Start Date</span>
           <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate"/>
+        </div>
+
+        <div *ngIf="selectedTask && selectedTask.task ==='sayHappyHolidayGmail'" class="form-group">
+          <select class="selectpicker" [(ngModel)]="subTask">
+            <option *ngFor="let holiday of botService.holidays">
+              {{holiday.name}}
+            </option>
+          </select>
         </div>
 
 
@@ -84,9 +88,13 @@
       </thead>
         <tbody>
         <tr *ngFor="let task of tasks"
+                [class.subTask]="task.decorated && task.decorated.type === 'subTask'"
                 [class.selected]="task === selectedTask"
                 (click)="onSelectTask(task)">
-                <td class="">{{task.task}}</td>
+                {{task.name}}
+                <p *ngIf="task.decorated && task.decorated.formattedName"> 
+                  {{task.decorated.formattedName}}
+                </p>
                 <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
         </tr>
       </tbody>

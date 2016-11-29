@@ -6,6 +6,11 @@ html {
   margin: 0;
 }
 
+.subTask {
+  font-size: 12;
+  text-align: right;
+}
+
 button {
   border-width: 0px;
   background-color: #5FC584;
