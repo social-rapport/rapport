@@ -37,7 +37,7 @@ module.exports = {
       username: taskObj.name,
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
-      subject: "Happy [holiday name]!!!",
+      subject: "Happy Holidays!!!",
       body: `${taskObj.message}<br/>`
     };
     gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
