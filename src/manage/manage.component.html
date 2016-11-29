@@ -41,6 +41,7 @@
       </div>
     </modal>
 
+<div>
 <!-- TITLE -->
 <div id="container-top-header">
   <div id="container-header" class="col-md-12">
@@ -147,61 +148,70 @@
 
   </div>
 
-<!--       <div class="col-md-12 table">
+<div style="height: 400px">
 
+</div>
 
-          <div class="control-container">
+</div>
+<!------------------------------ SUBSCRIBED VERSION ------------------------------>
 
-            <div class="list-container col-md-2">
-            <ul class="heroes">
-              <p class="text">Recent</p>
-              <li *ngFor="let activity of activities"
-                [class.selected]="activity === selectedActivity"
-                (click)="onSelectActivity(activity)">
-                <span class="badge">{{activity}}</span>
-              </li>
-            </ul>
-            </div>
+<div style="border: 1px solid black; position: absolute;
+    top: 1000px;
+    left: 0px;
+    width: 100%;">
 
-            <div class="list-container col-md-2">
-            <ul class="heroes">
-              <p class="text">Scheduled</p>
-              <li *ngFor="let activity of activities"
-                [class.selected]="activity === selectedActivity"
-                (click)="onSelectActivity(activity)">
-                <span class="badge">{{activity}}</span>
-              </li>
-            </ul>
-            </div>
+<div class="col-md-2">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>YOUR BOTS</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let bot of store.userBots | async"
+              [class.selected]="bot === selectedBot"
+              (click)="store.selectBot(bot)">
+              <td class="">{{bot.botType}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-            <div class="list-container col-md-2">
-              <ul class="heroes">
-                <p class="text">Selected</p>
-                <li class="contactli" *ngFor="let contact of contacts"
-                  [class.selected]="contact === selectedContact"
-                  (click)="onSelectContact(contact)">
-                  <contact-component [contact]="contact"></contact-component>
-                </li>
-              </ul>
-            </div>
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>TASKS</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of (store.selectedBot | async)?.tasks">                
+                <p> {{task.task}} </p>
+                <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
+ 
 
-          <div class="list-container col-md-2">
-            <ul class="heroes">
-              <p class="text">Tasks</p>
-              <li *ngFor="let task of tasks"
-                [class.selected]="task === selectedTask"
-                (click)="onSelectTask(task)">
-                <span class="badge">{{task.task}}</span>
-              </li>
-            </ul>
-          </div>
+ <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>AVAILABLE CONTACTS</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr class="list-container">
+          <td class="list-contents">
+            <tr *ngFor="let contact of store.availableContacts | async">
+                <p> {{contact.name}} </p>
+            </tr>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    </div> -->
-
-<!-- <div *ngIf="selectedHero">
-      <h2>
-        {{selectedHero.name | uppercase}} is my hero
-      </h2>
-      <button (click)="gotoDetail()">View Details</button>
-    </div> -->
+  </div>

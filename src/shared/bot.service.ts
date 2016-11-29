@@ -25,11 +25,11 @@ export class BotService {
   public getBotTypes(){
     let token = localStorage.getItem('id_token');
     let id = localStorage.getItem('user_id');
-
+    var self = this;
     return this.http.get(`/api/botTypes`)
       .map(function(data: any) {
-          this.botTypes = JSON.parse(data._body).bots;
-          return this.botTypes;
+          self.botTypes = JSON.parse(data._body).bots;
+          return self.botTypes;
       }).toPromise();
   }
 
@@ -75,7 +75,6 @@ export class BotService {
     return this.http.delete(`/api/bots?botId=${selectedBot.id}`)
     .toPromise()
     .then(()=>{
-      console.log('bot deleted');
       this.userBots = this.userBots.filter((bot)=>{
         return bot.id !== selectedBot.id;
       })

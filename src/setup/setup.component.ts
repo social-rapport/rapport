@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {BotService } from '../shared/bot.service';
 import {FbService} from '../shared/fb.service';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Store } from '../shared/store';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +19,10 @@ export class SetupComponent {
   private fbPassword: String;
   bots = [];
   selectedType;
+<<<<<<< e1c9639f8f27903d85a19ed5043c10aff5271ec6
 
+=======
+>>>>>>> begins refactor
 
   @ViewChild('myModal')
   modal: ModalComponent;
@@ -31,14 +35,13 @@ export class SetupComponent {
       this.modal.open();
   }
 
-  constructor(private botService: BotService,
-              private router: Router,
-              private fbService: FbService)
+
+  constructor(private botService: BotService, 
+              private router: Router, 
+              private fbService: FbService,
+              private store: Store) 
     {
-      botService.getBotTypes().then(types => {
-        console.log('botTypes', types);
-        this.bots = types;
-    })
+    this.bots = botService.botTypes;
   }
 
   private handleClick(selectedType){
@@ -66,8 +69,18 @@ export class SetupComponent {
   }
 
   private routeToManage(selectedType){
-    this.botService.addBotTypeToUser(selectedType);
-    this.router.navigate(['manage']);
+    if(selectedType.botType === 'power'){
+      this.router.navigate(['loading']);
+      this.botService.getHolidays().then(()=>{
+        this.botService.addBotTypeToUser(selectedType);
+        
+        this.router.navigate(['manage']);
+      })
+    } else {
+      this.store.addBot(selectedType);
+      this.botService.addBotTypeToUser(selectedType);
+      this.router.navigate(['manage']);
+    }
   }
 
 }

@@ -10,8 +10,8 @@ import {FbService} from '../shared/fb.service';
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Store } from '../shared/store';
 
-import {CurrentBotService} from '../shared/currentBot.service';
 @Component({
   selector: 'manage-component',
   templateUrl: 'app/manage/manage.component.html',
@@ -57,7 +57,8 @@ export class ManageComponent {
 
   constructor(private botService: BotService, 
               private gmailService: GmailService,
-              private router: Router) {}
+              private router: Router,
+              private store: Store) {}
 
   private onSelectBot(bot: any): void {
     this.selectedBot = bot;
