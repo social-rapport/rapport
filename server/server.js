@@ -1,5 +1,6 @@
-var sqp = require('./db-refactor/dbQueries')
+var sqp = require('./db-refactor/dbQueries');
 var mysql = require('promise-mysql');
+var cron = require('./cron/cron.js');
 
 mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
@@ -24,6 +25,9 @@ app.use(bodyParser.urlencoded({extended:false}));
 //app.use(express.static(__dirname+'/config/static'));
 app.use(express.static(__dirname+'/../'));
 console.log('static dirname, ', __dirname+'/../');
+
+
+cron.runCron();
 
 //-------------- DATABASE -------------------------
 
