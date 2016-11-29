@@ -9,7 +9,7 @@ export class BotService {
   //bots: Array<customBot>;
   public userBots: Array<customBot>;
   public botTypes: Array<customBot>;
-
+  public holidays;
   public contacts: Array<gmailContact>;
   public tasks: Array<string>;
 
@@ -47,6 +47,15 @@ export class BotService {
         } else {
           self.userBots = [];
         }
+      }).toPromise();
+  }
+
+  public getHolidays(){
+    return this.http.get(`/api/holidays?year=${2016}`)
+      .map((data: any) => {
+        data = data.json();
+        this.holidays = data;
+        return data;
       }).toPromise();
   }
 
