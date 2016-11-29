@@ -1,11 +1,14 @@
+const path = require('path');
 var gmail = require('./gmailController.js');
 const auth0Utils = require('../utils/auth0_utils.js');
 const facebook = require('../facebook/fbchatController.js');
 var dbM = require('../db-refactor/dbModel.js');
 var dbQ = require('../db-refactor/dbQueries.js');
-var bot = require('../bot/botController.js');
+const bot = require('./botController2.js');
 var types = require('../db-refactor/types');
 var holidayUtils = require('../utils/holiday_utils.js');
+
+console.log("bot", bot);
 
 module.exports.oauth = "";
 
@@ -126,6 +129,8 @@ module.exports.getTasksForChron = function(req, res){
 };
 
 module.exports.runalltasks = function(req, res){
+  console.log("bot", bot);
+
   bot.runAllTasks( result => {
     res.send(result);
     res.end();

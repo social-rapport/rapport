@@ -3,7 +3,7 @@ var gmail = require('../config/gmailController.js');
 const dbQ = require('../db-refactor/dbQueries.js');
 var express = require('express');
 var app = express();
-const botMethods = require('./botMethods.js');
+const botMethods = require('../bot/botMethods.js');
 
 module.exports = {
 //<----may go, using old oauth
