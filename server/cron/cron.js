@@ -1,4 +1,4 @@
-var bot = require('../config/botController.js');
+const bot = require('../bot/botController.js');
 var CronJob = require('cron').CronJob;
 
 module.exports.runCron = function(){
