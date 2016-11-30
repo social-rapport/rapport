@@ -74,6 +74,7 @@ export class BotService {
   }
 
   public updateBots(userBotsArray){
+   console.log("user bots to be saved", userBotsArray);
    const userId = localStorage.getItem('user_id');
    const body = JSON.stringify({bots: userBotsArray});
    const headers = new Headers({'Content-Type': 'application/json'});
