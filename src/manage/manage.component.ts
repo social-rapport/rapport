@@ -10,6 +10,7 @@ import {FbService} from '../shared/fb.service';
 import { ContactComponent } from '../contact/contact.component';
 import { SearchComponent } from '../search/search.component';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Store } from '../shared/store';
 
 @Component({
   selector: 'manage-component',
@@ -22,15 +23,61 @@ export class ManageComponent {
   @ViewChild('myModal')
   modal: ModalComponent;
 
+  
+
+  title = 'My Bots';
+
+  private bots: Array<customBot>;
+  private selectedBot: customBot;
+  private selectedTask; 
+  private subTask;
+  private displayMessage;
+  private customMessage; 
+  private customInterval; 
+  private customDate; 
+  private activities: Array<string>;
+  private contacts: Array<gmailContact>;
+  private tasks: Array<string>;
+  private mode = "bot";
+  private scheduled; 
+  private editabelName;
+  private customBotName;
+  //
+  constructor(private botService: BotService, 
+              private gmailService: GmailService,
+              private router: Router,
+              private store: Store) {
+    
+   var self = this;
+   store.state.subscribe(function(){
+     self.reload();
+   })             
+
+
+  }
+
+   //<-------------------DISPLAY MODE------------------->
+  pageMode(mode){
+    this.mode = mode;
+  }                
+
+  //<-------------------TASK METHODS------------------->
   close() { 
     this.modal.close();
     this.selectedTask = null; 
   }
 
   saveTask(){
-    this.customMessage? this.selectedTask.message = this.customMessage: 1; 
-    this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
-    this.customDate? this.selectedTask.date = this.customDate: 1; 
+    if(this.selectedTask.task === 'sayHappyHolidayGmail'){
+      var opts = {name: this.subTask, message: this.customMessage};
+      this.botService.addNewHolidayTask(opts, this.selectedBot);
+    } else {
+      this.customMessage? this.selectedTask.message = this.customMessage: 1; 
+      this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
+      this.customDate? this.selectedTask.date = this.customDate: 1; 
+    }
+    this.reload();
+    this.tasks = this.selectedBot.tasks;
   }
 
   open(task) {
@@ -41,22 +88,11 @@ export class ManageComponent {
     this.modal.open();
   }
 
-  title = 'My Bots';
+   private canSetDate(){
+    return this.selectedTask && this.selectedTask.task !== 'sayHappyBirthdayGmail';
+  }
 
-  private bots: Array<customBot>;
-  private selectedBot: customBot;
-  private selectedTask; 
-  private displayMessage;
-  private customMessage; 
-  private customInterval; 
-  private customDate; 
-  private activities: Array<string>;
-  private contacts: Array<gmailContact>;
-  private tasks: Array<string>;
-
-  constructor(private botService: BotService, 
-              private gmailService: GmailService,
-              private router: Router) {}
+  //<-------------------BOT METHODS------------------->
 
   private onSelectBot(bot: any): void {
     this.selectedBot = bot;
@@ -70,26 +106,6 @@ export class ManageComponent {
       this.contacts = bot.selectedContacts;
     }
     this.tasks = bot.tasks;
-  }
-
-  private canSetDate(){
-    return this.selectedTask && this.selectedTask.task !== 'sayHappyBirthdayGmail';
-  }
-
-  //<-----------------SELECTED CONTACTS MANAGEMENT (FACTOR INTO COMPONENT)----------------->
-
-  private removeSelectedContact(contact): void{
-    var i = this.contacts.indexOf(contact);
-    this.contacts.splice(i,1);
-    if(this.selectedBot.botType === 'social'){
-      this.botService.removeSelectedFbContact(contact).then(_=>{
-        this.reload();
-      })
-    } else {
-      this.botService.removeSelectedContact(contact).then(_=>{
-        this.reload();
-      })
-    }
   }
 
   private submitAllSettings(): void{
@@ -111,13 +127,32 @@ export class ManageComponent {
     })
   }
 
+  //<-----------------SELECTED CONTACTS METHODS----------------->
+
+  private removeSelectedContact(contact): void{
+    var i = this.contacts.indexOf(contact);
+    this.contacts.splice(i,1);
+    if(this.selectedBot.botType === 'social'){
+      this.botService.removeSelectedFbContact(contact).then(_=>{
+        this.reload();
+      })
+    } else {
+      this.botService.removeSelectedContact(contact).then(_=>{
+        this.reload();
+      })
+    }
+  }
+
+  
+
   private sendNow(): void {
     this.botService.sendNow()
       .then(console.log);
   }
 
   private reload() : void {
-    this.bots = this.botService.getUserBots();
+    this.scheduled = this.botService.scheduled;
+    this.bots = this.botService.userBots;
   }
 
   private ngOnInit(): void {

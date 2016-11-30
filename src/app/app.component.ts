@@ -33,7 +33,6 @@ export class AppComponent {
               ) {
 
     this.router.events.subscribe(path => {
-      console.log('path = ', path);
       if(path.url === '/logout'){
         this.auth.logout();
         this.authAction = 'Login';

@@ -15,6 +15,7 @@ export class GmailService {
         return this.http.get(`/api/gmail/contacts?userId=${userId}`)
         .map((data: any) => {
             this.contacts = data.json();
+            return this.contacts;
         }).toPromise();
     }
 

@@ -8,29 +8,33 @@
       <div id="modal-style" style="height:280px">
 
         <div class="semi-header">
-          Edit Task
+          <p>Edit Task</p>
+        </div>
+
+        
+
+        <div *ngIf="selectedTask && selectedTask.decorated.holidays === true" class="form-group">
+          <select class="selectpicker" [(ngModel)]="subTask">
+            <option *ngFor="let holiday of botService.holidays">
+              {{holiday.name}}
+            </option>
+          </select>
         </div>
 
         <div>
-          Set the interval and custom message
+          <span>Custom message:</span>
+          <textarea class="text" [(ngModel)]="customMessage"></textarea>
         </div>
 
-        <div *ngIf="canSetDate()" class="form-group">
+        <div *ngIf="selectedTask && selectedTask.decorated.setsDate" class="form-group">
           <span>Start Date</span>
           <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate"/>
         </div>
 
-
-        <div class="form-group">
+        <div *ngIf="selectedTask && selectedTask.decorated.setsInterval" class="form-group">
           <span>Send message every</span>
           <input class="fb-input" type="text" [(ngModel)]="customInterval">
           <span>months</span>
-        </div>
-
-        <div>
-          <span>Custom message:
-          </span>
-          <textarea class="text" [(ngModel)]="customMessage"></textarea>
         </div>
 
         <div class="buttons" style="float: right">
@@ -41,6 +45,7 @@
       </div>
     </modal>
 
+<div>
 <!-- TITLE -->
 <div id="container-top-header">
   <div id="container-header" class="col-md-12">
@@ -55,21 +60,32 @@
   </div>
 
 <!-- TABLE -->
-<div class="mycontainer">
+<div *ngIf = "mode === 'bot'" class="mycontainer" >
 
 <div class="col-md-2">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>Bot Types</th>
+          <th>MY BOTS</th>
         </tr>
       </thead>
-        <tbody>
-        <tr *ngFor="let bot of bots"
-              [class.selected]="bot === selectedBot"
-              (click)="onSelectBot(bot)">
-              <td class="">{{botService.getDisplayName(bot)}}</td>
-        </tr>
+        <tbody >
+        
+          <tr *ngFor="let bot of bots"
+                [class.selected]="bot === selectedBot"
+                (click)="onSelectBot(bot)">
+            
+                <td *ngIf="editableName !== bot" class="">
+                  <p>{{botService.getDisplayName(bot)}}</p>
+                  <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
+                </td>
+          
+                <td *ngIf="editableName === bot" class="">
+                  <span class="glyphicon glyphicon-ok" (click) = "editableName = null; bot.botName = customBotName" ></span>
+                  <input type="text" [(ngModel)]="customBotName">  
+                </td>
+          </tr>
+       
       </tbody>
     </table>
   </div>
@@ -83,9 +99,13 @@
       </thead>
         <tbody>
         <tr *ngFor="let task of tasks"
+                [class.subTask]="task.decorated && task.decorated.subTask === true"
                 [class.selected]="task === selectedTask"
                 (click)="onSelectTask(task)">
-                <td class="">{{task.task}}</td>
+                {{task.name}}
+                <p *ngIf="task.decorated && task.decorated.formattedName"> 
+                  {{task.decorated.formattedName}}
+                </p>
                 <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
         </tr>
       </tbody>
@@ -99,8 +119,24 @@
           <th>SELECTED CONTACTS</th>
         </tr>
       </thead>
-        <tbody>
-        <tr class="" *ngFor="let contact of contacts"
+        <tbody *ngIf="selectedBot.botType !== 'social'">
+        <tr class="" *ngFor="let contact of selectedBot.selectedContacts"
+                  [class.selected]="contact === selectedContact"
+                  (click)="onSelectContact(contact)">
+              <td>
+                <div *ngIf="contact">
+                  <p>{{contact.fullName || contact.name}}
+                    <span>
+                      <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday"/>
+                      <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
+                    </span>
+                  </p>
+                </div>
+              </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="selectedBot.botType === 'social'">
+        <tr class="" *ngFor="let contact of selectedBot.selectedFbFriends"
                   [class.selected]="contact === selectedContact"
                   (click)="onSelectContact(contact)">
               <td>
@@ -136,8 +172,76 @@
     </table>
   </div>
 
+</div>
+
+<div *ngIf = "mode === 'log'" class="mycontainer" >
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>BOT NAME</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.botName || job.botType}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>RECIPIENT NAME</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.name}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>CONTACT PLATFORM</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.platform}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>DATE</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.date}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
 <!-- BUTTONS -->
     <div class="buttons">
+      <button class="save-bots" style="float: left;" (click)="pageMode('log')">View Activity</button>
+      <button class="save-bots" style="float: left;" (click)="pageMode('bot')">View Bots</button>
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
       <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
@@ -145,63 +249,71 @@
       </span>
     </div>
 
+
+<div style="height: 400px">
+
+</div>
+
+</div>
+<!------------------------------ SUBSCRIBED VERSION ------------------------------>
+
+<!--<div style="border: 1px solid black; position: absolute;
+    top: 1000px;
+    left: 0px;
+    width: 100%;">
+
+<div class="col-md-2">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>YOUR BOTS</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let bot of store.userBots | async"
+              [class.selected]="bot === selectedBot"
+              (click)="store.selectBot(bot)">
+              <td class="">{{bot.botType}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-<!--       <div class="col-md-12 table">
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>TASKS</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of (store.selectedBot | async)?.tasks">                
+                <p> {{task.task}} </p>
+                <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
+ 
 
-          <div class="control-container">
+ <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>AVAILABLE CONTACTS</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr class="list-container">
+          <td class="list-contents">
+            <tr *ngFor="let contact of store.availableContacts | async">
+                <p> {{contact.name}} </p>
+            </tr>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-            <div class="list-container col-md-2">
-            <ul class="heroes">
-              <p class="text">Recent</p>
-              <li *ngFor="let activity of activities"
-                [class.selected]="activity === selectedActivity"
-                (click)="onSelectActivity(activity)">
-                <span class="badge">{{activity}}</span>
-              </li>
-            </ul>
-            </div>
-
-            <div class="list-container col-md-2">
-            <ul class="heroes">
-              <p class="text">Scheduled</p>
-              <li *ngFor="let activity of activities"
-                [class.selected]="activity === selectedActivity"
-                (click)="onSelectActivity(activity)">
-                <span class="badge">{{activity}}</span>
-              </li>
-            </ul>
-            </div>
-
-            <div class="list-container col-md-2">
-              <ul class="heroes">
-                <p class="text">Selected</p>
-                <li class="contactli" *ngFor="let contact of contacts"
-                  [class.selected]="contact === selectedContact"
-                  (click)="onSelectContact(contact)">
-                  <contact-component [contact]="contact"></contact-component>
-                </li>
-              </ul>
-            </div>
-
-
-          <div class="list-container col-md-2">
-            <ul class="heroes">
-              <p class="text">Tasks</p>
-              <li *ngFor="let task of tasks"
-                [class.selected]="task === selectedTask"
-                (click)="onSelectTask(task)">
-                <span class="badge">{{task.task}}</span>
-              </li>
-            </ul>
-          </div>
-
-    </div> -->
-
-<!-- <div *ngIf="selectedHero">
-      <h2>
-        {{selectedHero.name | uppercase}} is my hero
-      </h2>
-      <button (click)="gotoDetail()">View Details</button>
-    </div> -->
+  </div>-->

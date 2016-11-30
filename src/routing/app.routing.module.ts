@@ -17,8 +17,6 @@ const routes: Routes = [
   { path: 'setup', canActivate:[AuthGuard], component: SetupComponent,},
   { path: 'manage', canActivate: [AuthGuard], component: ManageComponent },
   { path: 'logout', redirectTo: '', pathMatch: 'full' },
-
-  // { path: 'detail/:id', component: HeroDetailComponent },
   
 ];
 @NgModule({
