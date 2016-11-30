@@ -20,11 +20,7 @@ export class SetupComponent {
 
   bots = [];
   selectedType;
-<<<<<<< e1c9639f8f27903d85a19ed5043c10aff5271ec6
-
-=======
->>>>>>> begins refactor
-
+  
   @ViewChild('myModal')
   modal: ModalComponent;
 
