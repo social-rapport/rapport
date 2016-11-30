@@ -35,8 +35,9 @@ module.exports = {
     });
   },
   sayHappyBirthdayGmail: function (taskObj) {
+    console.log('taskObj is ------ ', taskObj);
     const msgData = {
-      username: taskObj.name,
+      username: taskObj.username,
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
       subject: "Happy Birthday " + taskObj.name + "!!!",
@@ -58,7 +59,7 @@ module.exports = {
   },
   sayHappyHolidayGmail: function (taskObj) {
     const msgData = {
-      username: taskObj.name,
+      username: taskObj.username,
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
       subject: "Happy Holidays!!!",

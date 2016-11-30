@@ -9,7 +9,17 @@ const botMethods = require('./botMethods.js');
 const runAllTasks = function(callback) {
   const today = `${new Date().getMonth()}\/${new Date().getDate()}`;
   dbQ.getTasksJoinedWithUsers(today)
-  .then(tasks => Promise.all(tasks.map(taskObj => botMethods[taskObj.task](taskObj))))
+  .then(tasks => Promise.all(tasks.map(taskObj => {
+    dbQ.getUser(taskObj.id_user)
+    .then(user => {
+      taskObj.username = user.name;
+      return(taskObj);
+    })
+    .then(taskObj => {
+      console.log('taskObj is ---------', taskObj);
+      botMethods[taskObj.task](taskObj)
+    })
+  })))
   .then(logTasks)
   .then(callback);
 };
