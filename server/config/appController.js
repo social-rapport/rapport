@@ -61,6 +61,7 @@ module.exports.getFacebookFriends = function(req, res) {
 };
 //<---------------------Removes Facebook Friends--------------------->
 module.exports.removeFacebookFriends = function(req, res) {
+  console.log("query", req.query);
   dbQ.removeSelectedFacebookFriend([req.query.contactId])
     .then(() => res.status(200).send('removed friend'));
 };

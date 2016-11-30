@@ -25,7 +25,6 @@ export class SearchComponent implements OnChanges {
               private fbService: FbService) {}
 
   onAddContact(selectedContact): void{
-    console.log("add contact fired");
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
 
     if(this.bot.botType === 'social'){
@@ -36,8 +35,10 @@ export class SearchComponent implements OnChanges {
         email: selectedContact.email,
         birthday: null,
       });
-    }
 
+    }
+    
+    console.log("selected fb friends", this.bot.selectedFbFriends);
     this.contacts.splice(selectedContactIndex,1);
 
   }

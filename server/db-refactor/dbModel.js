@@ -20,7 +20,9 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
-  console.log("passed bot obj", botObj.botType);
+  console.log("passed bot type", botObj.botType);
+  console.log("passed bot fb friends", botObj.selectedFbFriends);
+
   if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
@@ -34,7 +36,7 @@ const createAllBotInfo = function(userId, botObj) {
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
     .then(botId => Promise.all([addOrUpdateSelectedContacts(botId, botObj.selectedContacts),
-      addOrUpdateRegisteredTasks(botId, botObj.tasks), addOrUpdateSelectedFacebookFriends(botObj.id, botObj.selectedFbFriends)]))
+      addOrUpdateRegisteredTasks(botId, botObj.tasks), addOrUpdateSelectedFacebookFriends(botId, botObj.selectedFbFriends)]))
     .then(resolve)
     .catch(reject);
   });
@@ -98,6 +100,8 @@ const getAllBotInfo = function(botId) {
         botObj.botActivity.recent = arrayOfBotInfo[4];
         botObj.botActivity.scheduled = arrayOfBotInfo[5];
 
+        console.log("fb object", botObj.selectedFbFriends);
+
         resolve(botObj)
       }).catch(reject);
   });
@@ -142,7 +146,7 @@ const removeFromRegisteredTasks = function(taskIdArray) {
 
 //facebook friends
 const addOrUpdateSelectedFacebookFriends = function(botId, friendArray) {
-  console.log("friend arrray", friendArray);
+  console.log("friend array", friendArray);
   return Promise.all(friendArray.map(friend => addOrUpdateFacebookFriend(botId, friend)));
 }; 
 

@@ -163,7 +163,6 @@ const updateSelectedTask = function({id: taskId, date: date, platform: platform,
   message=${sqp.escape(message)}, task=${sqp.escape(task)},\`interval\`=${sqp.escape(interval)} 
   WHERE id=${sqp.escape(taskId)}`;
 
-  console.log("update query", updateContactQuery);
   return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
 
@@ -252,7 +251,8 @@ const addToSelectedFacebookFriends = function(botId, {fullName: fullName, vanity
   const q = `INSERT INTO selectedFacebookFriends(name, vanityName, birthday, id_bot)
     values(${sqp.escape(fullName)}, ${sqp.escape(vanity)}, ${sqp.escape(birthday)}, ${sqp.escape(botId)})`;
 
-    console.log("db query string", q);
+  console.log("add fb friend args", arguments);
+  console.log("add fb friend query", q);
   return sqp.query(q).then(data => data.insertId);
 };
 
@@ -261,12 +261,10 @@ const removeSelectedFacebookFriend = function(friendId) {
   return sqp.query(q).then(data => data.affectedRows);
 };
 
-const updateSelectedFacebookFriend = function({id: id, fullName: fullName, vanityName: vanityName, birthday: birthday}) {
-  const q = `UPDATE selectedFacebookFriends SET name=${sqp.escape(fullName)}, vanityName=${sqp.escape(vanityName)},
-    birthday=${sqp.escape(birthday)}`;
+const updateSelectedFacebookFriend = function({id: id, fullName: fullName, name: name, vanityName: vanityName, birthday: birthday}) {
+  const q = `UPDATE selectedFacebookFriends SET name=${sqp.escape(fullName || name)}, vanityName=${sqp.escape(vanityName)},
+    birthday=${sqp.escape(birthday)} WHERE id=${sqp.escape(id)}`;
 
-
-    console.log("db query string", q);
   return sqp.query(q).then(data => data.affectedRows);
 };
 
