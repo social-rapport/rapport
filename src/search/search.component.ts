@@ -4,6 +4,8 @@ import { FilterContacts } from './contact.pipe';
 import { BotService } from '../shared/bot.service';
 import { GmailService} from '../shared/gmail.service';
 import { FbService} from '../shared/fb.service';
+import { Store } from '../shared/store';
+
 
 @Component({
   selector: 'search-component',
@@ -22,7 +24,15 @@ export class SearchComponent implements OnChanges {
 
   constructor(private botService: BotService,
               private gmailService: GmailService,
-              private fbService: FbService) {}
+              private fbService: FbService,
+              private store: Store) 
+  {
+
+
+
+
+
+  }
 
   onAddContact(selectedContact): void{
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
@@ -40,6 +50,7 @@ export class SearchComponent implements OnChanges {
     
     console.log("selected fb friends", this.bot.selectedFbFriends);
     this.contacts.splice(selectedContactIndex,1);
+    this.store.trigger();
 
   }
 

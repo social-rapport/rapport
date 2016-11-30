@@ -46,7 +46,15 @@ export class ManageComponent {
   constructor(private botService: BotService, 
               private gmailService: GmailService,
               private router: Router,
-              private store: Store) {}
+              private store: Store) {
+    
+   var self = this;
+   store.state.subscribe(function(){
+     self.reload();
+   })             
+
+
+  }
 
    //<-------------------DISPLAY MODE------------------->
   pageMode(mode){

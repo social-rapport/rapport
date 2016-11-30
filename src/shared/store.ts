@@ -5,47 +5,40 @@ import { BotService } from '../shared/bot.service';
 
 @Injectable()
 export class Store {
-    private userBots = new BehaviorSubject([]);
-    public userBots$ = this.userBots.asObservable();
 
-    private selectedBot = new BehaviorSubject({});
-    public selectedBot$ = this.selectedBot.asObservable();
 
-    private availableContacts = new BehaviorSubject([{name: 'x'}]);
-    public availableContacts$ = this.availableContacts.asObservable();
-
-    private selectedContacts = new BehaviorSubject([]);
-    public selectedContacts$ = this.selectedContacts.asObservable();
-
-    private _gmailContacts;
-    private _fbContacts;
-    private _botTypes; 
+    public state = new BehaviorSubject({});
+    state$ = this.state.asObservable();
+    private _state; 
+    private userId;
 
     constructor(private gmailService: GmailService, private botService: BotService) {
 
           gmailService.getContacts().then(contacts=>{
-            this._gmailContacts = contacts;
+
           })
         
     }
 
     public addBot(bot){
-      var p = this.userBots.getValue();
-      this.userBots.next(p.concat(bot));
-      console.log('state',this.userBots.getValue());
+      
+    }
+
+    public trigger(){
+      this.state.next({});
     }
 
     public selectBot(bot){
-      this.selectedBot.next(bot);
+
       if(bot.botType = 'basic'){
-        this.selectedContacts.next(bot.selectedGmailContacts);
-        var p = this.availableContacts.getValue();
-        p = p.concat([{name: 'a'}]);
-        this.availableContacts.next(p);
+        // this.selectedContacts.next(bot.selectedGmailContacts);
+        // var p = this.availableContacts.getValue();
+        // p = p.concat([{name: 'a'}]);
+        // this.availableContacts.next(p);
       }
       if(bot.botType = 'social'){
-        this.selectedContacts.next([{name: 'a'}]);
-        this.availableContacts.next(this._fbContacts);
+        // this.selectedContacts.next([{name: 'a'}]);
+        // this.availableContacts.next(this._fbContacts);
       }
     }
 

@@ -6,6 +6,7 @@ import { Subject }    from 'rxjs/Subject';
 @Injectable()
 export class _BotService {
   
+  //state is single observable
   public state = new Subject();
   state$ = this.state.asObservable();
   private _state; 
@@ -75,6 +76,10 @@ export class _BotService {
     .then(_=>{
       this.importUserBots();
     });
+  }
+
+  trigger(){
+    this.update();
   }
 
   update(){
