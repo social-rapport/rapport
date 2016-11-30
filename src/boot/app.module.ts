@@ -26,6 +26,7 @@ import { SearchComponent } from '../search/search.component';
 import { FilterContacts } from '../search/contact.pipe';
 import { LoadingComponent } from '../loading/loading.component';
 
+import { Store } from '../shared/store';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { LoadingComponent } from '../loading/loading.component';
     //{provide: LocationStrategy, useClass: HashLocationStrategy},
     BotService,
     Auth,
+    Store,
     GmailService,
     FbService,
     AuthGuard,
