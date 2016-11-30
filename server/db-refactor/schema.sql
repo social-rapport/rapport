@@ -7,14 +7,14 @@
 
 -- ---
 -- Table 'bot'
--- 
+--
 -- ---
 
 CREATE DATABASE rapport;
 USE rapport;
 
 DROP TABLE IF EXISTS `bot`;
-		
+
 CREATE TABLE `bot` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `botName` VARCHAR(100),
@@ -24,11 +24,11 @@ CREATE TABLE `bot` (
 
 -- ---
 -- Table 'tasks'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `tasks`;
-		
+
 CREATE TABLE `tasks` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `date` VARCHAR(100),
@@ -41,11 +41,11 @@ CREATE TABLE `tasks` (
 
 -- ---
 -- Table 'log'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `log`;
-		
+
 CREATE TABLE `log` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `date` VARCHAR(100),
@@ -59,11 +59,11 @@ CREATE TABLE `log` (
 
 -- ---
 -- Table 'tasks_bots'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `tasks_bots`;
-		
+
 CREATE TABLE `tasks_bots` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `id_bot` INTEGER,
@@ -73,11 +73,11 @@ CREATE TABLE `tasks_bots` (
 
 -- ---
 -- Table 'users_bots'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `users_bots`;
-		
+
 CREATE TABLE `users_bots` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `id_user` INTEGER,
@@ -87,11 +87,11 @@ CREATE TABLE `users_bots` (
 
 -- ---
 -- Table 'users'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `users`;
-		
+
 CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100),
@@ -104,11 +104,11 @@ CREATE TABLE `users` (
 
 -- ---
 -- Table 'selectedGmailContacts'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `selectedGmailContacts`;
-		
+
 CREATE TABLE `selectedGmailContacts` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100),
@@ -119,11 +119,11 @@ CREATE TABLE `selectedGmailContacts` (
 
 -- ---
 -- Table 'bot_contacts'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `bot_contacts`;
-		
+
 CREATE TABLE `bot_contacts` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `id_bot` INTEGER,
@@ -133,11 +133,11 @@ CREATE TABLE `bot_contacts` (
 
 -- ---
 -- Table 'selectedFacebookFriends'
--- 
+--
 -- --
 
 DROP TABLE IF EXISTS `selectedFacebookFriends`;
-		
+
 CREATE TABLE `selectedFacebookFriends` (
   `id` INTEGER NOt NULL AUTO_INCREMENT,
   `name` VARCHAR(100),
@@ -147,7 +147,7 @@ CREATE TABLE `selectedFacebookFriends` (
   PRIMARY KEY (`id`)
 );
 -- ---
--- Foreign Keys 
+-- Foreign Keys
 -- ---
 
 ALTER TABLE `log` ADD FOREIGN KEY (id_bot) REFERENCES `bot` (`id`);

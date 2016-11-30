@@ -20,7 +20,7 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
-  console.log("passed bot obj", botObj);
+  console.log("passed bot obj", botObj.botType);
   if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
@@ -29,6 +29,7 @@ const updateOrCreateNewBot = function(userId, botObj) {
 };
 
 const createAllBotInfo = function(userId, botObj) {
+  console.log("creating bot", botObj.botType);
 
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
@@ -40,6 +41,8 @@ const createAllBotInfo = function(userId, botObj) {
 };
 
 const updateAllBotInfo = function(botObj) {
+  console.log("updating bot", botObj.botType);
+
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
       .then(affectedRows => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
@@ -57,7 +60,8 @@ const retireBot = function(botObj) {
   arrayOfDeletePromises = [
     removeFromSelectedContacts(botObj.selectedContacts.map(contact => contact.id)),
     removeFromRegisteredTasks(botObj.tasks.map(task => task.id)),
-    removeFromSelectedFacebookFriends(botObj.selectedFbFriends.map(friend => friend.id))
+    removeFromSelectedFacebookFriends(botObj.selectedFbFriends.map(friend => friend.id)),
+    dbq.deleteBotLogs(botObj.id)
   ];
 
   return Promise.all(arrayOfDeletePromises)
@@ -80,7 +84,9 @@ const getAllBotInfo = function(botId) {
   };
 
   return new Promise ((resolve, reject) => {
-    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId)])
+    Promise.all([dbq.getBot(botId),dbq.getSelectedContacts(botId), 
+      dbq.getSelectedTasks(botId), dbq.getSelectedFacebookFriends(botId), 
+      dbq.getBotLog(botId), dbq.getTasksByBotId(botId)])
       .then(arrayOfBotInfo => {
         //massage data into botObj; 
         botObj.id = arrayOfBotInfo[0][0].id;
@@ -89,7 +95,8 @@ const getAllBotInfo = function(botId) {
         botObj.selectedContacts = arrayOfBotInfo[1];
         botObj.tasks = arrayOfBotInfo[2];
         botObj.selectedFbFriends = arrayOfBotInfo[3];
-
+        botObj.botActivity.recent = arrayOfBotInfo[4];
+        botObj.botActivity.scheduled = arrayOfBotInfo[5];
 
         resolve(botObj)
       }).catch(reject);
