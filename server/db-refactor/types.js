@@ -67,7 +67,7 @@ var initialBots =
         tasks: [
              {
                 id: null,
-                date: 'today',
+                date: null,
                 platform: 'gmail',
                 message: 'Hope you\'re having a great holiday!',
                 task: 'sayHappyHolidayGmail',

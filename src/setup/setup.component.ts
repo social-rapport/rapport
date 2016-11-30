@@ -41,7 +41,7 @@ export class SetupComponent {
               private fbService: FbService,
               private store: Store) 
     {
-    this.bots = botService.botTypes;
+    this.bots = JSON.parse(JSON.stringify(botService.botTypes));
   }
 
   private handleClick(selectedType){

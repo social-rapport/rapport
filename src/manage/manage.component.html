@@ -8,15 +8,12 @@
       <div id="modal-style" style="height:280px">
 
         <div class="semi-header">
-          Edit Task
+          <p>Edit Task</p>
         </div>
 
-        <div *ngIf="canSetDate()" class="form-group">
-          <span>Start Date</span>
-          <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate"/>
-        </div>
+        
 
-        <div *ngIf="selectedTask && selectedTask.task ==='sayHappyHolidayGmail'" class="form-group">
+        <div *ngIf="selectedTask && selectedTask.decorated.holidays === true" class="form-group">
           <select class="selectpicker" [(ngModel)]="subTask">
             <option *ngFor="let holiday of botService.holidays">
               {{holiday.name}}
@@ -24,17 +21,20 @@
           </select>
         </div>
 
+        <div>
+          <span>Custom message:</span>
+          <textarea class="text" [(ngModel)]="customMessage"></textarea>
+        </div>
 
-        <div class="form-group">
+        <div *ngIf="selectedTask && selectedTask.decorated.setsDate" class="form-group">
+          <span>Start Date</span>
+          <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="customDate"/>
+        </div>
+
+        <div *ngIf="selectedTask && selectedTask.decorated.setsInterval" class="form-group">
           <span>Send message every</span>
           <input class="fb-input" type="text" [(ngModel)]="customInterval">
           <span>months</span>
-        </div>
-
-        <div>
-          <span>Custom message:
-          </span>
-          <textarea class="text" [(ngModel)]="customMessage"></textarea>
         </div>
 
         <div class="buttons" style="float: right">
@@ -66,7 +66,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>Bot Types</th>
+          <th>MY BOTS</th>
         </tr>
       </thead>
         <tbody>
@@ -88,7 +88,7 @@
       </thead>
         <tbody>
         <tr *ngFor="let task of tasks"
-                [class.subTask]="task.decorated && task.decorated.type === 'subTask'"
+                [class.subTask]="task.decorated && task.decorated.subTask === true"
                 [class.selected]="task === selectedTask"
                 (click)="onSelectTask(task)">
                 {{task.name}}

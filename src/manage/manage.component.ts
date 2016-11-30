@@ -59,6 +59,8 @@ export class ManageComponent {
       this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
       this.customDate? this.selectedTask.date = this.customDate: 1; 
     }
+    this.reload();
+    this.tasks = this.selectedBot.tasks;
   }
 
   open(task) {
@@ -132,7 +134,7 @@ export class ManageComponent {
   }
 
   private reload() : void {
-    this.bots = this.botService.getUserBots();
+    this.bots = this.botService.userBots;
   }
 
   private ngOnInit(): void {

@@ -12,12 +12,26 @@ export class BotService {
   public holidays;
   public contacts: Array<gmailContact>;
   public tasks: Array<string>;
-  public formattedNames = {
-    'sayHappyHolidayGmail': 'holiday: gmail',
-    'sayHappyBirthdayGmail': 'birthday: gmail',
-    'sayHiGmail': 'message: gmail',
-    'sayHiFacebook': 'message: facebook',
+  public taskExtensions = {
+    'sayHappyHolidayGmail': {formattedName: 'holiday: gmail', 
+                            setsDate: false, 
+                            setsInterval: false, 
+                            subTask: true,
+                            holidays: true},
+    'sayHappyBirthdayGmail':{formattedName: 'birthday: gmail',
+                            setsDate: true, 
+                            setsInterval: true,}, 
+    'sayHappyBirthdayFacebook':{formattedName: 'birthday: facebook',
+                            setsDate: true, 
+                            setsInterval: true,}, 
+    'sayHiGmail':           {formattedName: 'message: gmail',
+                            setsDate: true, 
+                            setsInterval: true,}, 
+    'sayHiFacebook':        {formattedName: 'message: facebook',
+                            setsDate: true, 
+                            setsInterval: true,},
   };
+  
 
   public currentBot = null;
    
@@ -25,7 +39,7 @@ export class BotService {
 
   public getBots(){
     //add get tasks when api endpoint is implemented
-    return Promise.all([this.getBotTypes(), this.importUserBots()]);
+    return Promise.all([this.getHolidays(), this.getBotTypes(), this.importUserBots()]);
   }
 
   public getBotTypes(){
@@ -129,11 +143,17 @@ export class BotService {
     var self = this;
     bots.forEach(function(bot){
       bot.tasks.forEach(function(task){
-        task.decorated = {};
-        task.decorated.formattedName = self.formattedNames[task.task];
-      })
-    })
-
+        task.decorated = Object.assign({},self.taskExtensions[task.task]);
+        if(task.date === null){
+          task.decorated.subTask = false;
+        }
+        if(task.decorated.subTask){
+          task.decorated.formattedName = self.holidays.filter((h)=>{
+            return h.date === task.date
+          })[0].name;
+        }
+      });
+    });
   }
 
   public addNewHolidayTask(taskOptions,bot){
@@ -148,7 +168,12 @@ export class BotService {
                 message: taskOptions.message,
                 task: 'sayHappyHolidayGmail',
                 platform: 'gmail',
-                decorated: {type: "subTask", formattedName: taskOptions.name},};
+                decorated: {
+                            formattedName: taskOptions.name,
+                            setsInterval: false,
+                            setsDate: false,
+                            subTask: true}
+                };
 
     bot.tasks.push(task);
   }
