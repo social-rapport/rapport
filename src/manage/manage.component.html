@@ -60,7 +60,7 @@
   </div>
 
 <!-- TABLE -->
-<div class="mycontainer">
+<div *ngIf = "mode === 'bot'" class="mycontainer" >
 
 <div class="col-md-2">
     <table class="table">
@@ -69,12 +69,14 @@
           <th>MY BOTS</th>
         </tr>
       </thead>
-        <tbody>
-        <tr *ngFor="let bot of bots"
-              [class.selected]="bot === selectedBot"
-              (click)="onSelectBot(bot)">
-              <td class="">{{botService.getDisplayName(bot)}}</td>
-        </tr>
+        <tbody >
+        
+          <tr *ngFor="let bot of bots"
+                [class.selected]="bot === selectedBot"
+                (click)="onSelectBot(bot)">
+                <td class="">{{botService.getDisplayName(bot)}}</td>
+          </tr>
+       
       </tbody>
     </table>
   </div>
@@ -145,8 +147,76 @@
     </table>
   </div>
 
+</div>
+
+<div *ngIf = "mode === 'log'" class="mycontainer" >
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>BOT NAME</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.botName || job.botType}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>RECIPIENT NAME</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.name}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>CONTACT PLATFORM</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.platform}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>DATE</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let job of scheduled">
+                {{job.date}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
 <!-- BUTTONS -->
     <div class="buttons">
+      <button class="save-bots" style="float: left;" (click)="pageMode('log')">View Activity</button>
+      <button class="save-bots" style="float: left;" (click)="pageMode('bot')">View Bots</button>
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
       <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
@@ -154,7 +224,6 @@
       </span>
     </div>
 
-  </div>
 
 <div style="height: 400px">
 

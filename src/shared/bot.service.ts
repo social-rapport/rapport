@@ -32,7 +32,8 @@ export class BotService {
                             setsInterval: true,},
   };
   
-
+  public scheduled = null;
+  public recent = null;
   public currentBot = null;
    
   constructor(private http: Http) {}
@@ -54,6 +55,16 @@ export class BotService {
       }).toPromise();
   }
 
+  public joinTaskDescriptions(bots){
+    var jobs = bots.reduce(function(acc,bot){
+      return acc.concat(bot.botActivity.scheduled);
+    },[]);
+    var recent = bots.reduce(function(acc,bot){
+      return acc.concat(bot.botActivity.recent)
+    },[])
+    return jobs.concat(recent);
+  }
+
   public importUserBots(){
     let token = localStorage.getItem('id_token');
     let userId = localStorage.getItem('user_id');
@@ -65,6 +76,7 @@ export class BotService {
         if(bots.length !== 0) {
           self.userBots = bots;
           self.decorateAll(self.userBots);
+          self.scheduled = self.joinTaskDescriptions(self.userBots);
           return self.userBots; 
         } else {
           self.userBots = [];

@@ -11,7 +11,7 @@ import { FbService} from '../shared/fb.service';
   styleUrls: ['app/search/search.component.css'],
   template: `<input type="text" [(ngModel)]="filterText">
               <ul class="contact-list">
-                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact)"> {{ contact.fullName || contact.name }} </li>
+                <li *ngFor="let contact of contacts | filterContacts: filterText" (click)="onAddContact(contact);"> {{ contact.fullName || contact.name }} </li>
               </ul>
             `,
 })
