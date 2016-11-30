@@ -99,6 +99,10 @@ export class BotService {
 
   public removeSelectedFbContact(contact){
     const userId = localStorage.getItem('user_id');
+    
+    console.log("contact id", contact.id);
+    console.log("contact", contact);
+
     return this.http.delete(`/api/facebook/friends?contactId=${contact.id}`).toPromise()
     .then(_=>{
       return this.importUserBots();
