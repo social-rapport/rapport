@@ -7,13 +7,14 @@ const botMethods = require('./botMethods.js');
 
 
 const runAllTasks = function(callback) {
-      dbQ.getTasksJoinedWithUsers('today')
-      .then(tasks => Promise.all(tasks.map(taskObj => botMethods[taskObj.task](taskObj))))
-      .then(logTasks)
-      .then(callback);
+  const today = `${new Date().getMonth()}\/${new Date().getDate()}`;
+  dbQ.getTasksJoinedWithUsers(today)
+  .then(tasks => Promise.all(tasks.map(taskObj => botMethods[taskObj.task](taskObj))))
+  .then(logTasks)
+  .then(callback);
 };
 
-const logTasks = taskArray => Promise.all(tasksArray.map(task => dbQ.addToLog(task)));
+const logTasks = tasksArray => Promise.all(tasksArray.map(task => dbQ.addToLog(task)));
 
 module.exports.runAllTasks = runAllTasks;
 module.exports.logTasks = logTasks;

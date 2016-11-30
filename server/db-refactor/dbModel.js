@@ -20,7 +20,7 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
-  console.log("passed bot obj", botObj);
+  console.log("passed bot obj", botObj.botType);
   if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
@@ -29,6 +29,7 @@ const updateOrCreateNewBot = function(userId, botObj) {
 };
 
 const createAllBotInfo = function(userId, botObj) {
+  console.log("creating bot", botObj.botType);
 
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
@@ -40,6 +41,8 @@ const createAllBotInfo = function(userId, botObj) {
 };
 
 const updateAllBotInfo = function(botObj) {
+  console.log("updating bot", botObj.botType);
+
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
       .then(affectedRows => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
@@ -93,9 +96,7 @@ const getAllBotInfo = function(botId) {
         botObj.tasks = arrayOfBotInfo[2];
         botObj.selectedFbFriends = arrayOfBotInfo[3];
         botObj.botActivity.recent = arrayOfBotInfo[4];
-        botObj.botActivity.scheduled = arrayOfBotInfo[5]
-
-        console.log("botObject", botObj);
+        botObj.botActivity.scheduled = arrayOfBotInfo[5];
 
         resolve(botObj)
       }).catch(reject);

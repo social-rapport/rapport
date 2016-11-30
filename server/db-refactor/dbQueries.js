@@ -159,11 +159,19 @@ const removeSelectedTask = function(taskId) {
 };
 
 const updateSelectedTask = function({id: taskId, date: date, platform: platform, message: message, task: task, interval: interval}) {
-  const updateContactQuery = `UPDATE tasks SET date=${sqp.escape(date)},
-    platform=${sqp.escape(platform)}, message=${sqp.escape(message)}, task=${sqp.escape(task)}, interval=${sqp.escape(interval)}
-     WHERE id=${sqp.escape(taskId)}`;
-    return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
+  const updateContactQuery = `UPDATE tasks SET date=${sqp.escape(date)},platform=${sqp.escape(platform)}, 
+  message=${sqp.escape(message)}, task=${sqp.escape(task)},\`interval\`=${sqp.escape(interval)} 
+  WHERE id=${sqp.escape(taskId)}`;
+
+  console.log("update query", updateContactQuery);
+  return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
+
+const updateTaskDate = function(id, date) {
+  const q = `UPDATE tasks SET date=${sqp.escape(date)} WHERE id=${sqp.escape(id)}`;
+
+  return sqp.query(q).then(data => data.affectedRows);
+}
 
 const getSelectedTasks = function(botId) {
   const selectContactsQuery = `SELECT * FROM tasks G
@@ -224,7 +232,7 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN users U ON U.id=JJ.id_user
     INNER JOIN bot_contacts JJJ ON JJJ.id_bot=B.id
     INNER JOIN selectedGmailContacts G ON G.id=JJJ.id_contact
-    WHERE T.date=${sqp.escape(date)} OR G.birthday=${sqp.escape(date)}`;
+    WHERE T.date=${sqp.escape(date)} OR G.birthday=${sqp.escape(date)} OR T.date='today'`;
 
   const q2 = `SELECT * FROM tasks T
     INNER JOIN tasks_bots TB ON T.id=TB.id_task
@@ -232,7 +240,7 @@ const getTasksJoinedWithUsers = function(date) {
     INNER JOIN users_bots UB ON UB.id=B.id
     INNER JOIN users U ON U.id=UB.id_user
     INNER JOIN selectedFacebookFriends F ON F.id_bot=B.id
-    WHERE T.date=${sqp.escape(date)} OR F.birthday=${sqp.escape(date)}`;
+    WHERE T.date=${sqp.escape(date)} OR F.birthday=${sqp.escape(date)} OR T.date='today'`;
 
     return Promise.all([sqp.query(q), sqp.query(q2)])
       .then(resolveArray => [].concat.apply([],resolveArray));
@@ -338,5 +346,6 @@ module.exports = {
   getBotLog: getBotLog,
   deleteSingleLog: deleteSingleLog,
   deleteBotLogs: deleteBotLogs,
-  deleteUserLogs: deleteUserLogs
+  deleteUserLogs: deleteUserLogs,
+  updateTaskDate: updateTaskDate
 };

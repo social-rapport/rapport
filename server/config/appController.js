@@ -8,7 +8,6 @@ const bot = require('../bot/botController.js');
 var types = require('../db-refactor/types');
 var holidayUtils = require('../utils/holiday_utils.js');
 
-console.log("bot", bot);
 module.exports.oauth = "";
 
 //<---------------------RESTRICTED METHODS (ACCESSED AFTER AUTH)--------------------->
@@ -43,7 +42,6 @@ module.exports.updateUserInfo = function(req, res){
 };
 //<---------------------Updates Facebook Credentials--------------------->
 module.exports.updateFacebookCredentials = function(req, res) {
-  console.log("request body", req.body);
   dbQ.updateFacebookCredentials(req.query.userId, req.body)
     .then(() => res.status(200).send('updated user\'s facebook info'))
     .catch((error) => req.status(500).send('error saving the credentials: ', error));
@@ -108,7 +106,6 @@ module.exports.getTasksForChron = function(req, res){
   });
 };
 module.exports.runalltasks = function(req, res){
-  console.log("bot", bot);
   bot.runAllTasks( result => {
     res.send(result);
     res.end();
