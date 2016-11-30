@@ -80,8 +80,10 @@ export class BotService {
           return self.userBots; 
         } else {
           self.userBots = [];
+          self.scheduled = [];
         }
-      }).toPromise();
+      }).toPromise()
+      
   }
 
   public getHolidays(){
@@ -105,14 +107,11 @@ export class BotService {
   }
 
   public retireBot(selectedBot){
+    var self = this;
     const userId = localStorage.getItem('user_id');
     return this.http.delete(`/api/bots?botId=${selectedBot.id}`)
     .toPromise()
-    .then(()=>{
-      this.userBots = this.userBots.filter((bot)=>{
-        return bot.id !== selectedBot.id;
-      })
-    })
+    .then(self.importUserBots.bind(self));
   }
 
   public updateBots(userBotsArray){

@@ -74,7 +74,16 @@
           <tr *ngFor="let bot of bots"
                 [class.selected]="bot === selectedBot"
                 (click)="onSelectBot(bot)">
-                <td class="">{{botService.getDisplayName(bot)}}</td>
+            
+                <td *ngIf="editableName !== bot" class="">
+                  <p>{{botService.getDisplayName(bot)}}</p>
+                  <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
+                </td>
+          
+                <td *ngIf="editableName === bot" class="">
+                  <span class="glyphicon glyphicon-ok" (click) = "editableName = null; bot.botName = customBotName" ></span>
+                  <input type="text" [(ngModel)]="customBotName">  
+                </td>
           </tr>
        
       </tbody>

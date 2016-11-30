@@ -40,6 +40,8 @@ export class ManageComponent {
   private tasks: Array<string>;
   private mode = "bot";
   private scheduled; 
+  private editabelName;
+  private customBotName;
   //
   constructor(private botService: BotService, 
               private gmailService: GmailService,
