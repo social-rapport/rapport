@@ -116,7 +116,15 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>SELECTED CONTACTS</th>
+            <th>SELECTED CONTACTS</th>
+            <div *ngIf="!uiVars.addContact" >
+              <span class="glyphicon glyphicon-plus" (click)="uiVars.addContact = true"></span>
+            </div>
+            <div *ngIf="uiVars.addContact === true" >
+              <span *ngIf="uiVars.addContact === true" class="glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
+              name:<input *ngIf="uiVars.addContact === true" class="fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
+              email: <input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
+            </div>
         </tr>
       </thead>
         <tbody *ngIf="selectedBot.botType !== 'social'">
@@ -159,12 +167,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>AVAILABLE CONTACTS</th>
-          <span *ngIf="!uiVars.addContact" class="glyphicon glyphicon-plus" (click)="uiVars.addContact = true"></span>
-          <span *ngIf="uiVars.addContact === true" class="glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
-          name: <input *ngIf="uiVars.addContact === true" class="fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
-          email:<input *ngIf="uiVars.addContact === true" class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
-          
+          <th>AVAILABLE CONTACTS</th> 
         </tr>
       </thead>
         <tbody>
