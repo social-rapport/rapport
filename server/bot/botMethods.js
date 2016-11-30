@@ -40,14 +40,14 @@ module.exports = {
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
       subject: "Happy Birthday " + taskObj.name + "!!!",
-      body: `something${taskObj.message}<br/>`
     };
 
     return new Promise((resolve, reject) => {
       giphy.random('birthday')
-      .then(function(gifRes){
-        console.log(gifRes.data);
+      .then(gifRes => {
+
         msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
+
         gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
           scheduleNext(taskObj)
             .then(() => resolve(taskObj));
