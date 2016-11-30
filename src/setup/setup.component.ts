@@ -17,6 +17,7 @@ export class SetupComponent {
 
   private fbUsername: String;
   private fbPassword: String;
+
   bots = [];
   selectedType;
 <<<<<<< e1c9639f8f27903d85a19ed5043c10aff5271ec6
@@ -34,7 +35,6 @@ export class SetupComponent {
   open() {
       this.modal.open();
   }
-
 
   constructor(private botService: BotService, 
               private router: Router, 
@@ -71,10 +71,8 @@ export class SetupComponent {
   private routeToManage(selectedType){
     if(selectedType.botType === 'power'){
       this.router.navigate(['loading']);
-      this.botService.getHolidays().then(()=>{
         this.botService.addBotTypeToUser(selectedType);
         this.router.navigate(['manage']);
-      })
     } else {
       this.store.addBot(selectedType);
       this.botService.addBotTypeToUser(selectedType);
