@@ -20,7 +20,6 @@ import { LandingPageComponent }   from '../landing-page/landing-page.component';
 import { GmailLoginComponent }    from '../gmail-login/gmail-login.component';
 import { SetupComponent }    from '../setup/setup.component';
 import { ManageComponent }    from '../manage/manage.component';
-import { _ManageComponent }    from '../manage/_manage.component';
 import { ContactComponent }    from '../contact/contact.component';
 import { HomePageComponent } from '../home-page/home.component';
 import { SearchComponent } from '../search/search.component';
@@ -44,7 +43,6 @@ import { Store } from '../shared/store';
     GmailLoginComponent,
     SetupComponent,
     ManageComponent,
-    _ManageComponent,
     ContactComponent,
     SearchComponent,
     FilterContacts,
