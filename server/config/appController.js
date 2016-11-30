@@ -42,9 +42,19 @@ module.exports.updateUserInfo = function(req, res){
 };
 //<---------------------Updates Facebook Credentials--------------------->
 module.exports.updateFacebookCredentials = function(req, res) {
-  dbQ.updateFacebookCredentials(req.query.userId, req.body)
+  const auth = {
+    email: req.body.fbEmail,
+    password: req.body.fbPassword
+  };
+
+  facebook.checkIfValidCredentials(auth)
+  .then(() => {
+    dbQ.updateFacebookCredentials(req.query.userId, req.body)
     .then(() => res.status(200).send('updated user\'s facebook info'))
     .catch((error) => req.status(500).send('error saving the credentials: ', error));
+  })
+  .catch(error => res.status(500).send(`invalid credentials: ${error}`));
+  
 };
 //<---------------------Gets Facebook Friends--------------------->
 module.exports.getFacebookFriends = function(req, res) {
@@ -61,7 +71,6 @@ module.exports.getFacebookFriends = function(req, res) {
 };
 //<---------------------Removes Facebook Friends--------------------->
 module.exports.removeFacebookFriends = function(req, res) {
-  console.log("query", req.query);
   dbQ.removeSelectedFacebookFriend([req.query.contactId])
     .then(() => res.status(200).send('removed friend'));
 };
