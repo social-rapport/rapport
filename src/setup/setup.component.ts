@@ -15,8 +15,8 @@ import { Store } from '../shared/store';
 
 export class SetupComponent {
 
-  private fbUsername: String;
-  private fbPassword: String;
+  private fbUsername: String ='nickspinosa1022@gmail.com';
+  private fbPassword: String ='cichlid1111';
 
   bots = [];
   selectedType;

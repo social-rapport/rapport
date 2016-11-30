@@ -119,8 +119,24 @@
           <th>SELECTED CONTACTS</th>
         </tr>
       </thead>
-        <tbody>
-        <tr class="" *ngFor="let contact of contacts"
+        <tbody *ngIf="selectedBot.botType !== 'social'">
+        <tr class="" *ngFor="let contact of selectedBot.selectedContacts"
+                  [class.selected]="contact === selectedContact"
+                  (click)="onSelectContact(contact)">
+              <td>
+                <div *ngIf="contact">
+                  <p>{{contact.fullName || contact.name}}
+                    <span>
+                      <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday"/>
+                      <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
+                    </span>
+                  </p>
+                </div>
+              </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="selectedBot.botType === 'social'">
+        <tr class="" *ngFor="let contact of selectedBot.selectedFbFriends"
                   [class.selected]="contact === selectedContact"
                   (click)="onSelectContact(contact)">
               <td>
