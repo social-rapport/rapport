@@ -160,6 +160,11 @@
       <thead class="thead-inverse">
         <tr>
           <th>AVAILABLE CONTACTS</th>
+          <span *ngIf="!uiVars.addContact" class="glyphicon glyphicon-plus" (click)="uiVars.addContact = true"></span>
+          <span *ngIf="uiVars.addContact === true" class="glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
+          name: <input *ngIf="uiVars.addContact === true" class="fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
+          email:<input *ngIf="uiVars.addContact === true" class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
+          
         </tr>
       </thead>
         <tbody>
