@@ -1,7 +1,7 @@
 const gmail = require('../config/gmailController.js');
 const facebook = require('../facebook/fbchatController.js');
 const dbq = require('../db-refactor/dbQueries.js');
-
+const giphy = require('giphy-api')();
 
 function scheduleNext(taskObj) {
   const interval = taskObj.interval;
@@ -13,7 +13,7 @@ function scheduleNext(taskObj) {
 
   const newDate = `${newMonth}\/${new Date().getDate()}`;
 
-  return dbq.updateTaskDate(taskObj.id_task, newDate); 
+  return dbq.updateTaskDate(taskObj.id_task, newDate);
 }
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
       username: taskObj.name,
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
-      subject: "whooooot! this is from Nam",
+      subject: "Just a friendly 'hello'",
       body: `${taskObj.message}<br/>`
     };
 
@@ -40,16 +40,21 @@ module.exports = {
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
       subject: "Happy Birthday " + taskObj.name + "!!!",
-      body: `${taskObj.message}<br/>`
+      body: `something${taskObj.message}<br/>`
     };
 
     return new Promise((resolve, reject) => {
-      gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-        scheduleNext(taskObj)
-          .then(() => resolve(taskObj));
+      giphy.random('birthday')
+      .then(function(gifRes){
+        console.log(gifRes.data);
+        msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
+        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+          scheduleNext(taskObj)
+            .then(() => resolve(taskObj));
+        });
       });
     })
-    
+
   },
   sayHappyHolidayGmail: function (taskObj) {
     const msgData = {
@@ -80,7 +85,7 @@ module.exports = {
           .then(() => resolve(taskObj));
       });
     })
-    
+
   },
   sayHiFacebook: function(taskObj) {
     let auth = {};
