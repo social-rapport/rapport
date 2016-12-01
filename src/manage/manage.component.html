@@ -105,7 +105,11 @@
                 <p *ngIf="task.decorated && task.decorated.formattedName">
                   {{task.decorated.formattedName}}
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
+<<<<<<< 7d990ab9a2c6561a5cead717b4f4735a6445f6c0
                 </p>
+=======
+                <span class="glyphicon glyphicon-remove" (click)="alert('deleting task')"></span>
+>>>>>>> keeps modal open on invalid fb login; displays error; disables submit when no input; clears input
         </tr>
       </tbody>
     </table>
