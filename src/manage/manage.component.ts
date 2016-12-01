@@ -42,6 +42,8 @@ export class ManageComponent {
   private scheduled; 
   private editabelName;
   private customBotName;
+  private uiVars = {newContact:{name: "", string: ""},
+                    editContact: ""};
   //
   constructor(private botService: BotService, 
               private gmailService: GmailService,
@@ -125,6 +127,12 @@ export class ManageComponent {
         self.router.navigate(['setup']);
       }
     })
+  }
+
+  //<-----------------ADD CONTACTS METHODS----------------->
+
+  createNewContact(contact){
+    this.selectedBot.selectedContacts.push(contact);
   }
 
   //<-----------------SELECTED CONTACTS METHODS----------------->

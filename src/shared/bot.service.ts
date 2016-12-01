@@ -167,6 +167,10 @@ export class BotService {
     });
   }
 
+  public createNewContact(contact){
+    console.log('new contact',contact);
+  }
+
   public addNewHolidayTask(taskOptions,bot){
     var date = this.holidays.filter(function(holiday){
       return holiday.name === taskOptions.name; 
