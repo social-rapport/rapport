@@ -6,12 +6,15 @@ import { customBot, gmailContact } from '../shared/custom-type-classes';
 @Injectable()
 export class BotService {
   
-  //bots: Array<customBot>;
-  public userBots: Array<customBot>;
-  public botTypes: Array<customBot>;
+  public userBots;
+  public botTypes;
   public holidays;
   public contacts: Array<gmailContact>;
   public tasks: Array<string>;
+  public scheduled = null;
+  public recent = null;
+  public currentBot = null;
+
   public taskExtensions = {
     'sayHappyHolidayGmail': {formattedName: 'holiday: gmail', 
                             setsDate: false, 
@@ -19,11 +22,11 @@ export class BotService {
                             subTask: true,
                             holidays: true},
     'sayHappyBirthdayGmail':{formattedName: 'birthday: gmail',
-                            setsDate: true, 
-                            setsInterval: true,}, 
+                            setsDate: false, 
+                            setsInterval: false,}, 
     'sayHappyBirthdayFacebook':{formattedName: 'birthday: facebook',
-                            setsDate: true, 
-                            setsInterval: true,}, 
+                            setsDate: false, 
+                            setsInterval: false,}, 
     'sayHiGmail':           {formattedName: 'message: gmail',
                             setsDate: true, 
                             setsInterval: true,}, 
@@ -32,38 +35,9 @@ export class BotService {
                             setsInterval: true,},
   };
   
-  public scheduled = null;
-  public recent = null;
-  public currentBot = null;
-   
   constructor(private http: Http) {}
 
-  public getBots(){
-    //add get tasks when api endpoint is implemented
-    return Promise.all([this.getHolidays(), this.getBotTypes(), this.importUserBots()]);
-  }
-
-  public getBotTypes(){
-    let token = localStorage.getItem('id_token');
-    let id = localStorage.getItem('user_id');
-    var self = this;
-    return this.http.get(`/api/botTypes`)
-      .map(function(data: any) {
-          self.botTypes = JSON.parse(data._body).bots;
-          self.decorateAll(self.botTypes);
-          return self.botTypes;
-      }).toPromise();
-  }
-
-  public joinTaskDescriptions(bots){
-    var jobs = bots.reduce(function(acc,bot){
-      return acc.concat(bot.botActivity.scheduled);
-    },[]);
-    var recent = bots.reduce(function(acc,bot){
-      return acc.concat(bot.botActivity.recent)
-    },[])
-    return jobs.concat(recent);
-  }
+ //<----------------------BOT RETRIEVAL AND UPDATE---------------------->
 
   public importUserBots(){
     let token = localStorage.getItem('id_token');
@@ -86,12 +60,56 @@ export class BotService {
       
   }
 
+  public updateBots(userBotsArray){
+   const userId = localStorage.getItem('user_id');
+   const body = JSON.stringify({bots: userBotsArray});
+   const headers = new Headers({'Content-Type': 'application/json'});
+
+   this.normalizeDates();
+
+   return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
+      .toPromise()
+      .then(()=>{
+        return this.importUserBots();
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+  }
+
+  public retireBot(selectedBot){
+    var self = this;
+    const userId = localStorage.getItem('user_id');
+    return this.http.delete(`/api/bots?botId=${selectedBot.id}`)
+    .toPromise()
+    .then(self.importUserBots.bind(self));
+  }
+
+   //<----------------------SETUP---------------------->
+
+  public getBots(){
+    //add get tasks when api endpoint is implemented
+    return Promise.all([this.getHolidays(), this.getBotTypes(), this.importUserBots()]);
+  }
+
   public getHolidays(){
     return this.http.get(`/api/holidays?year=${2016}`)
       .map((data: any) => {
         data = data.json();
         this.holidays = data;
         return data;
+      }).toPromise();
+  }
+
+  public getBotTypes(){
+    let token = localStorage.getItem('id_token');
+    let id = localStorage.getItem('user_id');
+    var self = this;
+    return this.http.get(`/api/botTypes`)
+      .map(function(data: any) {
+          self.botTypes = JSON.parse(data._body).bots;
+          self.decorateAll(self.botTypes);
+          return self.botTypes;
       }).toPromise();
   }
 
@@ -106,29 +124,7 @@ export class BotService {
       }).toPromise();
   }
 
-  public retireBot(selectedBot){
-    var self = this;
-    const userId = localStorage.getItem('user_id');
-    return this.http.delete(`/api/bots?botId=${selectedBot.id}`)
-    .toPromise()
-    .then(self.importUserBots.bind(self));
-  }
-
-  public updateBots(userBotsArray){
-   console.log("user bots to be saved", userBotsArray);
-   const userId = localStorage.getItem('user_id');
-   const body = JSON.stringify({bots: userBotsArray});
-   const headers = new Headers({'Content-Type': 'application/json'});
-
-   return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
-      .toPromise()
-      .then(()=>{
-        return this.importUserBots();
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
-  }
+   //<----------------------CONTACT REMOVAL---------------------->
 
   public removeSelectedContact(contact){
     const userId = localStorage.getItem('user_id');
@@ -140,36 +136,13 @@ export class BotService {
 
   public removeSelectedFbContact(contact){
     const userId = localStorage.getItem('user_id');
-    
-    console.log("contact id", contact.id);
-    console.log("contact", contact);
-
     return this.http.delete(`/api/facebook/friends?contactId=${contact.id}`).toPromise()
     .then(_=>{
       return this.importUserBots();
     });
   }
 
-  public decorateAll(bots){
-    var self = this;
-    bots.forEach(function(bot){
-      bot.tasks.forEach(function(task){
-        task.decorated = Object.assign({},self.taskExtensions[task.task]);
-        if(task.date === null){
-          task.decorated.subTask = false;
-        }
-        if(task.decorated.subTask){
-          task.decorated.formattedName = self.holidays.filter((h)=>{
-            return h.date === task.date
-          })[0].name;
-        }
-      });
-    });
-  }
-
-  public createNewContact(contact){
-    console.log('new contact',contact);
-  }
+   //<----------------------TASK ADDITION---------------------->
 
   public addNewHolidayTask(taskOptions,bot){
     var date = this.holidays.filter(function(holiday){
@@ -193,15 +166,58 @@ export class BotService {
     bot.tasks.push(task);
   }
 
-//   date:"today"
-// id:1
-// id_bot:1
-// id_task:1
-// interval:6
-// message:"Howdy! how are ya!"
-// platform:"gmail"
-// task:"sayHiGmail"
 
+  //<----------------------DATA TRANSFORMATIONS FROM BACKEND TO FRONTEND---------------------->
+
+  public decorateAll(bots){
+    var self = this;
+    bots.forEach(function(bot){
+      bot.tasks.forEach(function(task){
+        task.decorated = Object.assign({},self.taskExtensions[task.task]);
+        if(task.date === null){
+          task.decorated.subTask = false;
+        }
+        if(task.decorated.subTask){
+          task.decorated.formattedName = self.holidays.filter((h)=>{
+            return h.date === task.date
+          })[0].name;
+        }
+      });
+    });
+  }
+
+  public joinTaskDescriptions(bots){
+    var jobs = bots.reduce(function(acc,bot){
+      return acc.concat(bot.botActivity.scheduled);
+    },[]);
+    var recent = bots.reduce(function(acc,bot){
+      return acc.concat(bot.botActivity.recent)
+    },[])
+    return jobs.concat(recent);
+  }
+
+  //<----------------------DATA TRANSFORMATIONS FROM FRONTEND TO BACKEND---------------------->
+  public normalizeDates(){
+    this.userBots.forEach(function(bot){
+      bot.selectedContacts.forEach(function(contact){
+        if(contact.birthday){
+          var date = new Date(contact.birthday);
+          var month = date.getMonth();
+          var day = date.getDay();
+          contact.birthday = String(month) + '/' + String(day);
+        }
+      })
+      bot.tasks.forEach(function(task){
+        if(task.date){
+          var date = new Date(task.date);
+          var month = date.getMonth();
+          var day = date.getDay();
+          task.date = String(month) + '/' + String(day);
+        }
+      })
+    })
+  }
+   
   //<-----------------GETTERS AND SETTERS----------------->
 
   public getDisplayName(bot){
