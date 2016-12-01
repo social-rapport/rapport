@@ -6,6 +6,7 @@ import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
 import { AUTH_PROVIDERS }      from 'angular2-jwt';
 
+import { LogInGuard } from '../shared/logged-in.guard';
 import { AuthGuard } from '../shared/auth.guard';
 import { Auth0CallbackGuard } from '../shared/auth0.guard';
 import { BotService }         from '../shared/bot.service';
@@ -56,6 +57,7 @@ import { Store } from '../shared/store';
     Store,
     GmailService,
     FbService,
+    LogInGuard,
     AuthGuard,
     Auth0CallbackGuard,
     AUTH_PROVIDERS

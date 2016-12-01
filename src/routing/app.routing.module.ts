@@ -8,9 +8,10 @@ import {AuthGuard} from '../shared/auth.guard';
 import { HomePageComponent } from '../home-page/home.component';
 import { SearchComponent } from '../search/search.component';
 import { LoadingComponent } from '../loading/loading.component';
+import { LogInGuard } from '../shared/logged-in.guard';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent},
+  { path: '', canActivate:[LogInGuard], component: LandingPageComponent},
   { path: 'loading', component: LoadingComponent},
   { path: 'home', component: HomePageComponent},
   { path: 'search', component: SearchComponent },

@@ -107,10 +107,11 @@ const addToSelectedContacts = function(botId, {name: name, email: email, birthda
       })
 };
 
-const updateSelectedContact = function({contactId: contactId, name: name, email: email, birthday: birthday}) {
+const updateSelectedContact = function({id: id, name: name, email: email, birthday: birthday}) {
   const updateContactQuery = `UPDATE selectedGmailContacts SET name=${sqp.escape(name)},
-    email=${sqp.escape(email)}, birthday=${sqp.escape(birthday)} WHERE id=${sqp.escape(contactId)}`;
-    return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
+    email=${sqp.escape(email)}, birthday=${sqp.escape(birthday)} WHERE id=${sqp.escape(id)}`;
+
+  return sqp.query(updateContactQuery).then((data)=>data.affectedRows);
 };
 
 const removeSelectedContact = function(contactId) {

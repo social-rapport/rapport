@@ -7,7 +7,6 @@ const updateOrCreateUserBots = function(userId, botsArray) {
 };
 
 const getAllUserBots = function(userId) {
-
   return new Promise((resolve, reject) => {
     dbq.getUserBots(userId)
       .then(botIdArray => Promise.all(botIdArray.map(botId => getAllBotInfo(botId))))
@@ -20,9 +19,6 @@ const getAllUserBots = function(userId) {
 //<----------------------Per Bot---------------------->>
 
 const updateOrCreateNewBot = function(userId, botObj) {
-  console.log("passed bot type", botObj.botType);
-  console.log("passed bot fb friends", botObj.selectedFbFriends);
-
   if(botObj.id) {
     return updateAllBotInfo(botObj);
   } else {
@@ -31,8 +27,6 @@ const updateOrCreateNewBot = function(userId, botObj) {
 };
 
 const createAllBotInfo = function(userId, botObj) {
-  console.log("creating bot", botObj.botType);
-
   return new Promise((resolve, reject) => {
     dbq.addBotToUser(userId, botObj)
     .then(botId => Promise.all([addOrUpdateSelectedContacts(botId, botObj.selectedContacts),
@@ -43,8 +37,6 @@ const createAllBotInfo = function(userId, botObj) {
 };
 
 const updateAllBotInfo = function(botObj) {
-  console.log("updating bot", botObj.botType);
-
   return new Promise((resolve, reject) => {
     dbq.updateBot(botObj)
       .then(affectedRows => Promise.all([addOrUpdateSelectedContacts(botObj.id, botObj.selectedContacts),
@@ -100,8 +92,6 @@ const getAllBotInfo = function(botId) {
         botObj.botActivity.recent = arrayOfBotInfo[4];
         botObj.botActivity.scheduled = arrayOfBotInfo[5];
 
-        console.log("fb object", botObj.selectedFbFriends);
-
         resolve(botObj)
       }).catch(reject);
   });
@@ -146,12 +136,10 @@ const removeFromRegisteredTasks = function(taskIdArray) {
 
 //facebook friends
 const addOrUpdateSelectedFacebookFriends = function(botId, friendArray) {
-  console.log("friend array", friendArray);
   return Promise.all(friendArray.map(friend => addOrUpdateFacebookFriend(botId, friend)));
 }; 
 
 const addOrUpdateFacebookFriend = function(botId, friendObj) {
-  console.log("friend obj", friendObj);
   if(friendObj.id) {
     return dbq.updateSelectedFacebookFriend(friendObj);
   } else {
