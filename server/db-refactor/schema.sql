@@ -52,6 +52,7 @@ CREATE TABLE `log` (
   `platform` VARCHAR(100),
   `message` VARCHAR(500),
   `task` VARCHAR(100),
+  `contactName` VARCHAR(100),
   `id_bot` INTEGER,
   `id_user` INTEGER,
   PRIMARY KEY (`id`)

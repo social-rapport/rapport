@@ -92,6 +92,8 @@ const getAllBotInfo = function(botId) {
         botObj.botActivity.recent = arrayOfBotInfo[4];
         botObj.botActivity.scheduled = arrayOfBotInfo[5];
 
+        console.log("recent", botObj.botActivity.recent);
+
         resolve(botObj)
       }).catch(reject);
   });

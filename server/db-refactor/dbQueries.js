@@ -276,22 +276,25 @@ const getSelectedFacebookFriends = function(botId) {
 
 //<----------------------LOG---------------------->>
 
-const addToLog = function({date: date, platform: platform, message: message, task: task, id_bot: id_bot, id_user: id_user}){
-  const q = `INSERT INTO log(date, platform, message, task, id_bot, id_user)
+const addToLog = function({date: date, platform: platform, message: message, task: task, id_bot: id_bot, id_user: id_user, name: name}){
+  const q = `INSERT INTO log(date, platform, message, task, id_bot, id_user, contactName)
     values(${sqp.escape(date)}, ${sqp.escape(platform)}, ${sqp.escape(message)},
-    ${sqp.escape(task)}, ${sqp.escape(id_bot)}, ${sqp.escape(id_user)})`;
-
+    ${sqp.escape(task)}, ${sqp.escape(id_bot)}, ${sqp.escape(id_user)}, ${sqp.escape(name)})`;
 
   return sqp.query(q)
 };
 
 const getUserLog = function(userId) {
-  const q = `SELECT * FROM log WHERE id_user=${sqp.escape(userId)}`;
+  const q = `SELECT * FROM log L
+    INNER JOIN bot B ON L.id_bot=B.id
+    WHERE L.id_user=${sqp.escape(userId)}`;
   return sqp.query(q);
 };
 
 const getBotLog = function(botId) {
-  const q = `SELECT * FROM log WHERE id_bot=${sqp.escape(botId)}`;
+  const q = `SELECT * FROM log L 
+    INNER JOIN bot B ON L.id_bot=B.id 
+    WHERE B.id=${sqp.escape(botId)}`;
   return sqp.query(q);
 };
 
