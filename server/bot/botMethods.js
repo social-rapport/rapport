@@ -16,41 +16,53 @@ function scheduleNext(taskObj) {
   return dbq.updateTaskDate(taskObj.id_task, newDate);
 }
 
+function buildMsgData(taskObj, msgData){
+  return new Promise((resolve, reject) => {
+    dbq.getUser(taskObj.id_user)
+    .then(user => {
+      msgData.username = user.name;
+      msgData.useremail = taskObj.gmail;
+      msgData.emailTo = taskObj.email;
+      resolve(msgData);
+    });
+  });
+}
+
 module.exports = {
 
   sayHiGmail: function(taskObj) {
     const msgData = {
-      username: taskObj.name,
-      useremail: taskObj.gmail,
-      emailTo: taskObj.email,
       subject: "Just a friendly 'hello'",
       body: `${taskObj.message}<br/>`
     };
 
     return new Promise((resolve, reject) => {
-      gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-        scheduleNext(taskObj)
-          .then(() => resolve(taskObj));
+      buildMsgData(taskObj, msgData)
+      .then(msgData => {
+        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+          scheduleNext(taskObj)
+            .then(() => resolve(taskObj));
+        });
       });
     });
   },
   sayHappyBirthdayGmail: function (taskObj) {
     const msgData = {
-      username: taskObj.name,
-      useremail: taskObj.gmail,
-      emailTo: taskObj.email,
       subject: "Happy Birthday " + taskObj.name + "!!!",
     };
 
     return new Promise((resolve, reject) => {
-      giphy.random('birthday')
-      .then(gifRes => {
+      buildMsgData(taskObj, msgData)
+      .then(msgData => {
+        giphy.random('birthday')
+        .then(gifRes => {
 
-        msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
+          msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
 
-        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-          scheduleNext(taskObj)
-            .then(() => resolve(taskObj));
+          gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+            scheduleNext(taskObj)
+              .then(() => resolve(taskObj));
+          });
         });
       });
     })
@@ -58,17 +70,17 @@ module.exports = {
   },
   sayHappyHolidayGmail: function (taskObj) {
     const msgData = {
-      username: taskObj.name,
-      useremail: taskObj.gmail,
-      emailTo: taskObj.email,
       subject: "Happy Holidays!!!",
       body: `${taskObj.message}<br/>`
     };
 
     return new Promise((resolve, reject) => {
-      gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-        scheduleNext(taskObj)
-          .then(() => resolve(taskObj));
+      buildMsgData(taskObj, msgData)
+      .then(msgData => {
+        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+          scheduleNext(taskObj)
+            .then(() => resolve(taskObj));
+        });
       });
     })
 

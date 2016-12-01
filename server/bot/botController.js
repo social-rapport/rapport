@@ -5,7 +5,6 @@ var express = require('express');
 var app = express();
 const botMethods = require('./botMethods.js');
 
-
 const runAllTasks = function(callback) {
   const today = `${new Date().getMonth()}\/${new Date().getDate()}`;
   dbQ.getTasksJoinedWithUsers(today)
