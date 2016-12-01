@@ -4,7 +4,7 @@
 var initialBots =
     [{
         botId: null,
-        botName: 'unnamed',
+        botName: 'MyBot',
         botType: 'basic',
         tasks: [
              {
@@ -33,7 +33,7 @@ var initialBots =
     },
     {
         botId: null,
-        botName: 'unnamed',
+        botName: 'MyBot',
         botType: 'social',
         tasks: [
             {
@@ -62,7 +62,7 @@ var initialBots =
     },
     {
         botId: null,
-        botName: 'unnamed',
+        botName: 'MyBot',
         botType: 'power',
         tasks: [
              {

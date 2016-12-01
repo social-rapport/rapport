@@ -5,7 +5,7 @@ import { customBot, gmailContact } from '../shared/custom-type-classes';
 
 @Injectable()
 export class BotService {
-  
+
   public userBots;
   public botTypes;
   public holidays;
@@ -14,7 +14,7 @@ export class BotService {
   public scheduled = null;
   public recent = null;
   public currentBot = null;
-  
+
   constructor(private http: Http) {}
 
  //<----------------------BOT RETRIEVAL AND UPDATE---------------------->
@@ -24,7 +24,7 @@ export class BotService {
     let userId = localStorage.getItem('user_id');
     var self = this;
 
-    return this.http.get(`/api/bots?userId=${userId}`) 
+    return this.http.get(`/api/bots?userId=${userId}`)
       .map(function(data: any) {
         var bots = JSON.parse(data._body);
         if(bots.length !== 0) {
@@ -33,13 +33,13 @@ export class BotService {
           self.scheduled = self.joinScheduledTaskDescriptions(self.userBots);
           self.recent = self.joinRecentTaskDescriptions(self.userBots);
 
-          return self.userBots; 
+          return self.userBots;
         } else {
           self.userBots = [];
           self.scheduled = [];
         }
       }).toPromise()
-      
+
   }
 
   public updateBots(userBotsArray){
@@ -128,9 +128,9 @@ export class BotService {
 
   public addNewHolidayTask(taskOptions,bot){
     var date = this.holidays.filter(function(holiday){
-      return holiday.name === taskOptions.name; 
+      return holiday.name === taskOptions.name;
     })[0].date;
-    
+
     var task = {id: null,
                 id_bot: null,
                 interval: 12,
@@ -153,23 +153,23 @@ export class BotService {
 
 
   public taskExtensions = {
-    'sayHappyHolidayGmail': {formattedName: 'holiday: gmail', 
-                            setsDate: false, 
-                            setsInterval: false, 
+    'sayHappyHolidayGmail': {formattedName: 'holiday: gmail',
+                            setsDate: false,
+                            setsInterval: false,
                             masterTask: true,
                             subTask: true,
                             holidays: true},
     'sayHappyBirthdayGmail':{formattedName: 'birthday: gmail',
-                            setsDate: false, 
-                            setsInterval: false,}, 
+                            setsDate: false,
+                            setsInterval: false,},
     'sayHappyBirthdayFacebook':{formattedName: 'birthday: facebook',
-                            setsDate: false, 
-                            setsInterval: false,}, 
+                            setsDate: false,
+                            setsInterval: false,},
     'sayHiGmail':           {formattedName: 'message: gmail',
-                            setsDate: true, 
-                            setsInterval: true,}, 
+                            setsDate: true,
+                            setsInterval: true,},
     'sayHiFacebook':        {formattedName: 'message: facebook',
-                            setsDate: true, 
+                            setsDate: true,
                             setsInterval: true,},
   };
 
@@ -204,7 +204,7 @@ export class BotService {
     },[]);
     return recent;
   }
-  
+
 
   //<----------------------DATA TRANSFORMATIONS FROM FRONTEND TO BACKEND---------------------->
   public normalizeDates(){
@@ -227,17 +227,17 @@ export class BotService {
       })
     })
   }
-   
+
   //<-----------------GETTERS AND SETTERS----------------->
 
   public getDisplayName(bot){
-    if(bot.botName !== 'unnamed'){
+    if(bot.botName !== 'MyBot'){
       return bot.botName;
     } else {
       return bot.botType;
     }
   }
-  
+
   public sendNow(){
     return this.http.get('/api/runalltasks').toPromise();
   }
