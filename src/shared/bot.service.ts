@@ -14,6 +14,7 @@ export class BotService {
   public scheduled = null;
   public recent = null;
   public currentBot = null;
+  public deletedTasks = [];
 
   constructor(private http: Http) {}
 
@@ -42,21 +43,40 @@ export class BotService {
 
   }
 
+  //do rely on passed paramters 
   public updateBots(userBotsArray){
-   const userId = localStorage.getItem('user_id');
-   const body = JSON.stringify({bots: userBotsArray});
-   const headers = new Headers({'Content-Type': 'application/json'});
+    this.normalizeDates();
+    return this.deleteTasks()
+    .then(this.postBots.bind(this));
+  }
 
-   this.normalizeDates();
+  public postBots(){
+    var self = this;
+    const userId = localStorage.getItem('user_id');
+    const body = JSON.stringify({bots: this.userBots});
+    const headers = new Headers({'Content-Type': 'application/json'});
 
-   return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
-      .toPromise()
-      .then(()=>{
-        return this.importUserBots();
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
+    return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
+        .toPromise()
+        .then(()=>{
+          return self.importUserBots();
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+  }
+
+  public deleteTasks(){
+    //userID must be factored out
+    const userId = localStorage.getItem('user_id');
+    const body = JSON.stringify({tasks: this.deletedTasks});
+    //factor out headers
+    const headers = new Headers({'Content-Type': 'application/json'});
+
+    var r = this.http.post('/api/tasks', body, {headers: headers})
+    .toPromise();
+    this.deletedTasks = [];
+    return r;
   }
 
   public retireBot(selectedBot){
@@ -176,6 +196,7 @@ export class BotService {
   public decorateAll(bots){
     var self = this;
     bots.forEach(function(bot){
+      bot.decorated = {deletedTasks: []};
       bot.tasks.forEach(function(task){
         task.decorated = Object.assign({},self.taskExtensions[task.task]);
         if(task.date === null){

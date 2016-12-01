@@ -163,6 +163,9 @@ export class ManageComponent {
     this.scheduled = this.botService.scheduled;
     this.recent = this.botService.recent;
     this.bots = this.botService.userBots;
+    if(this.selectedBot){
+      this.tasks = this.selectedBot.tasks;
+    }
   }
 
   private ngOnInit(): void {

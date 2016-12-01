@@ -89,6 +89,8 @@
     </table>
   </div>
 
+  <!--added tasks-->
+
   <div class="col-md-3">
     <table class="table">
       <thead class="thead-inverse">
@@ -105,11 +107,15 @@
                 <p *ngIf="task.decorated && task.decorated.formattedName">
                   {{task.decorated.formattedName}}
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
+<<<<<<< 2e04420c6c8dac13fecd0b0d0cd290479859549d
 <<<<<<< 7d990ab9a2c6561a5cead717b4f4735a6445f6c0
                 </p>
 =======
                 <span class="glyphicon glyphicon-remove" (click)="alert('deleting task')"></span>
 >>>>>>> keeps modal open on invalid fb login; displays error; disables submit when no input; clears input
+=======
+                <span class="glyphicon glyphicon-remove" (click)="store.actions('DELETE-TASK',{bot: selectedBot, task: task})"></span>
+>>>>>>> -adds delete button
         </tr>
       </tbody>
     </table>
@@ -136,6 +142,7 @@
         </tr>
       </thead>
 
+      <!--basic bot contacts-->
 
         <tbody *ngIf="selectedBot.botType !== 'social'">
         <tr class="" *ngFor="let contact of selectedBot.selectedContacts">
@@ -156,6 +163,7 @@
         </tr>
       </tbody>
 
+    <!--social bot contacts-->
 
       <tbody *ngIf="selectedBot.botType === 'social'">
         <tr class="" *ngFor="let contact of selectedBot.selectedFbFriends">
@@ -178,6 +186,7 @@
     </table>
   </div>
 
+  <!--available contacts-->
 
   <div class="col-md-3">
     <table class="table">
