@@ -28,6 +28,16 @@ function buildMsgData(taskObj, msgData){
   });
 }
 
+function addGiphy(giphyQuery, msgData, taskObj) {
+  return new Promise((resolve, reject) => {
+    giphy.random(giphyQuery)
+    .then(gifRes => {
+      msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
+      resolve(msgData);
+    });
+  })
+}
+
 module.exports = {
 
   sayHiGmail: function(taskObj) {
@@ -53,19 +63,14 @@ module.exports = {
 
     return new Promise((resolve, reject) => {
       buildMsgData(taskObj, msgData)
+      .then(msgData => addGiphy('birthday', msgData, taskObj))
       .then(msgData => {
-        giphy.random('birthday')
-        .then(gifRes => {
-
-          msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
-
-          gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-            scheduleNext(taskObj)
-              .then(() => resolve(taskObj));
-          });
+        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+          scheduleNext(taskObj)
+            .then(() => resolve(taskObj));
         });
       });
-    })
+    });
 
   },
   sayHappyHolidayGmail: function (taskObj) {
