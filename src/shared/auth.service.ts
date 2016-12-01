@@ -48,7 +48,7 @@ export class Auth {
         localStorage.setItem('user_id',userInfo.id);
         userObj = userInfo;
         this.botService.getBots()
-          .then(arrayOfResolves => userBots = arrayOfResolves[2])
+          .then(arrayOfResolves => userBots = arrayOfResolves[3])
           .then(() => this.gmailService.getContacts())
           .then(() => {
             if(userObj.fbCredentials){
@@ -70,7 +70,7 @@ export class Auth {
   }
 
   public redirectForUserType(userObj, userBots) {
-    if(userObj.newUser || !userBots ){
+    if(userObj.newUser || !userBots){
       this.router.navigate(['setup']);
     } else {
       this.router.navigate(['manage']);
