@@ -1,0 +1,29 @@
+
+ <video class="vid" autoplay>
+    <source src="https://s3.amazonaws.com/nth-hack-reactor/rapport-assets/rapportDashboard.mp4" type="video/mp4">
+  </video >
+
+<div>
+<!-- TITLE -->
+  <div id="container-top-header">
+    <div id="container-header" class="col-md-12">
+      <div id="title-section" >
+        VIEW ACTIVITIES
+      </div>
+
+      <div id="title-section desc">
+        All recent and upcoming activity for all of your bots
+        Optionally filter by bot.
+      </div>
+
+    </div>
+
+
+<!--log display columns-->
+
+<h2>SCHEDULED ACTIVITIES</h2>
+  <div>
+    <ActivitiesTable [tasks]='subscribedScheduled' [bots]='bots' [clickFunction]='filterByBot' ></ActivitiesTable>
+    <ActivitiesTable [tasks]='subscribedRecent' [bots]='bots' [clickFunction]='filterByBot' ></ActivitiesTable>
+  </div>
+</div>

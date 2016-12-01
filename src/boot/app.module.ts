@@ -26,6 +26,8 @@ import { HomePageComponent } from '../home-page/home.component';
 import { SearchComponent } from '../search/search.component';
 import { FilterContacts } from '../search/contact.pipe';
 import { LoadingComponent } from '../loading/loading.component';
+import { ActivitiesTable } from '../activities-table/activities-table.component';
+import { ActivitiesContainer } from '../view-activities/view-activities.component';
 
 import { Store } from '../shared/store';
 
@@ -38,6 +40,8 @@ import { Store } from '../shared/store';
     Ng2Bs3ModalModule
   ],
   declarations: [
+    ActivitiesContainer,
+    ActivitiesTable,
     HomePageComponent,
     AppComponent,
     LandingPageComponent,

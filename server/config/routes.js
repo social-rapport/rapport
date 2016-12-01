@@ -60,6 +60,7 @@ console.log("routes loaded");
   app.get('/api/runalltasks', appController.runalltasks);
 
   // <--------------- Tasks Routes --------------->
+  //app.get('/api/user/tasks', )
   app.get('/api/tasks', appController.getTasks);
   app.post('/api/tasks', appController.removeRegisteredTasks);
 

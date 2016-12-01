@@ -104,8 +104,8 @@
                 {{task.name}}
                 <p *ngIf="task.decorated && task.decorated.formattedName">
                   {{task.decorated.formattedName}}
-                </p>
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
+                </p>
         </tr>
       </tbody>
     </table>
@@ -138,14 +138,15 @@
               <td>
                 <div *ngIf="contact">
                   <div [hidden]="contact.editContact" >
-                    <p>{{contact.name}}</p>
+                    <p>{{contact.name}}
+                    <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
                     <span (click)="contact.editContact = true" class="glyphicon glyphicon-pencil"></span>
+                    </p>
                   </div>
                   <div *ngIf="contact.editContact === true">
                     <span class="glyphicon glyphicon-ok" (click)="contact.editContact = false"></span>
                     birthday: <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday"/>
                   </div>
-                  <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
                 </div>
               </td>
         </tr>
@@ -157,8 +158,9 @@
             <td>
               <div *ngIf="contact">
                 <div [hidden]="contact.editContact" >
-                  <p>{{contact.name}}</p>
+                  <p>{{contact.name}}
                   <span (click)="contact.editContact = true" class="glyphicon glyphicon-pencil"></span>
+                  </p>
                 </div>
                 <div *ngIf="contact.editContact === true">
                   <span class="glyphicon glyphicon-ok" (click)="contact.editContact = false"></span>
