@@ -166,6 +166,7 @@ module.exports = {
     updateOrCreateNewBot: updateOrCreateNewBot,
     removeFromSelectedFacebookFriends: removeFromSelectedFacebookFriends,
     removeFromSelectedContacts: removeFromSelectedContacts, 
-    retireBot: retireBot
+    retireBot: retireBot,
+    removeFromRegisteredTasks: removeFromRegisteredTasks
 };
 
