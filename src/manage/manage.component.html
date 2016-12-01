@@ -96,6 +96,16 @@
       <thead class="thead-inverse">
         <tr>
           <th>TASKS</th>
+          <div class="btn-group">
+            <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </span>
+            <div class="dropdown-menu">
+              <p *ngFor="let potentialTask of selectedBot.decorated.potentialTasks" class="dropdown-item" href="#" 
+              (click)="store.actions('ADD-TASK',{bot: selectedBot, task: potentialTask})">
+                {{potentialTask.decorated.formattedName}}
+              </p>
+            </div>
+          </div>
         </tr>
       </thead>
         <tbody>
@@ -107,15 +117,8 @@
                 <p *ngIf="task.decorated && task.decorated.formattedName">
                   {{task.decorated.formattedName}}
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
-<<<<<<< 2e04420c6c8dac13fecd0b0d0cd290479859549d
-<<<<<<< 7d990ab9a2c6561a5cead717b4f4735a6445f6c0
                 </p>
-=======
-                <span class="glyphicon glyphicon-remove" (click)="alert('deleting task')"></span>
->>>>>>> keeps modal open on invalid fb login; displays error; disables submit when no input; clears input
-=======
                 <span class="glyphicon glyphicon-remove" (click)="store.actions('DELETE-TASK',{bot: selectedBot, task: task})"></span>
->>>>>>> -adds delete button
         </tr>
       </tbody>
     </table>
@@ -128,8 +131,17 @@
             <th>SELECTED CONTACTS FOR TASKS</th>
 
             <!--add new contact widget-->
+            <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </span>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Separated link</a>
+               <span class="dropdown-item glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
+              name:<input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
+              <span class="dropdown-item glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
+              email: <input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
+            </div>
 
-            <div *ngIf="!uiVars.addContact && selectedBot.botType !== 'social'" >
+            <!--<div *ngIf="!uiVars.addContact && selectedBot.botType !== 'social'" >
               <span class="glyphicon glyphicon-plus" (click)="uiVars.addContact = true"></span>
             </div>
             <div *ngIf="uiVars.addContact === true" >
@@ -137,8 +149,13 @@
               name:<input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
               <span class="glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
               email: <input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
+<<<<<<< 4ea625c62c90e90e015c6da984cf9f26c6834cf7
             </div>
 
+=======
+            </div>-->
+            
+>>>>>>> -queries all tasks in setup
         </tr>
       </thead>
 

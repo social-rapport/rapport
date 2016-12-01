@@ -54,6 +54,13 @@ export class Store {
         //assign copied state to next observable
         this.trigger();
         break;
+      case 'ADD-TASK': 
+        payload.bot.tasks.push(payload.task);
+        payload.bot.decorated.potentialTasks = payload.bot.decorated.potentialTasks.filter(function(task){
+          return task !== payload.task;
+        });
+        this.trigger();
+        break;
       default: 
         alert('unhandled action');
     }
