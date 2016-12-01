@@ -16,17 +16,25 @@
 
         <div class="form-group">
           <span>Email:  </span>
-          <input class="fb-input" type="text" [(ngModel)]="fbUsername">
+          <input class="fb-input" type="text" (focus)="uiVars.invalid = false" [(ngModel)]="fbUsername">
         </div>
 
         <div>
           <span>Password:
           </span>
-          <input class="fb-input" type="password" [(ngModel)]="fbPassword">
+          <input class="fb-input" type="password" (focus)="uiVars.invalid = false" [(ngModel)]="fbPassword">
+        </div>
+
+        <div *ngIf="uiVars.invalid === true">
+          <p style="color: red">invalid email or password</p>
+        </div>
+
+        <div *ngIf="uiVars.loading === true" class="spinner">
+          <img src="http://tecnoesis.in/Modules/img/drop16.gif" />
         </div>
 
         <div class="fb-buttons">
-          <button class="btn btn-primary" (click)="fbLogin()">Submit</button>
+          <button class="btn btn-primary" (click)="fbLogin()" [disabled]="!fbPassword || !fbUsername">Submit</button>
           <button class="btn btn-secondary" (click)="close()">Cancel</button>
         </div>
 

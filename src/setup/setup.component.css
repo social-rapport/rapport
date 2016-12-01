@@ -27,6 +27,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.invalid {
+  color: red;
+}
+
 .facebookInputs {
   padding-top:1em;
 }

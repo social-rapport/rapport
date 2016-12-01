@@ -17,7 +17,10 @@ export class SetupComponent {
 
   private fbUsername: String ='nickspinosa1022@gmail.com';
   private fbPassword: String ='cichlid1111';
-
+  private uiVars = {
+    invalid: false,
+    loading: false,
+  }
   bots = [];
   selectedType;
 
@@ -65,15 +68,16 @@ export class SetupComponent {
   }
 
   private fbLogin(){
-    this.router.navigate(['loading']);
     var self = this;
+    this.uiVars.loading = true;
     this.fbService.login(this.fbUsername, this.fbPassword).then(()=>{
-        this.close();
         this.routeToManage(this.selectedType);
     })
     .catch(()=>{
-      this.router.navigate(['setup']);
-      alert('there was an error');
+      this.fbPassword = "";
+      this.fbUsername = "";
+      this.uiVars.loading = false;
+      this.uiVars.invalid = true;
     })
   }
 
