@@ -24,13 +24,13 @@
 
   <div id="activity-tables">
     <div class="row">
-      <h3 class="col-md-3 scheduled">SCHEDULED ACTIVITIES</h3>
+      <h3 class="col-md-3 scheduled">SCHEDULED ACTIVITIES:</h3>
     </div>
     <div class="row">
       <ActivitiesTable [tasks]='subscribedScheduled' [bots]='bots' [clickFunction]='filterByBot' class="atables" ></ActivitiesTable>
     </div>
     <div class="row">
-      <h3 class="col-md-3">RECENT ACTIVITIES</h3>
+      <h3 class="col-md-3 recent">RECENT ACTIVITIES:</h3>
     </div>
     <div class="row">
       <ActivitiesTable [tasks]='subscribedRecent' [bots]='bots' [clickFunction]='filterByBot' class="atables"></ActivitiesTable>
