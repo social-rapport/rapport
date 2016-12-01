@@ -1,0 +1,70 @@
+
+ <video class="vid" autoplay>
+    <source src="https://s3.amazonaws.com/nth-hack-reactor/rapport-assets/rapportDashboard.mp4" type="video/mp4">
+  </video >
+
+<div *ngIf = "mode === 'log'" class="mycontainer" >
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>BOT NAME</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of tasks">
+                {{task.botName || task.botType}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>RECIPIENT NAME</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of tasks">
+                {{task.name} || task.contactName}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>CONTACT PLATFORM</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of tasks">
+                {{task.platform}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>DATE</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of tasks">
+                {{task.date}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</div>
