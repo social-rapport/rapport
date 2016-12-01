@@ -92,8 +92,6 @@ const getAllBotInfo = function(botId) {
         botObj.botActivity.recent = arrayOfBotInfo[4];
         botObj.botActivity.scheduled = arrayOfBotInfo[5];
 
-        console.log("recent", botObj.botActivity.recent);
-
         resolve(botObj)
       }).catch(reject);
   });
@@ -168,6 +166,7 @@ module.exports = {
     updateOrCreateNewBot: updateOrCreateNewBot,
     removeFromSelectedFacebookFriends: removeFromSelectedFacebookFriends,
     removeFromSelectedContacts: removeFromSelectedContacts, 
-    retireBot: retireBot
+    retireBot: retireBot,
+    removeFromRegisteredTasks: removeFromRegisteredTasks
 };
 

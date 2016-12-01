@@ -59,6 +59,10 @@ console.log("routes loaded");
   // nam send botctrol test
   app.get('/api/runalltasks', appController.runalltasks);
 
+  // <--------------- Tasks Routes --------------->
+  app.get('/api/tasks', appController.getTasks);
+  app.post('/api/tasks', appController.removeRegisteredTasks);
+
 
   app.get("/url", gmail.sendUrl);
 
@@ -68,7 +72,7 @@ console.log("routes loaded");
 
   app.get("/oauthcallback",function(req,res){
     res.sendFile('index.html', {root: '../'})
-  })
+  });
 
 };
 

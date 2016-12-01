@@ -81,19 +81,29 @@ module.exports.removeGmailContacts = function(req, res) {
 };
 //<---------------------Removes Tasks--------------------->
 module.exports.removeRegisteredTasks = function(req, res) {
-  dbM.removeFromRegisteredTasks(req.body)
-    .then(() => res.status(200).send('removed friend'));
+  dbM.removeFromRegisteredTasks(req.body.tasks)
+    .then(() => res.status(200).send('removed tasks!')); 
 };
+
+//<---------------------Gets Tasks--------------------->
+module.exports.getTasks = function(req, res) {
+  res.status(200).send(types.taskList);
+};
+
 //<-------------------return the bot type so FE can change it------------------->
 module.exports.getBotTypes = function(req, res){
-  var data = {bots: types.initialBots};
+  var data = {bots: types.initialBots,
+    tasks: types.taskList  
+  };
   res.end(JSON.stringify(data));
 };
+
 //<-------------------get all the users bot information------------------->
   module.exports.getBotInfo = function(req, res) {
     dbM.getAllUserBots(req.query.userId)
     .then((data)=>res.end(JSON.stringify(data)));
   };
+
 //<-------------------change the users bots on a post------------------->
 module.exports.updateBots = function(req, res){
   dbM.updateOrCreateUserBots(req.query.userId,req.body.bots)
