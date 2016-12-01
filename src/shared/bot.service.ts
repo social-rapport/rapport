@@ -209,26 +209,29 @@ export class BotService {
     bots.forEach(function(bot){
       bot.decorated = JSON.parse(JSON.stringify(self.botExtensions[bot.botType]));
       self.addPotentialTasks(bot);
-      bot.tasks.forEach(function(task){
-        task.decorated = Object.assign({},self.taskExtensions[task.task]);
-        if(task.date === null){
-          task.decorated.subTask = false;
-        }
-        if(task.decorated.subTask){
-          task.decorated.masterTask = false;
-          task.decorated.formattedName = self.holidays.filter((h)=>{
-            return h.date === task.date
-          })[0].name;
-        }
-      });
+      self.extendTasks(bot.tasks);
     });
   }
 
-  public extendTasks(tasks){
+  private extendTasks(tasks){
     var self = this;
     tasks.forEach(function(task){
       task.decorated = Object.assign({},self.taskExtensions[task.task]);
+      self.markSubTask(task);
     });
+  }
+
+  private markSubTask(task){
+    var self = this;
+    if(task.date === null){
+      task.decorated.subTask = false;
+    }
+    if(task.date !== null && task.decorated.subTask){
+      task.decorated.masterTask = false;
+      task.decorated.formattedName = self.holidays.filter((h)=>{
+        return h.date === task.date
+      })[0].name;
+    }
   }
 
   public taskExtensions = {
@@ -242,7 +245,6 @@ export class BotService {
                             setsDate: false, 
                             setsInterval: false, 
                             masterTask: true,
-                            subTask: true,
                             holidays: true}, 
     'sayHiFacebook':        {formattedName: 'message on facebook',
                             setsDate: true, 
@@ -253,7 +255,6 @@ export class BotService {
     'sayHappyHolidayFacebook': {formattedName: 'holiday on facebook', 
                             setsDate: false, 
                             setsInterval: false, 
-                            masterTask: true,
                             subTask: true,
                             holidays: true}, 
   };
