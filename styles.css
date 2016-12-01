@@ -210,6 +210,12 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 
 }
 
+.box-choose-bot-basic:hover {
+  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");
+  cursor:hand;
+}
+
 .box-choose-bot-social{
   position: relative;
   width: 16em;
@@ -222,6 +228,12 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 
 }
 
+.box-choose-bot-social:hover {
+  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");
+  cursor:hand;
+}
+
 .box-choose-bot-power{
   position: relative;
   width: 16em;
@@ -232,6 +244,12 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
   background-image: url("http://i.imgur.com/SCFGOcw.png");
   background-position: 25% 18%;
 
+}
+
+.box-choose-bot-power:hover {
+  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");
+  cursor:hand;
 }
 
 .img-choose-bot {
