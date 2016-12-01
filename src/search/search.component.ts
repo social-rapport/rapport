@@ -38,7 +38,6 @@ export class SearchComponent implements OnChanges {
     let selectedContactIndex = this.contacts.indexOf(selectedContact);
 
     if(this.bot.botType === 'social'){
-      selectedContact.name = selectedContact.fullName;
       this.bot.selectedFbFriends.push (selectedContact);
     } else {
       this.bot.selectedContacts.push ({
