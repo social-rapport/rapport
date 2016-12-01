@@ -16,11 +16,25 @@ function scheduleNext(taskObj) {
   return dbq.updateTaskDate(taskObj.id_task, newDate);
 }
 
+function addUserName(taskObj, msgData){
+  return new Promise((resolve, reject) => {
+    // console.log('taskObj is ', taskObj.id_user);
+    dbq.getUser(taskObj.id_user)
+    .then(user => {
+      // console.log('user is ', user);
+      msgData.username = user.name;
+      msgData.useremail = taskObj.gmail;
+      msgData.emailTo = taskObj.email;
+      resolve(msgData);
+    });
+  });
+}
+
 module.exports = {
 
   sayHiGmail: function(taskObj) {
     const msgData = {
-      username: taskObj.name,
+      username: taskObj.username,
       useremail: taskObj.gmail,
       emailTo: taskObj.email,
       subject: "Just a friendly 'hello'",
@@ -35,23 +49,23 @@ module.exports = {
     });
   },
   sayHappyBirthdayGmail: function (taskObj) {
-    console.log('taskObj is ------ ', taskObj);
     const msgData = {
-      username: taskObj.username,
-      useremail: taskObj.gmail,
-      emailTo: taskObj.email,
       subject: "Happy Birthday " + taskObj.name + "!!!",
     };
 
     return new Promise((resolve, reject) => {
-      giphy.random('birthday')
-      .then(gifRes => {
+        // console.log('msgData is ', msgData);
+      addUserName(taskObj, msgData)
+      .then(msgData => {
+        giphy.random('birthday')
+        .then(gifRes => {
 
-        msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
+          msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
 
-        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-          scheduleNext(taskObj)
-            .then(() => resolve(taskObj));
+          gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+            scheduleNext(taskObj)
+              .then(() => resolve(taskObj));
+          });
         });
       });
     })

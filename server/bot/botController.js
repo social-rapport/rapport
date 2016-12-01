@@ -13,10 +13,9 @@ const runAllTasks = function(callback) {
     dbQ.getUser(taskObj.id_user)
     .then(user => {
       taskObj.username = user.name;
-      return(taskObj);
+      return taskObj;
     })
     .then(taskObj => {
-      console.log('taskObj is ---------', taskObj);
       botMethods[taskObj.task](taskObj)
     })
   })))
