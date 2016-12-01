@@ -14,26 +14,6 @@ export class BotService {
   public scheduled = null;
   public recent = null;
   public currentBot = null;
-
-  public taskExtensions = {
-    'sayHappyHolidayGmail': {formattedName: 'holiday: gmail', 
-                            setsDate: false, 
-                            setsInterval: false, 
-                            subTask: true,
-                            holidays: true},
-    'sayHappyBirthdayGmail':{formattedName: 'birthday: gmail',
-                            setsDate: false, 
-                            setsInterval: false,}, 
-    'sayHappyBirthdayFacebook':{formattedName: 'birthday: facebook',
-                            setsDate: false, 
-                            setsInterval: false,}, 
-    'sayHiGmail':           {formattedName: 'message: gmail',
-                            setsDate: true, 
-                            setsInterval: true,}, 
-    'sayHiFacebook':        {formattedName: 'message: facebook',
-                            setsDate: true, 
-                            setsInterval: true,},
-  };
   
   constructor(private http: Http) {}
 
@@ -169,6 +149,28 @@ export class BotService {
 
   //<----------------------DATA TRANSFORMATIONS FROM BACKEND TO FRONTEND---------------------->
 
+
+  public taskExtensions = {
+    'sayHappyHolidayGmail': {formattedName: 'holiday: gmail', 
+                            setsDate: false, 
+                            setsInterval: false, 
+                            masterTask: true,
+                            subTask: true,
+                            holidays: true},
+    'sayHappyBirthdayGmail':{formattedName: 'birthday: gmail',
+                            setsDate: false, 
+                            setsInterval: false,}, 
+    'sayHappyBirthdayFacebook':{formattedName: 'birthday: facebook',
+                            setsDate: false, 
+                            setsInterval: false,}, 
+    'sayHiGmail':           {formattedName: 'message: gmail',
+                            setsDate: true, 
+                            setsInterval: true,}, 
+    'sayHiFacebook':        {formattedName: 'message: facebook',
+                            setsDate: true, 
+                            setsInterval: true,},
+  };
+
   public decorateAll(bots){
     var self = this;
     bots.forEach(function(bot){
@@ -178,6 +180,7 @@ export class BotService {
           task.decorated.subTask = false;
         }
         if(task.decorated.subTask){
+          task.decorated.masterTask = false;
           task.decorated.formattedName = self.holidays.filter((h)=>{
             return h.date === task.date
           })[0].name;
@@ -208,7 +211,7 @@ export class BotService {
         }
       })
       bot.tasks.forEach(function(task){
-        if(task.date){
+        if(task.date && task.date !== 'today'){
           var date = new Date(task.date);
           var month = date.getMonth();
           var day = date.getDay();

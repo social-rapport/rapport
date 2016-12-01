@@ -104,7 +104,7 @@
                 <p *ngIf="task.decorated && task.decorated.formattedName"> 
                   {{task.decorated.formattedName}}
                 </p>
-                <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
+                <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
         </tr>
       </tbody>
     </table>
