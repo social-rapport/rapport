@@ -42,6 +42,7 @@ export class ManageComponent {
   private scheduled; 
   private editabelName;
   private customBotName;
+  private recent; 
   private uiVars = {newContact:{name: "", string: ""},
                     editContact: ""};
   //
@@ -160,6 +161,7 @@ export class ManageComponent {
 
   private reload() : void {
     this.scheduled = this.botService.scheduled;
+    this.recent = this.botService.recent;
     this.bots = this.botService.userBots;
   }
 
