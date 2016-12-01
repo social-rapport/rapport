@@ -16,12 +16,10 @@ function scheduleNext(taskObj) {
   return dbq.updateTaskDate(taskObj.id_task, newDate);
 }
 
-function addUserName(taskObj, msgData){
+function buildMsgData(taskObj, msgData){
   return new Promise((resolve, reject) => {
-    // console.log('taskObj is ', taskObj.id_user);
     dbq.getUser(taskObj.id_user)
     .then(user => {
-      // console.log('user is ', user);
       msgData.username = user.name;
       msgData.useremail = taskObj.gmail;
       msgData.emailTo = taskObj.email;
@@ -34,17 +32,17 @@ module.exports = {
 
   sayHiGmail: function(taskObj) {
     const msgData = {
-      username: taskObj.username,
-      useremail: taskObj.gmail,
-      emailTo: taskObj.email,
       subject: "Just a friendly 'hello'",
       body: `${taskObj.message}<br/>`
     };
 
     return new Promise((resolve, reject) => {
-      gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-        scheduleNext(taskObj)
-          .then(() => resolve(taskObj));
+      buildMsgData(taskObj, msgData)
+      .then(msgData => {
+        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+          scheduleNext(taskObj)
+            .then(() => resolve(taskObj));
+        });
       });
     });
   },
@@ -54,8 +52,7 @@ module.exports = {
     };
 
     return new Promise((resolve, reject) => {
-        // console.log('msgData is ', msgData);
-      addUserName(taskObj, msgData)
+      buildMsgData(taskObj, msgData)
       .then(msgData => {
         giphy.random('birthday')
         .then(gifRes => {
@@ -73,17 +70,17 @@ module.exports = {
   },
   sayHappyHolidayGmail: function (taskObj) {
     const msgData = {
-      username: taskObj.username,
-      useremail: taskObj.gmail,
-      emailTo: taskObj.email,
       subject: "Happy Holidays!!!",
       body: `${taskObj.message}<br/>`
     };
 
     return new Promise((resolve, reject) => {
-      gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
-        scheduleNext(taskObj)
-          .then(() => resolve(taskObj));
+      buildMsgData(taskObj, msgData)
+      .then(msgData => {
+        gmail.sendMailBot(msgData, taskObj.gmailAuthToken, results => {
+          scheduleNext(taskObj)
+            .then(() => resolve(taskObj));
+        });
       });
     })
 
