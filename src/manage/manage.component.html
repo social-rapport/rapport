@@ -11,8 +11,6 @@
           <p>Edit Task</p>
         </div>
 
-        
-
         <div *ngIf="selectedTask && selectedTask.decorated.holidays === true" class="form-group">
           <select class="selectpicker" [(ngModel)]="subTask">
             <option *ngFor="let holiday of botService.holidays">
@@ -106,7 +104,7 @@
                 <p *ngIf="task.decorated && task.decorated.formattedName"> 
                   {{task.decorated.formattedName}}
                 </p>
-                <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
+                <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
         </tr>
       </tbody>
     </table>
@@ -117,12 +115,16 @@
       <thead class="thead-inverse">
         <tr>
             <th>SELECTED CONTACTS</th>
+
+            <!--add new contact widget-->
+
             <div *ngIf="!uiVars.addContact && selectedBot.botType !== 'social'" >
               <span class="glyphicon glyphicon-plus" (click)="uiVars.addContact = true"></span>
             </div>
             <div *ngIf="uiVars.addContact === true" >
               <span class="glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
               name:<input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
+              <span class="glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
               email: <input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
             </div>
             
@@ -140,7 +142,6 @@
                   </div>
                   <div *ngIf="contact.editContact === true">
                     <span class="glyphicon glyphicon-ok" (click)="contact.editContact = false"></span>
-                    name: <input class="fb-input" type="text" [(ngModel)]="contact.name">
                     birthday: <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday"/>
                   </div>
                   <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
@@ -160,7 +161,6 @@
                 </div>
                 <div *ngIf="contact.editContact === true">
                   <span class="glyphicon glyphicon-ok" (click)="contact.editContact = false"></span>
-                  name: <input class="fb-input" type="text" [(ngModel)]="contact.name">
                   birthday: <input class="selectBday" type="date" style="width:170px; border: 0px;" [(ngModel)]="contact.birthday"/>
                 </div>
                 <span class="glyphicon glyphicon-remove" (click)="removeSelectedContact(contact)"></span>
@@ -190,6 +190,8 @@
   </div>
 
 </div>
+
+<!--log display columns-->
 
 <div *ngIf = "mode === 'log'" class="mycontainer" >
 
