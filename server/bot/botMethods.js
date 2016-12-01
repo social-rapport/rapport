@@ -32,10 +32,21 @@ function addGiphy(giphyQuery, msgData, taskObj) {
   return new Promise((resolve, reject) => {
     giphy.random(giphyQuery)
     .then(gifRes => {
-      msgData.body = `${taskObj.message}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
+      msgData.body = `${parseMessageText(taskObj)}<br/><img src=${gifRes.data.fixed_height_downsampled_url}></img>`;
       resolve(msgData);
     });
   })
+}
+
+function parseMessageText(taskObj) {
+  let message = taskObj.message.replace(/\/name/g, taskObj.name);
+
+  if(taskObj.platform === 'gmail') {
+    //parse for giphy
+  }
+
+  return message;
+
 }
 
 module.exports = {
@@ -43,7 +54,7 @@ module.exports = {
   sayHiGmail: function(taskObj) {
     const msgData = {
       subject: "Just a friendly 'hello'",
-      body: `${taskObj.message}<br/>`
+      body: `${parseMessageText(taskObj)}<br/>`
     };
 
     return new Promise((resolve, reject) => {
@@ -76,7 +87,7 @@ module.exports = {
   sayHappyHolidayGmail: function (taskObj) {
     const msgData = {
       subject: "Happy Holidays!!!",
-      body: `${taskObj.message}<br/>`
+      body: `${parseMessageText(taskObj)}<br/>`
     };
 
     return new Promise((resolve, reject) => {
@@ -97,20 +108,21 @@ module.exports = {
     console.log("taskObj", taskObj);
 
     return new Promise((resolve, reject) => {
-      facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
+      facebook.sendMsg(auth, taskObj.vanityName, parseMessageText(taskObj), data => {
         scheduleNext(taskObj)
           .then(() => resolve(taskObj));
       });
     })
 
   },
+  
   sayHiFacebook: function(taskObj) {
     let auth = {};
     auth.email = taskObj.fbUsername;
     auth.password = taskObj.fbPassword;
 
     return new Promise((resolve, reject) => {
-      facebook.sendMsg(auth, taskObj.vanityName, taskObj.message, data => {
+      facebook.sendMsg(auth, taskObj.vanityName, parseMessageText(taskObj), data => {
         scheduleNext(taskObj)
           .then(() => resolve(taskObj));
       });
