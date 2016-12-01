@@ -1,4 +1,3 @@
-var dbModel = require('../db/dbModel.js');
 var gmail = require('../config/gmailController.js');
 const dbQ = require('../db-refactor/dbQueries.js');
 var express = require('express');

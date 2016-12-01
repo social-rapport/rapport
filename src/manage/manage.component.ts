@@ -23,38 +23,38 @@ export class ManageComponent {
   @ViewChild('myModal')
   modal: ModalComponent;
 
-  
+
 
   title = 'My Bots';
 
   private bots: Array<customBot>;
   private selectedBot: customBot;
-  private selectedTask; 
+  private selectedTask;
   private subTask;
   private displayMessage;
-  private customMessage; 
-  private customInterval; 
-  private customDate; 
+  private customMessage;
+  private customInterval;
+  private customDate;
   private activities: Array<string>;
   private contacts: Array<gmailContact>;
   private tasks: Array<string>;
   private mode = "bot";
-  private scheduled; 
+  private scheduled;
   private editabelName;
   private customBotName;
   private recent; 
   private uiVars = {newContact:{name: "", string: ""},
                     editContact: ""};
   //
-  constructor(private botService: BotService, 
+  constructor(private botService: BotService,
               private gmailService: GmailService,
               private router: Router,
               private store: Store) {
-    
+
    var self = this;
    store.state.subscribe(function(){
      self.reload();
-   })             
+   })
 
 
   }
@@ -62,12 +62,12 @@ export class ManageComponent {
    //<-------------------DISPLAY MODE------------------->
   pageMode(mode){
     this.mode = mode;
-  }                
+  }
 
   //<-------------------TASK METHODS------------------->
-  close() { 
+  close() {
     this.modal.close();
-    this.selectedTask = null; 
+    this.selectedTask = null;
   }
 
   saveTask(){
@@ -75,16 +75,16 @@ export class ManageComponent {
       var opts = {name: this.subTask, message: this.customMessage};
       this.botService.addNewHolidayTask(opts, this.selectedBot);
     } else {
-      this.customMessage? this.selectedTask.message = this.customMessage: 1; 
-      this.customInterval? this.selectedTask.interval = this.customInterval: 1; 
-      this.customDate? this.selectedTask.date = this.customDate: 1; 
+      this.customMessage? this.selectedTask.message = this.customMessage: 1;
+      this.customInterval? this.selectedTask.interval = this.customInterval: 1;
+      this.customDate? this.selectedTask.date = this.customDate: 1;
     }
     this.reload();
     this.tasks = this.selectedBot.tasks;
   }
 
   open(task) {
-    this.selectedTask = task; 
+    this.selectedTask = task;
     this.customMessage = this.selectedTask.message;
     this.customInterval = this.selectedTask.interval;
     this.customDate = this.selectedTask.date;
@@ -152,7 +152,7 @@ export class ManageComponent {
     }
   }
 
-  
+
 
   private sendNow(): void {
     this.botService.sendNow()
