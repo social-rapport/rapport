@@ -46,7 +46,6 @@ function parseMessageText(taskObj) {
   }
 
   return message;
-
 }
 
 module.exports = {
@@ -115,7 +114,7 @@ module.exports = {
     })
 
   },
-  
+
   sayHiFacebook: function(taskObj) {
     let auth = {};
     auth.email = taskObj.fbUsername;
