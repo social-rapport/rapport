@@ -15,8 +15,7 @@ import { BotService } from '../shared/bot.service';
     <nav>
         <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
         <a *ngIf="authenticated() && hasBot()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
-        <a *ngIf="authenticated() && has()" routerLink="/view-activities"
-          routerLinkActive="active">View Activities</a>
+        <a *ngIf="authenticated()" routerLink="/view-activities" routerLinkActive="active">View Activities</a>
         <a (click)="test()">Test</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
         <a class='login' *ngIf="!authenticated()" class="right" (click)="login()">Login</a>

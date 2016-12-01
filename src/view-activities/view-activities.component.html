@@ -12,7 +12,8 @@
       </div>
 
       <div id="title-section desc">
-        Each bot is pre-configured with basic tasks to suite each type of user
+        All recent and upcoming activity for all of your bots
+        Optionally filter by bot.
       </div>
 
     </div>
@@ -22,7 +23,7 @@
 
 <h2>SCHEDULED ACTIVITIES</h2>
   <div>
-    <activites-table [tasks] = 'scheduled'></activites-table>
-    <activites-table [tasks] = 'recent'></activites-table>
+    <ActivitiesTable [tasks]='subscribedScheduled' [bots]='bots' [clickFunction]='filterByBot' ></ActivitiesTable>
+    <ActivitiesTable [tasks]='subscribedRecent' [bots]='bots' [clickFunction]='filterByBot' ></ActivitiesTable>
   </div>
 </div>

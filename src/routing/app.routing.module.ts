@@ -9,11 +9,12 @@ import { HomePageComponent } from '../home-page/home.component';
 import { SearchComponent } from '../search/search.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { LogInGuard } from '../shared/logged-in.guard';
+import { ActivitiesContainer } from '../view-activities/view-activities.component';
 
 const routes: Routes = [
   { path: '', canActivate:[LogInGuard], component: LandingPageComponent},
   { path: 'loading', component: LoadingComponent},
-  { path: 'home', component: HomePageComponent},
+  { path: 'view-activities', component: ActivitiesContainer},
   { path: 'search', component: SearchComponent },
   { path: 'setup', canActivate:[AuthGuard], component: SetupComponent,},
   { path: 'manage', canActivate: [AuthGuard], component: ManageComponent },
