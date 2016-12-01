@@ -42,7 +42,8 @@ export class ManageComponent {
   private scheduled; 
   private editabelName;
   private customBotName;
-  private uiVars = {newContact:{name: "", string: ""}};
+  private uiVars = {newContact:{name: "", string: ""},
+                    editContact: ""};
   //
   constructor(private botService: BotService, 
               private gmailService: GmailService,
