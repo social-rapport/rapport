@@ -30,7 +30,9 @@ export class BotService {
         if(bots.length !== 0) {
           self.userBots = bots;
           self.decorateAll(self.userBots);
-          self.scheduled = self.joinTaskDescriptions(self.userBots);
+          self.scheduled = self.joinScheduledTaskDescriptions(self.userBots);
+          self.recent = self.joinRecentTaskDescriptions(self.userBots);
+
           return self.userBots; 
         } else {
           self.userBots = [];
@@ -189,15 +191,20 @@ export class BotService {
     });
   }
 
-  public joinTaskDescriptions(bots){
-    var jobs = bots.reduce(function(acc,bot){
+  public joinScheduledTaskDescriptions(bots){
+    var tasks = bots.reduce(function(acc,bot){
       return acc.concat(bot.botActivity.scheduled);
     },[]);
+    return tasks;
+  }
+
+  public joinRecentTaskDescriptions(bots){
     var recent = bots.reduce(function(acc,bot){
       return acc.concat(bot.botActivity.recent)
-    },[])
-    return jobs.concat(recent);
+    },[]);
+    return recent;
   }
+  
 
   //<----------------------DATA TRANSFORMATIONS FROM FRONTEND TO BACKEND---------------------->
   public normalizeDates(){
