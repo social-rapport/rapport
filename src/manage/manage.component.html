@@ -119,7 +119,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-            <th>SELECTED CONTACTS</th>
+            <th>SELECTED CONTACTS FOR TASKS</th>
 
             <!--add new contact widget-->
 
@@ -206,15 +206,15 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>BOT NAME</th>
+          <th>BOT</th>
         </tr>
       </thead>
         <tbody>
         <tr *ngFor="let job of scheduled">
-                {{job.botName || job.botType}}
+                {{job.botName}} - {{job.botType}}
         </tr>
         <tr *ngFor="let job of recent">
-                {{job.botName || job.botType}}
+                {{job.botName}} - {{job.botType}}
         </tr>
       </tbody>
     </table>
@@ -232,7 +232,7 @@
                 {{job.name}}
         </tr>
         <tr *ngFor="let job of recent">
-                {{job.name}}
+                {{job.name || job.contactName}}
         </tr>
       </tbody>
     </table>
