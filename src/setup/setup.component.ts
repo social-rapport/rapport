@@ -15,8 +15,8 @@ import { Store } from '../shared/store';
 
 export class SetupComponent {
 
-  private fbUsername: String ='nickspinosa1022@gmail.com';
-  private fbPassword: String ='cichlid1111';
+  private fbUsername: String;
+  private fbPassword: String;
   private uiVars = {
     invalid: false,
     loading: false,
@@ -28,6 +28,8 @@ export class SetupComponent {
   modal: ModalComponent;
 
   close() {
+      this.fbUsername = "";
+      this.fbPassword = "";
       this.modal.close();
   }
 
