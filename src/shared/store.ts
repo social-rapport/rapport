@@ -51,6 +51,10 @@ export class Store {
           return task !== payload.task;
         });
         this.botService.deletedTasks.push(payload.task.id);
+        if(!payload.task.decorated.subTask){
+          payload.bot.decorated.potentialTasks.push(payload.task); 
+        }
+        //will cause mastertasks with a date to render incorrectly
         //assign copied state to next observable
         this.trigger();
         break;
@@ -59,6 +63,9 @@ export class Store {
         payload.bot.decorated.potentialTasks = payload.bot.decorated.potentialTasks.filter(function(task){
           return task !== payload.task;
         });
+        this.botService.deletedTasks = this.botService.deletedTasks.map(function(task){
+          return task.id !== payload.task.id;
+        })
         this.trigger();
         break;
       default: 

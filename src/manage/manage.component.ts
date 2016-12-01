@@ -44,7 +44,9 @@ export class ManageComponent {
   private customBotName;
   private recent; 
   private uiVars = {newContact:{name: "", string: ""},
-                    editContact: ""};
+                    editContact: "",
+                    success: false,
+                    };
   //
   constructor(private botService: BotService,
               private gmailService: GmailService,
@@ -112,12 +114,22 @@ export class ManageComponent {
   }
 
   private submitAllSettings(): void{
+    var self = this;
     this.botService.updateBots(this.bots).then(_=>{
       this.reload();
       if(!this.selectedBot.id){
         this.selectedBot = this.bots[this.bots.length-1];
       }
+      this.showSuccess(); 
     })
+  }
+
+  private showSuccess(){
+    var self = this;
+    this.uiVars.success = true;
+    setTimeout(function(){
+      self.uiVars.success = false;
+    },1000);
   }
 
   private retireBot(bot): void {
@@ -126,6 +138,8 @@ export class ManageComponent {
       this.reload();
       if(this.bots.length === 0){
         self.router.navigate(['setup']);
+      } else {
+        this.showSuccess(); 
       }
     })
   }

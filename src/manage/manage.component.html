@@ -74,7 +74,7 @@
                 (click)="onSelectBot(bot)">
 
                 <td *ngIf="editableName !== bot" class="">
-                  <p>{{botService.getDisplayName(bot)}}
+                  <p>{{bot.botName}}-{{bot.botType}}</p>
                   <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
                   </p>
                 </td>
@@ -96,7 +96,7 @@
       <thead class="thead-inverse">
         <tr>
           <th>TASKS</th>
-          <div class="btn-group">
+          <div *ngIf="selectedBot.decorated.potentialTasks.length > 0" class="btn-group">
             <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             </span>
             <div class="dropdown-menu">
@@ -129,12 +129,11 @@
       <thead class="thead-inverse">
         <tr>
             <th>SELECTED CONTACTS FOR TASKS</th>
-
+            <div>
             <!--add new contact widget-->
             <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             </span>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Separated link</a>
                <span class="dropdown-item glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
               name:<input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
               <span class="dropdown-item glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
@@ -149,13 +148,11 @@
               name:<input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
               <span class="glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
               email: <input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
-<<<<<<< 4ea625c62c90e90e015c6da984cf9f26c6834cf7
             </div>
 
-=======
             </div>-->
-            
->>>>>>> -queries all tasks in setup
+
+            </div>
         </tr>
       </thead>
 
@@ -302,8 +299,16 @@
 
 </div>
 
+
+
 <!-- BUTTONS -->
     <div class="buttons">
+
+      <div *ngIf="uiVars.success === true">
+        <p style="color: green"> Success! </p>
+      </div>
+      <button class="save-bots" style="float: left;" (click)="pageMode('log')">View Activity</button>
+      <button class="save-bots" style="float: left;" (click)="pageMode('bot')">View Bots</button>
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
       <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
