@@ -4,3 +4,11 @@
   right: -25%;
   z-index: 1;
 }*/
+
+.gmailPitch {
+  position:relative;
+}
+.gmailPitch h3 {
+  margin:auto;
+  text-align:center;
+}
