@@ -6,6 +6,14 @@
   background-repeat: no-repeat;
 }
 
+#modal-style-power {
+  top:50%;
+  padding:6em;
+  padding-bottom:5em;
+  background-image: url(http://i.imgur.com/Qt35Qsl.png);
+  background-repeat: no-repeat;
+}
+
 html {
   margin: 0;
 }

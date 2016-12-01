@@ -20,7 +20,7 @@ export class SetupComponent {
 
   bots = [];
   selectedType;
-  
+
   @ViewChild('myModal')
   modal: ModalComponent;
 
@@ -32,10 +32,21 @@ export class SetupComponent {
       this.modal.open();
   }
 
-  constructor(private botService: BotService, 
-              private router: Router, 
+  @ViewChild('powerModal')
+  powerModal: ModalComponent;
+
+  closePower() {
+      this.powerModal.close();
+  }
+
+  openPower() {
+      this.powerModal.open();
+  }
+
+  constructor(private botService: BotService,
+              private router: Router,
               private fbService: FbService,
-              private store: Store) 
+              private store: Store)
     {
     this.bots = JSON.parse(JSON.stringify(botService.botTypes));
   }
@@ -46,6 +57,8 @@ export class SetupComponent {
     //if the fbService has no contacts, get the users fb auth info
     if(selectedType.botType === 'social' && !this.fbService.contacts){
       this.open();
+    } else if(selectedType.botType === 'power'){
+      this.openPower();
     } else {
       this.routeToManage(selectedType);
     }
