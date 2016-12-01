@@ -68,22 +68,23 @@
         </tr>
       </thead>
         <tbody >
-        
+
           <tr *ngFor="let bot of bots"
                 [class.selected]="bot === selectedBot"
                 (click)="onSelectBot(bot)">
-            
+
                 <td *ngIf="editableName !== bot" class="">
-                  <p>{{botService.getDisplayName(bot)}}</p>
+                  <p>{{botService.getDisplayName(bot)}}
                   <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
+                  </p>
                 </td>
-          
+
                 <td *ngIf="editableName === bot" class="">
                   <span class="glyphicon glyphicon-ok" (click) = "editableName = null; bot.botName = customBotName" ></span>
-                  <input type="text" [(ngModel)]="customBotName">  
+                  <input type="text" [(ngModel)]="customBotName">
                 </td>
           </tr>
-       
+
       </tbody>
     </table>
   </div>
@@ -101,7 +102,7 @@
                 [class.selected]="task === selectedTask"
                 (click)="onSelectTask(task)">
                 {{task.name}}
-                <p *ngIf="task.decorated && task.decorated.formattedName"> 
+                <p *ngIf="task.decorated && task.decorated.formattedName">
                   {{task.decorated.formattedName}}
                 </p>
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
@@ -127,7 +128,7 @@
               <span class="glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
               email: <input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
             </div>
-            
+
         </tr>
       </thead>
 
@@ -176,7 +177,7 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>AVAILABLE CONTACTS</th> 
+          <th>AVAILABLE CONTACTS</th>
         </tr>
       </thead>
         <tbody>
@@ -318,7 +319,7 @@
         </tr>
       </thead>
         <tbody>
-        <tr *ngFor="let task of (store.selectedBot | async)?.tasks">                
+        <tr *ngFor="let task of (store.selectedBot | async)?.tasks">
                 <p> {{task.task}} </p>
                 <span class="glyphicon glyphicon-pencil" (click)="open(task)"></span>
         </tr>
@@ -326,7 +327,7 @@
     </table>
   </div>
 
- 
+
 
  <div class="col-md-3">
     <table class="table">
