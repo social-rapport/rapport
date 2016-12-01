@@ -11,6 +11,10 @@ html {
   text-align: right;
 }
 
+.scheduled {
+  margin-top:7em;
+}
+
 button {
   border-width: 0px;
   background-color: #5FC584;
@@ -128,6 +132,19 @@ body {
 .checkbox {
   float:right;
 }
+
+#activity-tables .row {
+  /*margin:auto !important;*/
+  /*margin-left:21em;*/
+  margin:auto;
+  float:right;
+  width: 85%;
+}
+
+/*.atables {
+  margin:auto;
+  width:80%;
+}*/
 
 .text {
     width: 90%;
