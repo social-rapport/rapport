@@ -183,7 +183,7 @@
             <td>
               <div *ngIf="contact">
                 <div [hidden]="contact.editContact" >
-                  <p>{{contact.name}}
+                  <p>{{contact.name || contact.fullName}}
                   <span (click)="contact.editContact = true" class="glyphicon glyphicon-pencil"></span>
                   </p>
                 </div>

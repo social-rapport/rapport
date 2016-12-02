@@ -34,12 +34,27 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>CONTACT PLATFORM</th>
+          <th>Task</th>
         </tr>
       </thead>
         <tbody>
         <tr *ngFor="let task of tasks">
-                {{task.platform}}
+                {{task.task}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-2">
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Message</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr *ngFor="let task of tasks">
+                {{task.message}}
         </tr>
       </tbody>
     </table>
