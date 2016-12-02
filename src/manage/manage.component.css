@@ -122,6 +122,10 @@ body {
   margin: 0;
 }
 
+input {
+  height:1.5em;
+}
+
 .selectBday {
   float:right;
 }
@@ -135,5 +139,17 @@ body {
     /* margin: auto; */
     position: relative;
     margin-left: 10px;
-    border: 3px solid gray;
+    border: 1px solid #ccc;
+    color:#999;
+    font-style:italic;
+}
+
+#modal-style {
+  padding:3em 2em 1em 4em;
+  height:430px;
+}
+
+#modal-style div {
+  margin-top:1em;
+  margin-bottom:1em;
 }
