@@ -35,6 +35,9 @@ export class BotService {
           self.scheduled = self.joinScheduledTaskDescriptions(self.userBots);
           self.recent = self.joinRecentTaskDescriptions(self.userBots);
 
+          console.log("scheduled", self.scheduled);
+          console.log("recent", self.recent);
+
           return self.userBots;
         } else {
           self.userBots = [];
@@ -210,6 +213,8 @@ export class BotService {
       bot.decorated = JSON.parse(JSON.stringify(self.botExtensions[bot.botType]));
       self.addPotentialTasks(bot);
       self.extendTasks(bot.tasks);
+      self.extendTasks(bot.botActivity.recent);
+      self.extendTasks(bot.botActivity.scheduled);
     });
   }
 

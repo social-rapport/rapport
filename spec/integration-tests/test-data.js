@@ -1,7 +1,9 @@
 //<-----------------initialBots----------------->
 
-var initialBots =
-    [{
+var mockBots =
+    [
+    //no custom messages
+    {
         botId: null,
         botName: 'chuck testa 1',
         botType: 'basic',
@@ -30,9 +32,10 @@ var initialBots =
             scheduled:[]
         }
     },
+    //has custom messages and names
     {
         botId: null,
-        botName: 'MyBot',
+        botName: 'chuck testa 2',
         botType: 'social',
         tasks: [
             {
@@ -58,37 +61,8 @@ var initialBots =
             recent:[],
             scheduled:[]
         }
-    },
-    {
-        botId: null,
-        botName: 'MyBot',
-        botType: 'power',
-        tasks: [
-             {
-                id: null,
-                date: null,
-                platform: 'gmail',
-                message: 'Hope you\'re having a great holiday!',
-                task: 'sayHappyHolidayGmail',
-                interval: 12
-            }
-        ],
-        selectedContacts: [],
-        selectedFbFriends: [],
-        botActivity:{
-            recent:[],
-            scheduled:[]
-        }
-    }];
-
-var initialUser = {
-    name: null,
-    gmail: null,
-    //gmailAuthToken: null,
-    //fbPassword: null,
-    fbUsername: null,
-    newUser: true,
-};
+    }
+    ];
 
 const taskList = [
     {
@@ -141,8 +115,59 @@ const taskList = [
     }
 ];
 
+const mockFbFriends = [
+    {
+        id: null,
+        name: 'chuck testing',
+        vanityName: 'chuck.testa',
+        birthday: 'sometime',
+    },
+    {
+        id: null,
+        name: 'chuck testing 1',
+        vanityName: 'chuck.testa1',
+        birthday: 'sometime',
+    },
+    {
+        id: null,
+        name: 'chuck testing2',
+        vanityName: 'chuck.testa2',
+        birthday: 'sometime',
+    },
+    {
+        id: null,
+        name: 'chuck testing3',
+        vanityName: 'chuck.testa3',
+        birthday: 'sometime',
+    }
+];
+
+const mockGmailContacts = [
+    {
+        name: 'chuck testing',
+        email: 'chuck@testa.com',
+        birthday: 'sometime'
+    },
+    {
+        name: 'chuck testing1',
+        email: 'chuck@testa.com1',
+        birthday: 'sometime'
+    },
+    {
+        name: 'chuck testing2',
+        email: 'chuck@testa.com2',
+        birthday: 'sometime'
+    },
+    {
+        name: 'chuck testing3',
+        email: 'chuck@testa.com3',
+        birthday: 'sometime'
+    }
+];
+
 module.exports = {
-    initialUser: initialUser,
-    initialBots: initialBots,
-    taskList: taskList
+    taskList: taskList,
+    mockBots: mockBots,
+    mockFbFriends: mockFbFriends,
+    mockGmailContacts: mockGmailContacts
 }

@@ -11,8 +11,10 @@ import { LoadingComponent } from '../loading/loading.component';
 import { LogInGuard } from '../shared/logged-in.guard';
 import { ActivitiesContainer } from '../view-activities/view-activities.component';
 
+//canActivate:[LogInGuard],
+
 const routes: Routes = [
-  { path: '', canActivate:[LogInGuard], component: LandingPageComponent},
+  { path: '', component: LandingPageComponent},
   { path: 'loading', component: LoadingComponent},
   { path: 'view-activities', component: ActivitiesContainer},
   { path: 'search', component: SearchComponent },

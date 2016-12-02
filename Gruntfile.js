@@ -19,12 +19,16 @@ module.exports = function(grunt) {
             command: `mysql -u root -p < ${__dirname}/spec/test-schema.sql`
           },
 
+          startServer: {
+            command: `node ${__dirname}/server/server.js`
+          },
+
           test: {
-            command: 'node server/server.js && mocha '+__dirname+'/spec/serverSpec.js'
+            command: 'mocha '+__dirname+'/spec/serverSpec.js'
           },
 
           testDB: {
-            command: 'mocha ' + __dirname + '/spec/integration-tests/dbSpec.js'
+            command: `'mocha ${__dirname}/spec/integration-tests/dbSpec.js`
           },
 
           electroncompile:{
