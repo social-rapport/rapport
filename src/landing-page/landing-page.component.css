@@ -287,3 +287,11 @@
   top: 11em;
   left:60.4em;
 }
+
+/*devteam simplegrid*/
+.container-type {
+  position: relative;
+  top: 8em;
+/*  left: 25%;*/
+  /*width:;*/
+}
