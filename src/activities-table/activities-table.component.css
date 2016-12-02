@@ -11,12 +11,6 @@ html {
   text-align: right;
 }
 
-.activities-table-container {
-  margin-left: auto;
-  margin-right: auto;
-  width:90%;
-}
-
 button {
   border-width: 0px;
   background-color: #5FC584;
