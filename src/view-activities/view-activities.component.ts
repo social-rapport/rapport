@@ -37,7 +37,7 @@ export class ActivitiesContainer {
 
   botFilter(arrayOfTasks, bot) {
     return arrayOfTasks.filter(task => {
-      if(task.botName !== 'unnamed'){
+      if(task.botName !== 'MyBot'){
         return task.botName === bot.botName;
       } else {
         return task.botType === bot.botType;
