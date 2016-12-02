@@ -86,5 +86,24 @@ export class _BotService {
     this.state.next(this._state);
   }
 
+  //<-----------------ACTIONS FOR USE WITH STORE----------------->
+
+  public actions(name,payload){
+    //deep copy state here
+    //loses reference to the object you are trying to change?
+    switch(name){
+      case 'DELETE-TASK': 
+        payload.bot.tasks = payload.bot.tasks.filter(function(task){
+          return task !== payload.task;
+        });
+        //assign copied state to next observable
+        this.trigger();
+        break;
+      default: 
+        alert('unhandled action');
+    }
+
+  }
+
 }
 

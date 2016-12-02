@@ -74,9 +74,8 @@
                 (click)="onSelectBot(bot)">
 
                 <td *ngIf="editableName !== bot" class="">
-                  <p>{{botService.getDisplayName(bot)}}
+                  <p>{{bot.botName}}-{{bot.botType}}</p>
                   <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
-                  </p>
                 </td>
 
                 <td *ngIf="editableName === bot" class="">
@@ -89,11 +88,23 @@
     </table>
   </div>
 
+  <!--added tasks-->
+
   <div class="col-md-3">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
           <th>TASKS</th>
+          <div *ngIf="selectedBot.decorated.potentialTasks.length > 0" class="btn-group">
+            <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </span>
+            <div class="dropdown-menu">
+              <p *ngFor="let potentialTask of selectedBot.decorated.potentialTasks" class="dropdown-item" href="#" 
+              (click)="store.actions('ADD-TASK',{bot: selectedBot, task: potentialTask})">
+                {{potentialTask.decorated.formattedName}}
+              </p>
+            </div>
+          </div>
         </tr>
       </thead>
         <tbody>
@@ -106,6 +117,7 @@
                   {{task.decorated.formattedName}}
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
                 </p>
+                <span class="glyphicon glyphicon-remove" (click)="store.actions('DELETE-TASK',{bot: selectedBot, task: task})"></span>
         </tr>
       </tbody>
     </table>
@@ -115,11 +127,19 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-            <th>SELECTED CONTACTS</th>
-
+            <th>SELECTED CONTACTS FOR TASKS</th>
+            <div>
             <!--add new contact widget-->
+            <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </span>
+            <div class="dropdown-menu">
+               <span class="dropdown-item glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
+              name:<input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
+              <span class="dropdown-item glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
+              email: <input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
+            </div>
 
-            <div *ngIf="!uiVars.addContact && selectedBot.botType !== 'social'" >
+            <!--<div *ngIf="!uiVars.addContact && selectedBot.botType !== 'social'" >
               <span class="glyphicon glyphicon-plus" (click)="uiVars.addContact = true"></span>
             </div>
             <div *ngIf="uiVars.addContact === true" >
@@ -129,9 +149,13 @@
               email: <input class="fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
             </div>
 
+            </div>-->
+
+            </div>
         </tr>
       </thead>
 
+      <!--basic bot contacts-->
 
         <tbody *ngIf="selectedBot.botType !== 'social'">
         <tr class="" *ngFor="let contact of selectedBot.selectedContacts">
@@ -152,6 +176,7 @@
         </tr>
       </tbody>
 
+    <!--social bot contacts-->
 
       <tbody *ngIf="selectedBot.botType === 'social'">
         <tr class="" *ngFor="let contact of selectedBot.selectedFbFriends">
@@ -174,6 +199,7 @@
     </table>
   </div>
 
+  <!--available contacts-->
 
   <div class="col-md-3">
     <table class="table">
@@ -202,15 +228,15 @@
     <table class="table">
       <thead class="thead-inverse">
         <tr>
-          <th>BOT NAME</th>
+          <th>BOT</th>
         </tr>
       </thead>
         <tbody>
         <tr *ngFor="let job of scheduled">
-                {{job.botName || job.botType}}
+                {{job.botName}} - {{job.botType}}
         </tr>
         <tr *ngFor="let job of recent">
-                {{job.botName || job.botType}}
+                {{job.botName}} - {{job.botType}}
         </tr>
       </tbody>
     </table>
@@ -228,7 +254,7 @@
                 {{job.name}}
         </tr>
         <tr *ngFor="let job of recent">
-                {{job.name}}
+                {{job.name || job.contactName}}
         </tr>
       </tbody>
     </table>
@@ -272,8 +298,16 @@
 
 </div>
 
+
+
 <!-- BUTTONS -->
     <div class="buttons">
+
+      <div *ngIf="uiVars.success === true">
+        <p style="color: green"> Success! </p>
+      </div>
+      <button class="save-bots" style="float: left;" (click)="pageMode('log')">View Activity</button>
+      <button class="save-bots" style="float: left;" (click)="pageMode('bot')">View Bots</button>
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
       <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
