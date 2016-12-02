@@ -291,7 +291,115 @@
 /*devteam simplegrid*/
 .container-type {
   position: relative;
-  top: 8em;
+  top: 2em;
 /*  left: 25%;*/
   /*width:;*/
+}
+
+.box-choose-nam{
+  position: relative;
+/*  width: 16em;
+  height: 25em;*/
+  width: auto;
+  height: auto;
+ /* background-color: grey;*/
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+/*  background-image: url("http://i.imgur.com/R2ApPct.png");
+  background-position: 25% 18%;*/
+}
+
+.box-choose-nam:hover {
+/*  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");*/
+  cursor:hand;
+}
+
+.box-choose-vi{
+  position: relative;
+  width: auto;
+  height: auto;
+ /* background-color: grey;*/
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+/*  background-image: url("http://i.imgur.com/R2ApPct.png");
+  background-position: 25% 18%;*/
+
+}
+
+.box-choose-vi:hover {
+/*  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");*/
+  cursor:hand;
+}
+
+.box-choose-justin{
+  position: relative;
+  width: auto;
+  height: auto;
+ /* background-color: grey;*/
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+/*  background-image: url("http://i.imgur.com/R2ApPct.png");
+  background-position: 25% 18%;*/
+
+}
+
+.box-choose-justin:hover {
+/*  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");*/
+  cursor:hand;
+}
+
+.box-choose-nick{
+  position: relative;
+  width: auto;
+  height: auto;
+ /* background-color: grey;*/
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+/*  background-image: url("http://i.imgur.com/R2ApPct.png");
+  background-position: 25% 18%;*/
+
+}
+
+.box-choose-nick:hover {
+/*  background-color: #87a5c1;
+  background-image: url("http://i.imgur.com/YosUqT6.png");*/
+  cursor:hand;
+}
+
+.img-profile-main img{
+  /*position: absolute;*/
+  position: absolute;
+  width: 8em;
+  top:3em;
+  height: auto;
+  left:4.25em;
+  z-index: 2;
+}
+
+.name-profile-main {
+/*  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;*/
+  /*font: normal 25px/1 Arial, Helvetica, sans-serif;*/
+/*  font-size: 25px;
+  font-family: 'PT Sans Narrow', sans-serif;
+  color: #ffffff;*/
+  text-align: center;
+/*  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;*/
+  position: absolute;
+  width: 8em;
+  top:11.5em;
+  left:4.2em;
+  height: auto;
+  z-index: 2;
+  font-family: 'Inconsolata', monospace;
+  font-size: 1em;
+ /* letter-spacing:0.335em;*/
+  text-transform: uppercase;
+  color: #282828;
 }
