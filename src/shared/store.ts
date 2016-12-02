@@ -42,4 +42,36 @@ export class Store {
       }
     }
 
+  public actions(name,payload){
+    //deep copy state here
+    //loses reference to the object you are trying to change?
+    switch(name){
+      case 'DELETE-TASK': 
+        payload.bot.tasks = payload.bot.tasks.filter(function(task){
+          return task !== payload.task;
+        });
+        this.botService.deletedTasks.push(payload.task.id);
+        if(!payload.task.decorated.subTask){
+          payload.bot.decorated.potentialTasks.push(payload.task); 
+        }
+        //will cause mastertasks with a date to render incorrectly
+        //assign copied state to next observable
+        this.trigger();
+        break;
+      case 'ADD-TASK': 
+        payload.bot.tasks.push(payload.task);
+        payload.bot.decorated.potentialTasks = payload.bot.decorated.potentialTasks.filter(function(task){
+          return task !== payload.task;
+        });
+        this.botService.deletedTasks = this.botService.deletedTasks.map(function(task){
+          return task.id !== payload.task.id;
+        })
+        this.trigger();
+        break;
+      default: 
+        alert('unhandled action');
+    }
+
+  }
+
 }

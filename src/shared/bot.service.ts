@@ -14,7 +14,8 @@ export class BotService {
   public scheduled = null;
   public recent = null;
   public currentBot = null;
-  
+  public deletedTasks = [];
+  public allTasks;
   constructor(private http: Http) {}
 
  //<----------------------BOT RETRIEVAL AND UPDATE---------------------->
@@ -42,21 +43,40 @@ export class BotService {
       
   }
 
+  //do rely on passed paramters 
   public updateBots(userBotsArray){
-   const userId = localStorage.getItem('user_id');
-   const body = JSON.stringify({bots: userBotsArray});
-   const headers = new Headers({'Content-Type': 'application/json'});
+    this.normalizeDates();
+    return this.deleteTasks()
+    .then(this.postBots.bind(this));
+  }
 
-   this.normalizeDates();
+  public postBots(){
+    var self = this;
+    const userId = localStorage.getItem('user_id');
+    const body = JSON.stringify({bots: this.userBots});
+    const headers = new Headers({'Content-Type': 'application/json'});
 
-   return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
-      .toPromise()
-      .then(()=>{
-        return this.importUserBots();
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
+    return this.http.put(`/api/bots?userId=${userId}`, body, {headers: headers})
+        .toPromise()
+        .then(()=>{
+          return self.importUserBots();
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+  }
+
+  public deleteTasks(){
+    //userID must be factored out
+    const userId = localStorage.getItem('user_id');
+    const body = JSON.stringify({tasks: this.deletedTasks});
+    //factor out headers
+    const headers = new Headers({'Content-Type': 'application/json'});
+
+    var r = this.http.post('/api/tasks', body, {headers: headers})
+    .toPromise();
+    this.deletedTasks = [];
+    return r;
   }
 
   public retireBot(selectedBot){
@@ -71,7 +91,7 @@ export class BotService {
 
   public getBots(){
     //add get tasks when api endpoint is implemented
-    return Promise.all([this.getHolidays(), this.getBotTypes(), this.importUserBots()]);
+    return Promise.all([this.getHolidays(), this.getAllTasks(), this.getBotTypes(), this.importUserBots()]);
   }
 
   public getHolidays(){
@@ -81,6 +101,17 @@ export class BotService {
         this.holidays = data;
         return data;
       }).toPromise();
+  }
+
+  public getAllTasks(){
+      var self = this;
+      return this.http.get('/api/tasks')
+      .toPromise()
+      .then(function(data){
+        data = data.json();
+        self.allTasks = data;
+        self.extendTasks(self.allTasks);
+      });
   }
 
   public getBotTypes(){
@@ -101,6 +132,7 @@ export class BotService {
     this.http.get(`/api/tasks?userId=${userId}`)
       .map((data: any) => {
         data = data.json();
+        //?
         this.contacts = data;
         return data;
       }).toPromise();
@@ -152,43 +184,89 @@ export class BotService {
   //<----------------------DATA TRANSFORMATIONS FROM BACKEND TO FRONTEND---------------------->
 
 
-  public taskExtensions = {
-    'sayHappyHolidayGmail': {formattedName: 'holiday: gmail', 
-                            setsDate: false, 
-                            setsInterval: false, 
-                            masterTask: true,
-                            subTask: true,
-                            holidays: true},
-    'sayHappyBirthdayGmail':{formattedName: 'birthday: gmail',
-                            setsDate: false, 
-                            setsInterval: false,}, 
-    'sayHappyBirthdayFacebook':{formattedName: 'birthday: facebook',
-                            setsDate: false, 
-                            setsInterval: false,}, 
-    'sayHiGmail':           {formattedName: 'message: gmail',
-                            setsDate: true, 
-                            setsInterval: true,}, 
-    'sayHiFacebook':        {formattedName: 'message: facebook',
-                            setsDate: true, 
-                            setsInterval: true,},
-  };
+  public botExtensions = {
+    'basic': {
+      deletedTasks: [], 
+      potentialTasks: [],
+      platform: 'gmail',
+    },
+    'social': {
+      deletedTasks: [], 
+      potentialTasks: [],
+      platform: 'facebook',
+    },
+    'power': {
+      deletedTasks: [], 
+      potentialTasks: [],
+      platform: 'facebook',
+    }
+  }
 
   public decorateAll(bots){
     var self = this;
     bots.forEach(function(bot){
-      bot.tasks.forEach(function(task){
-        task.decorated = Object.assign({},self.taskExtensions[task.task]);
-        if(task.date === null){
-          task.decorated.subTask = false;
-        }
-        if(task.decorated.subTask){
-          task.decorated.masterTask = false;
-          task.decorated.formattedName = self.holidays.filter((h)=>{
-            return h.date === task.date
-          })[0].name;
-        }
-      });
+      bot.decorated = JSON.parse(JSON.stringify(self.botExtensions[bot.botType]));
+      self.addPotentialTasks(bot);
+      self.extendTasks(bot.tasks);
     });
+  }
+
+  private extendTasks(tasks){
+    var self = this;
+    tasks.forEach(function(task){
+      task.decorated = Object.assign({},self.taskExtensions[task.task]);
+      self.markSubTask(task);
+    });
+  }
+
+  private markSubTask(task){
+    var self = this;
+    if(task.date === null){
+      task.decorated.subTask = false;
+    }
+    if(task.date !== null && task.decorated.subTask){
+      task.decorated.masterTask = false;
+      task.decorated.formattedName = self.holidays.filter((h)=>{
+        return h.date === task.date
+      })[0].name;
+    }
+  }
+
+  public taskExtensions = {
+    'sayHiGmail':           {formattedName: 'message on gmail',
+                            setsDate: true, 
+                            setsInterval: true,}, 
+    'sayHappyBirthdayGmail':{formattedName: 'birthday wishes on gmail',
+                            setsDate: false, 
+                            setsInterval: false,},
+    'sayHappyHolidayGmail': {formattedName: 'holiday on gmail', 
+                            setsDate: false, 
+                            setsInterval: false, 
+                            masterTask: true,
+                            holidays: true}, 
+    'sayHiFacebook':        {formattedName: 'message on facebook',
+                            setsDate: true, 
+                            setsInterval: true,},
+    'sayHappyBirthdayFacebook':{formattedName: 'birthday wishes on facebook',
+                            setsDate: false, 
+                            setsInterval: false,}, 
+    'sayHappyHolidayFacebook': {formattedName: 'holiday on facebook', 
+                            setsDate: false, 
+                            setsInterval: false, 
+                            subTask: true,
+                            holidays: true}, 
+  };
+
+  public addPotentialTasks(bot){
+    this.allTasks.forEach(function(_potentialTask){
+      var potentialTask = JSON.parse(JSON.stringify(_potentialTask));
+      var match = bot.tasks.some(function(botTask){
+        return botTask.task === potentialTask.task;
+      });
+      if(!match && (bot.decorated.platform === potentialTask.platform)){
+        bot.decorated.potentialTasks.push(potentialTask);
+      }
+    })
   }
 
   public joinScheduledTaskDescriptions(bots){
@@ -227,7 +305,9 @@ export class BotService {
       })
     })
   }
-   
+  
+
+
   //<-----------------GETTERS AND SETTERS----------------->
 
   public getDisplayName(bot){
