@@ -19,6 +19,11 @@
   height:50vh;
 }
 
+.one-view .content-devteam {
+  margin-left:0px;
+  height:50vh;
+}
+
 .table.features3>tbody>tr>td, .table.features3>tbody>tr>th, .table.features3>tfoot>tr>td, .table.features3>tfoot>tr>th, .table.features3>thead>tr>td, .table.features3>thead>tr>th {
   border-top:none !important ;
 }
@@ -60,6 +65,16 @@
   background-color: #5D5D5D;
   padding:8em 25em;
 }
+
+.devteambg {
+  background-color: #D4D4D4;
+}
+
+/*.row.featuresbg {
+  padding:4em 3em;
+  background-color: #5D5D5D;
+  text-align:center;
+}*/
 
 .col-md-3.features {
   float:left;
@@ -145,6 +160,7 @@
   top: 3em;
 }
 
+
 .gmail img {
   margin-top: 1em;
   height: 2em;
@@ -159,6 +175,16 @@
   text-align:center;
 }
 
+.devteam h2 {
+  text-align:center;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2em;
+  letter-spacing:0.335em;
+  text-transform: uppercase;
+  color: #282828;
+  position: relative;
+  top: 1em;
+}
 
 #button-start {
   margin: auto;
@@ -192,3 +218,28 @@
   float:left;
 }
 
+.box-profile {
+  position: relative;
+}
+
+.img-profile-nam img {
+  position: absolute;
+  top:5em;
+  left:15em;
+}
+
+.img-profile-vi img {
+  position: absolute;
+  top:5em;
+  left:30em;
+}
+.img-profile-justin img {
+  position: absolute;
+    top:5em;
+  left:45em;
+}
+.img-profile-nick img {
+  position: absolute;
+  top:5em;
+  left:60em;
+}
