@@ -1,6 +1,6 @@
-<div class="mycontainer" >
+<div class="activities-table-container" >
 
-  <div class="col-md-3">
+  <div class="col-md-2">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
@@ -15,7 +15,7 @@
     </table>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-2">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
@@ -24,13 +24,13 @@
       </thead>
         <tbody>
         <tr *ngFor="let task of tasks">
-                {{task.name} || task.contactName}
+                {{task.name || task.contactName}}
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-2">
     <table class="table">
       <thead class="thead-inverse">
         <tr>
@@ -45,7 +45,7 @@
     </table>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-2">
     <table class="table">
       <thead class="thead-inverse">
         <tr>

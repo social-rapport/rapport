@@ -44,8 +44,9 @@ button {
 }
 
 .buttons {
-  margin-top: 2em;
+  margin-top: 1em;
   float: right;
+  margin-right:11em;
 }
 
 .control-container {

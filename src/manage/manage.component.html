@@ -274,19 +274,12 @@
 
 <!-- BUTTONS -->
     <div class="buttons">
-      <button class="save-bots" style="float: left;" (click)="pageMode('log')">View Activity</button>
-      <button class="save-bots" style="float: left;" (click)="pageMode('bot')">View Bots</button>
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
       <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
         <button class="retire" (click)="retireBot()"> Retire Bot </button>
       </span>
     </div>
-
-
-<div style="height: 400px">
-
-</div>
 
 </div>
 <!------------------------------ SUBSCRIBED VERSION ------------------------------>
