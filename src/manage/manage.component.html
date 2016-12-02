@@ -136,6 +136,7 @@
             <div class="dropdown-menu">
                <span class="dropdown-item glyphicon glyphicon-ok" (click)="uiVars.addContact = false; createNewContact(uiVars.newContact)"></span>
               name:<input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.name">
+              <br>
               <span class="dropdown-item glyphicon glyphicon-remove" (click)="uiVars.addContact = false"></span>
               email: <input class="dropdown-item fb-input" type="text" [(ngModel)]="uiVars.newContact.email">
             </div>

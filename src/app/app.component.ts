@@ -13,7 +13,7 @@ import { BotService } from '../shared/bot.service';
   providers: [Auth],
   template: `
     <nav>
-        <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Choose A Bot</a>
+        <a *ngIf="authenticated()" routerLink="/setup" routerLinkActive="active">Add A Bot</a>
         <a *ngIf="authenticated() && hasBot()" routerLink="/manage" routerLinkActive="active">Manage Bots</a>
         <a *ngIf="authenticated()" routerLink="/view-activities" routerLinkActive="active">View Activities</a>
         <a *ngIf="authenticated()" routerLink="/logout" routerLinkActive="active" class="right">Logout</a>
