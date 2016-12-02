@@ -44,6 +44,10 @@
 
 }
 
+.devteamprofile td{
+  text-align:center;
+  color:white;
+}
 
 /*.save {
   text-align:center;
@@ -162,20 +166,8 @@
   color: white;
   position: relative;
   top: 4em;
-  /*left: 50%;*/
 }
 
-.devteam h2 {
-  text-align:center;
-  font-family: 'Inconsolata', monospace;
-  font-size: 3em;
-  letter-spacing:0.335em;
-  text-transform: uppercase;
-  color: black;
-  position: relative;
-  top: 1em;
-  /*left: 50%;*/
-}
 
 #button-start {
   margin: auto;
