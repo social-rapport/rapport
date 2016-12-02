@@ -378,7 +378,7 @@
   width: 8em;
   top:3em;
   height: auto;
-  left:3.25em;
+  left:3em;
   z-index: 2;
 }
 
@@ -395,9 +395,12 @@
 /*  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;*/
   position: absolute;
-  width: 8em;
+/*  width: 8em;
   top:11.5em;
-  left:4.2em;
+  left:3.2em;*/
+  width: 7em;
+  top:11.5em;
+  left:3.4em;
   height: auto;
   z-index: 2;
   font-family: 'Inconsolata', monospace;
