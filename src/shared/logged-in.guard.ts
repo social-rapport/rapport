@@ -11,21 +11,12 @@ export class LogInGuard implements CanActivate {
   }
 
   canActivate() {
-    if(localStorage.getItem('id_token')) {
+    if(this.auth.authenticated()) {
       this.router.navigate(['loading']);
-
-      if(this.auth.authenticated()) {
-        this.auth.onAuthentication({idToken: localStorage.getItem('id_token')});
-        return false;
-      } else {
-        this.auth.logout();
-        return true;
-      }
-
+      this.auth.onAuthentication({idToken: localStorage.getItem('id_token')});
+      return false;
     } else {
       return true;
     }
-    
-  //return true;
   }
 }

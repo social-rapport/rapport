@@ -9,9 +9,9 @@
 -- Table 'bot'
 --
 -- ---
-DROP DATABASE rapport;
-CREATE DATABASE rapport;
-USE rapport;
+DROP DATABASE IF EXISTS test;
+CREATE DATABASE test;
+USE test;
 
 DROP TABLE IF EXISTS `bot`;
 

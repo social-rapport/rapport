@@ -3,7 +3,7 @@ var mysql = require('promise-mysql');
 var cron = require('./cron/cron.js');
 
 mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST || process.env.test || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASS || require('../env.js').DB_PASS,
     database: process.env.DB || 'rapport'

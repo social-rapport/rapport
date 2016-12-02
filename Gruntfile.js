@@ -16,11 +16,11 @@ module.exports = function(grunt) {
           },
 
           test: {
-            command: 'mocha '+__dirname+'/spec/serverSpec.js'
+            command: 'node server/server.js && mocha '+__dirname+'/spec/serverSpec.js'
           },
 
           testDB: {
-            command: 'mocha '+__dirname+'/spec/dbBotSpec.js'
+            command: 'mocha '+__dirname+'/spec/integration-tests/dbSpec.js'
           },
 
           electroncompile:{
