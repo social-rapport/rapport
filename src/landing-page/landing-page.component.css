@@ -5,10 +5,65 @@
   z-index: 1;
 }*/
 
-.gmailPitch {
-  position:relative;
+.main-view {
+  position: relative;
+  left:0px;
+  height:140vh;
 }
-.gmailPitch h3 {
-  margin:auto;
+
+.one-view {
+  position: relative;
+}
+
+.one-view .content {
+  height:100vh;
+}
+
+.save {
+  height:50vh;
+  background-color: #D4D4D4;
+}
+
+/*.gmail-view {
+  height:50vh;
+}
+
+.gmail-view .content {
+  height:50vh;
+  background-color: #D4D4D4;
+}*/
+
+.gmail h2 {
   text-align:center;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2em;
+  letter-spacing:0.335em;
+  text-transform: uppercase;
+  color: #282828;
+  position: relative;
+  top: 9em;
+  left: 50%;
+}
+
+.facebook h2 {
+  text-align:center;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2em;
+  letter-spacing:0.335em;
+  text-transform: uppercase;
+  color: #282828;
+  position: relative;
+  top: 9em;
+  left:50%;
+}
+
+
+#gmailScreen.col-md-4 {
+  right:-4em;
+  float:right;
+}
+
+#facebookScreen.col-md-4 {
+  left:-23em;
+  float:left;
 }
