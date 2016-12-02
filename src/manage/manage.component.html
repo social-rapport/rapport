@@ -74,8 +74,9 @@
                 (click)="onSelectBot(bot)">
 
                 <td *ngIf="editableName !== bot" class="">
-                  <p>{{bot.botName}}-{{bot.botType}}</p>
-                  <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
+                  <p>{{bot.botName}}-{{bot.botType}}
+                    <span class="glyphicon glyphicon-pencil" (click)="editableName = bot"></span>
+                  </p>
                 </td>
 
                 <td *ngIf="editableName === bot" class="">
@@ -99,7 +100,7 @@
             <span type="button" class="glyphicon glyphicon-plus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             </span>
             <div class="dropdown-menu">
-              <p *ngFor="let potentialTask of selectedBot.decorated.potentialTasks" class="dropdown-item" href="#" 
+              <p *ngFor="let potentialTask of selectedBot.decorated.potentialTasks" class="dropdown-item" href="#"
               (click)="store.actions('ADD-TASK',{bot: selectedBot, task: potentialTask})">
                 {{potentialTask.decorated.formattedName}}
               </p>
@@ -115,9 +116,9 @@
                 {{task.name}}
                 <p *ngIf="task.decorated && task.decorated.formattedName">
                   {{task.decorated.formattedName}}
+                <span class="glyphicon glyphicon-remove" (click)="store.actions('DELETE-TASK',{bot: selectedBot, task: task})"></span>
                 <span class="glyphicon" [ngClass]="{'glyphicon-pencil': !task.decorated.masterTask, 'glyphicon-plus' : task.decorated.masterTask }" (click)="open(task)"></span>
                 </p>
-                <span class="glyphicon glyphicon-remove" (click)="store.actions('DELETE-TASK',{bot: selectedBot, task: task})"></span>
         </tr>
       </tbody>
     </table>
@@ -306,8 +307,6 @@
       <div *ngIf="uiVars.success === true">
         <p style="color: green"> Success! </p>
       </div>
-      <button class="save-bots" style="float: left;" (click)="pageMode('log')">View Activity</button>
-      <button class="save-bots" style="float: left;" (click)="pageMode('bot')">View Bots</button>
       <button class="save-bots" (click)="submitAllSettings()"> Save Bots! </button>
       <button class="send-now" (click)="sendNow()"> Send Now! </button>
       <span *ngIf="selectedBot.id">
