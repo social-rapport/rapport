@@ -165,7 +165,7 @@
   text-transform: uppercase;
   color: white;
   position: relative;
-  top: 4em;
+  top: 3em;
 }
 
 
@@ -181,7 +181,7 @@
   text-align: center;
   background-color: #93BA4C;
   position: relative;
-  top:8em;
+  top:6em;
 }
 
 #button-start:hover {
