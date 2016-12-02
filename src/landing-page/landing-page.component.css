@@ -243,3 +243,47 @@
   top:5em;
   left:60em;
 }
+
+.profile-name-nam {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1em;
+ /* letter-spacing:0.335em;*/
+  text-transform: uppercase;
+  color: #282828;
+  position: absolute;
+  top: 11em;
+  left:16em;
+}
+
+.profile-name-vi {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1em;
+ /* letter-spacing:0.335em;*/
+  text-transform: uppercase;
+  color: #282828;
+  position: absolute;
+  top: 11em;
+  left:31.7em;
+}
+
+.profile-name-justin {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1em;
+ /* letter-spacing:0.335em;*/
+  text-transform: uppercase;
+  color: #282828;
+  position: absolute;
+  top: 11em;
+  left:45em;
+}
+
+.profile-name-nick {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1em;
+ /* letter-spacing:0.335em;*/
+  text-transform: uppercase;
+  color: #282828;
+  position: absolute;
+  top: 11em;
+  left:60.4em;
+}
