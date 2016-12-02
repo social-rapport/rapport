@@ -1,10 +1,3 @@
-/*#container-landing-page {
-  position: absolute;
-  top: 30%;
-  right: -25%;
-  z-index: 1;
-}*/
-
 .main-view {
   position: relative;
   left:0px;
@@ -21,6 +14,7 @@
 }
 
 .one-view .content-start {
+  padding-top:2em;
   margin-left:0px;
   height:50vh;
 }
@@ -41,6 +35,7 @@
   text-indent:18em;
   color:white;
   white-space:nowrap;
+  line-height:2em;
 
 }
 
@@ -48,12 +43,6 @@
   text-align:center;
   color:white;
 }
-
-/*.save {
-  text-align:center;
-  height:50vh;
-  background-color: #D4D4D4;
-}*/
 
 .gmailbg {
   background-color: #D4D4D4;
@@ -72,12 +61,6 @@
   padding:8em 25em;
 }
 
-/*.row.featuresbg {
-  padding:4em 3em;
-  background-color: #5D5D5D;
-  text-align:center;
-}*/
-
 .col-md-3.features {
   float:left;
 }
@@ -89,15 +72,6 @@
 .featuresbg li {
   color:white;
 }
-
-/*.features h2 {
-  color:white;
-  font-family: 'Inconsolata', monospace;
-  font-size: 2em;
-  letter-spacing:0.335em;
-  text-transform: uppercase;
-  top:4.5em;
-}*/
 
 .fbbg {
   background-color: #919191;
@@ -112,14 +86,15 @@
   left:50%;
 }
 
-/*.gmail-view {
-  height:50vh;
+.row h2 {
+  text-align:center;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2em;
+  letter-spacing:0.335em;
+  text-transform: uppercase;
+  color: #282828;
+  position: relative;
 }
-
-.gmail-view .content {
-  height:50vh;
-  background-color: #D4D4D4;
-}*/
 
 .gmail h2 {
   text-align:center;
@@ -153,7 +128,7 @@
   text-transform: uppercase;
   color: #282828;
   position: relative;
-  top: 6em;
+  top: 10em;
   left:50%;
 }
 
@@ -166,6 +141,20 @@
   color: white;
   position: relative;
   top: 3em;
+}
+
+.gmail img {
+  margin-top: 1em;
+  height: 2em;
+}
+
+.facebook img {
+  margin-top: 1em;
+  height: 2em;
+}
+
+.developers {
+  text-align:center;
 }
 
 
