@@ -88,7 +88,6 @@ video#bgvid {
   font-size: 6em;
   line-height:0.8;
   padding-left:0.2em;
-  /*color: #5a5a5a;*/
   color: #292929;
   text-align: center;
   -o-text-overflow: ellipsis;
@@ -113,16 +112,6 @@ video#bgvid {
 .table {
   background-color:;
 }
-/*this loads image*/
-/*#button-signup {
-  z-index:1;
-  background-image: url('./app/assets/button-signup.png');
-  background-size:contain;
-  background-repeat:no-repeat;
-  height:100px;
-  width:200px;
-  font-family: 'Inconsolata', monospace;
-}*/
 
 .button {
 -webkit-box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
@@ -197,9 +186,6 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 }
 
 /* CHOOSE BOT PAGE */
-#carousel {
-
-}
 
 .box-choose-bot-basic{
   position: relative;
@@ -256,14 +242,12 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 }
 
 .img-choose-bot {
-  /*position: absolute;*/
   width: 22em;
   height: auto;
   z-index: 1;
 }
 
 .img-bot-icon-main img{
-  /*position: absolute;*/
   position: absolute;
   width: 8em;
   top:3em;
@@ -285,17 +269,10 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 }
 
 .name-bottype-main {
-/*  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  border: none;*/
-  /*font: normal 25px/1 Arial, Helvetica, sans-serif;*/
   font-size: 25px;
   font-family: 'PT Sans Narrow', sans-serif;
   color: #ffffff;
   text-align: center;
-/*  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;*/
   position: absolute;
   width: 8em;
   top:7.5em;
@@ -316,16 +293,7 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
   left:35.5em;
 }
 
-/*#carousel #img-choose-bot {
-
-}*/
-
 .bottype-desc-main {
-/*  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  border: none;*/
-  /*font: normal 1em/1 Arial, Helvetica, sans-serif;*/
   font-size: 1em/1;
   font-family: 'PT Sans Narrow', sans-serif;
   color: #ffffff !important;
@@ -439,10 +407,6 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
   text-overflow: ellipsis;
 }
 
-#button-bot-action {
-
-}
-
 .mycontainer {
   margin-left: auto;
   margin-right: auto;
@@ -451,37 +415,8 @@ box-shadow: 4px 5px 5px -1px rgba(0,0,0,0.2);
 .container-botType {
   position: relative;
   top: 8em;
-/*  left: 25%;*/
-  /*width:;*/
 }
 
-.botCards:nth-of-type(1) {
-  background-color: blue;
-  width: 18em;
-  height: 25em;
-  position: relative;
-  margin-right: 5em;
-  background-position: 25% 18%;
-  /*background-image: url("app/assets/card-socialbot.png");*/
-}
-
-.botCards:nth-of-type(2) {
-  width: 18em;
-  height: 25em;
-  background-color: green;
-  position: relative;
-  margin-right: 5em;
-  background-position: 25% 18%;
-}
-
-.botCards:nth-of-type(3){
-  width: 18em;
-  height: 25em;
-  background-color:orange;
-  position: relative;
-  margin-right: 5em;
-  background-position: 25% 18%;
-}
 
 
 
